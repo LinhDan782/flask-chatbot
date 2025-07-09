@@ -140,10 +140,18 @@ def chatbot():
 
     if request.method == "POST":
         user_message = request.form['message']
+
+        # Biến đổi và dự đoán intent
         X_test = vectorizer.transform([user_message])
-        response = model.predict(X_test)[0]
+        predicted_label = clf.predict(X_test)[0]
+
+        # Trả lời dựa vào intent
+        response = intent_responses.get(predicted_label, "🤖 Xin lỗi, tôi chưa hiểu câu hỏi của bạn.")
+
+        # Lưu lịch sử vào session
         session['history'].append((user_message, response))
         session.modified = True
+
         return redirect(url_for('chatbot'))
 
     return render_template_string(HTML_TEMPLATE, history=session['history'])
