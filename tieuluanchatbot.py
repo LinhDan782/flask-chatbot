@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template_string, redirect, url_for, session
-from flask import Flask
 from flask_session import Session
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
@@ -141,11 +140,8 @@ def chatbot():
 
     if request.method == "POST":
         user_message = request.form['message']
-        response = "🤖 Xin lỗi, tôi chưa hiểu câu hỏi."
-        for key in faq:
-            if key in user_message.lower():
-                response = faq[key]
-                break
+        X_test = vectorizer.transform([user_message])
+        response = model.predict(X_test)[0]
         session['history'].append((user_message, response))
         session.modified = True
         return redirect(url_for('chatbot'))
