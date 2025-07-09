@@ -136,8 +136,8 @@ HTML_TEMPLATE = """
 # Tạo ứng dụng Flask
 @app.route("/", methods=["GET", "POST"])
 def chatbot():
-    if 'history' not in Session:
-        Session['history'] = []
+    if 'history' not in session:
+        session['history'] = []
 
     if request.method == "POST":
         user_message = request.form['message']
@@ -146,11 +146,11 @@ def chatbot():
             if key in user_message.lower():
                 response = faq[key]
                 break
-        Session['history'].append((user_message, response))
-        Session.modified = True
+        session['history'].append((user_message, response))
+        session.modified = True
         return redirect(url_for('chatbot'))
 
-    return render_template_string(HTML_TEMPLATE, history=Session['history'])
+    return render_template_string(HTML_TEMPLATE, history=session['history'])
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
