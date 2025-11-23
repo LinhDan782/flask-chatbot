@@ -1,161 +1,280 @@
-from flask import Flask, request, render_template_string, redirect, url_for, session
-from flask_session import Session
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import google.generativeai as genai
 
-# ====== Huấn luyện mô hình học máy ======
-data = [
-    ("giờ làm việc của bạn là gì", "working_hours"),
-    ("khi nào mở cửa", "working_hours"),
-    ("có làm việc cuối tuần không", "working_hours"),
-    ("bạn mở cửa lúc mấy giờ", "working_hours"),
+# --- CẤU HÌNH GEMINI ---
+# Dán API Key của bạn vào đây
+genai.configure(api_key='DÁN_API_KEY_CỦA_BẠN_VÀO_ĐÂY') 
 
-    ("chính sách hoàn tiền thế nào", "refund_policy"),
-    ("tôi muốn đổi/trả hàng", "refund_policy"),
-    ("trả hàng mất phí không", "refund_policy"),
-    ("tôi đã mua sai, hoàn tiền được không", "refund_policy"),
+model = genai.GenerativeModel('gemini-1.5-flash')
 
-    ("tôi muốn liên hệ", "contact"),
-    ("làm sao để gọi cho bạn", "contact"),
-    ("email hỗ trợ của bạn là gì", "contact"),
-    ("số điện thoại của shop là gì", "contact"),
-
-    ("bạn có ship không", "shipping"),
-    ("phí giao hàng là bao nhiêu", "shipping"),
-    ("ship COD không", "shipping"),
-    ("giao hàng mất bao lâu", "shipping"),
-]
-texts, labels = zip(*data)
-vectorizer = TfidfVectorizer()
-X = vectorizer.fit_transform(texts)
-clf = MultinomialNB()
-clf.fit(X, labels)
-
-# ====== Các phản hồi theo intent ======
-intent_responses = {
-    "working_hours": "⏰ Chúng tôi làm việc từ 8h đến 17h, từ thứ 2 đến thứ 6.",
-    "refund_policy": "💸 Bạn có thể hoàn trả trong vòng 7 ngày kể từ ngày mua.",
-    "contact": "📞 Bạn có thể liên hệ qua email: support@example.com hoặc gọi 0123.456.789.",
-    "shipping": "🚚 Chúng tôi giao hàng toàn quốc, hỗ trợ COD và phí giao từ 20K tuỳ khu vực."
-}
+# Dữ liệu shop của bạn
+SHOP_DATA = """
+- Shop tên: Vintage Store.
+- Giờ làm việc: 8h - 22h hàng ngày.
+- Địa chỉ: 123 Đường ABC, Quận 1.
+- Chính sách: Đổi trả trong 3 ngày nếu lỗi.
+- Ship: Đồng giá 30k toàn quốc.
+"""
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
-app.config['SESSION_TYPE'] = 'filesystem'
-Session(app)
+CORS(app)
 
-# Giao diện HTML đơn giản
+# Giao diện
 HTML_TEMPLATE = """
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Chatbot thông minh</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        body, html {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            height: 100%%;
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Inter', sans-serif;
         }
-        .chat-container {
+
+        body {
+            /* Hình nền */
+            background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2029&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Khung điện thoại mô phỏng */
+        .phone-container {
+            width: 100%;
+            max-width: 400px;
+            height: 90vh;
+            background: rgba(255, 255, 255, 0.1); /* Nền kính mờ */
+            backdrop-filter: blur(15px); /* Hiệu ứng làm mờ hậu cảnh */
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             flex-direction: column;
-            height: 100%%;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 0;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
         }
-        .messages {
+        /* Khu vực hiển thị tin nhắn */
+        .chat-box {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-        }
-        .message {
-            padding: 10px 15px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            max-width: 75%%;
-            display: inline-block;
-            clear: both;
-        }
-        .user {
-            background-color: #0084ff;
-            color: white;
-            float: right;
-        }
-        .bot {
-            background-color: #e4e6eb;
-            color: black;
-            float: left;
-        }
-        form {
             display: flex;
-            border-top: 1px solid #ccc;
+            flex-direction: column;
+            gap: 15px;
+            /* Scrollbar ẩn cho đẹp */
+            scrollbar-width: none; 
         }
-        input[name="message"] {
+        .chat-box::-webkit-scrollbar { display: none; }
+
+        /* Bong bóng chat */
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Tin nhắn của Bot (Bên trái) */
+        .message.bot {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.85);
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Tin nhắn của Khách (Bên phải) */
+        .message.user {
+            align-self: flex-end;
+            background: #6C63FF; /* Màu tím giống style bên phải hoặc xanh */
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 2px 10px rgba(108, 99, 255, 0.3);
+        }
+
+        /* Khu vực nhập liệu */
+        .input-area {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-wrapper {
             flex: 1;
-            padding: 15px;
-            border: none;
-            font-size: 16px;
+            position: relative;
         }
-        input[type="submit"] {
-            background-color: #0084ff;
+
+        input {
+            width: 100%;
+            padding: 14px 45px 14px 20px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            box-shadow: 0 0 0 2px #6C63FF;
+        }
+
+        /* Nút gửi */
+        .send-btn {
+            background: #6C63FF;
             color: white;
             border: none;
-            padding: 15px 25px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 16px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-    </style>
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Hiệu ứng xuất hiện */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        </style>
 </head>
 <body>
-    <div class="chat-container">
-        <div class="messages" id="messages">
-            {% for m in history %}
-                <div class="message user">{{ m[0] }}</div>
-                <div class="message bot">{{ m[1] }}</div>
-            {% endfor %}
+
+    <div class="phone-container">
+        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/robot-assistant-5649462-4706751.png" class="character-overlay" alt="Bot">
+
+        <div class="header">
+            <div class="status-badge">● Online</div>
+            <h3>Trợ lý Shop</h3>
+            <p style="font-size: 0.8rem; opacity: 0.8;">Luôn sẵn sàng hỗ trợ bạn</p>
         </div>
-        <form method="POST">
-            <input name="message" placeholder="Nhập tin nhắn..." autocomplete="off" required />
-            <input type="submit" value="Gửi" />
-        </form>
+
+        <div class="chat-box" id="chatBox">
+            <div class="message bot">
+                Chào bạn! 👋 Mình là trợ lý ảo của Shop. Hôm nay mình có thể giúp gì cho bạn nè?
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-wrapper">
+                <input type="text" id="userInput" placeholder="Nhập câu hỏi..." onkeypress="handleEnter(event)">
+            </div>
+            <button class="send-btn" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
     </div>
+
     <script>
-        var messagesDiv = document.getElementById("messages");
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        function handleEnter(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const chatBox = document.getElementById('chatBox');
+            const message = input.value.trim();
+
+            if (message) {
+                // 1. Hiển thị tin nhắn người dùng
+                appendMessage(message, 'user');
+                input.value = '';
+
+                // 2. Giả lập Bot đang gõ (typing...)
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'message bot';
+                loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i>';
+                loadingDiv.id = 'loading';
+                chatBox.appendChild(loadingDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // 3. GỌI API GEMINI
+                fetch('http://127.0.0.1:5000/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Xóa icon loading
+                    document.getElementById('loading').remove();
+                    // Bot trả lời
+                    appendMessage(data.reply, 'bot'); // Hiển thị câu trả lời của Gemini
+                    .catch(error => {
+                    console.error('Lỗi:', error);
+                    document.getElementById('loading').remove();
+                    appendMessage("Lỗi kết nối server rồi bạn ơi!", 'bot');
+                    });
+            }
+        }
+        function appendMessage(text, sender) {
+            const chatBox = document.getElementById('chatBox');
+            const div = document.createElement('div');
+            div.className = `message ${sender}`;
+            div.textContent = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight; // Tự cuộn xuống cuối
+        }
     </script>
 </body>
 </html>
 """
 
 # Tạo ứng dụng Flask
-@app.route("/", methods=["GET", "POST"])
-def chatbot():
-    if 'history' not in session:
-        session['history'] = []
+@app.route('/chat', methods=['POST'])
+def chat():
+    # 1. Nhận tin nhắn từ file giao diện HTML gửi lên
+    data = request.json
+    user_msg = data.get('message')
+    
+    if not user_msg:
+        return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
 
-    if request.method == "POST":
-        user_message = request.form['message']
+    # 2. Gửi cho Gemini xử lý
+    prompt = f"""
+    Bạn là nhân viên tư vấn của Vintage Store. Hãy trả lời câu hỏi sau của khách dựa trên thông tin shop.
+    Thông tin shop: {SHOP_DATA}
+    
+    Câu hỏi khách: {user_msg}
+    
+    Trả lời ngắn gọn, thân thiện, có icon:
+    """
+    
+    try:
+        response = model.generate_content(prompt)
+        bot_reply = response.text
+    except Exception as e:
+        bot_reply = "Xin lỗi, hệ thống đang bận. Bạn thử lại sau nhé!"
 
-        # Biến đổi và dự đoán intent
-        X_test = vectorizer.transform([user_message])
-        predicted_label = clf.predict(X_test)[0]
+    # 3. Trả câu trả lời về cho giao diện HTML
+    return jsonify({'reply': bot_reply})
 
-        # Trả lời dựa vào intent
-        response = intent_responses.get(predicted_label, "🤖 Xin lỗi, tôi chưa hiểu câu hỏi của bạn.")
-
-        # Lưu lịch sử vào session
-        session['history'].append((user_message, response))
-        session.modified = True
-
-        return redirect(url_for('chatbot'))
-
-    return render_template_string(HTML_TEMPLATE, history=session['history'])
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
-app.run()
+# Chạy server
+if __name__ == '__main__':
+    print("Server đang chạy tại http://127.0.0.1:5000")
+    app.run(port=5000, debug=True)
