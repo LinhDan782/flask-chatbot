@@ -1,13 +1,18 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import google.generativeai as genai
-
-# --- CẤU HÌNH GEMINI ---
-# Dán API Key của bạn vào đây
-genai.configure(api_key='DÁN_API_KEY_CỦA_BẠN_VÀO_ĐÂY') 
-
+# 1. Kích hoạt chế độ đọc file .env
+load_dotenv()
+# 2. Lấy API Key từ biến môi trường
+api_key_lay_duoc = os.getenv('GEMINI_API_KEY')
 model = genai.GenerativeModel('gemini-1.5-flash')
-
+# Kiểm tra xem có lấy được key không (để debug)
+if not api_key_lay_duoc:
+    print("Lỗi: Không tìm thấy Key trong file .env!")
+else:
+    genai.configure(api_key=api_key_lay_duoc)
 # Dữ liệu shop của bạn
 SHOP_DATA = """
 - Shop tên: Vintage Store.
