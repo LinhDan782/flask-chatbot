@@ -168,9 +168,9 @@ HTML_TEMPLATE = """
         </style>
 </head>
 <body>
-    <div class="phone-container">
         <div class="header">
-            <h4>Trợ lý Vintage Store</h4>
+        <div class="status-badge">● Online</div>
+            <h3>Trợ lý Vintage Store</h3><p style="font-size: 0.8rem; opacity: 0.8;">Luôn sẵn sàng hỗ trợ bạn</p>
         </div>
         <div class="chat-box" id="chatBox">
             <div class="message bot">Chào bạn! 👋 Mình là trợ lý ảo của Shop. Hôm nay mình có thể giúp gì cho bạn nè?</div>
