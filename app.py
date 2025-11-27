@@ -168,7 +168,7 @@ HTML_TEMPLATE = """
         </style>
 </head>
 <body>
-        <div class="header">
+        <div class="phone-container"> <div class="header">
         <div class="status-badge">● Online</div>
             <h3>Trợ lý Vintage Store</h3>
             <p style="font-size: 0.8rem; opacity: 0.8;">Luôn sẵn sàng hỗ trợ bạn</p>
