@@ -1,19 +1,19 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template_string
 from flask_cors import CORS
 import google.generativeai as genai
-# 1. Kích hoạt chế độ đọc file .env
+
+# Cấu hình
 load_dotenv()
-# 2. Lấy API Key từ biến môi trường
-api_key_lay_duoc = os.getenv('GEMINI_API_KEY')
-model = genai.GenerativeModel('gemini-1.5-flash')
-# Kiểm tra xem có lấy được key không (để debug)
-if not api_key_lay_duoc:
-    print("Lỗi: Không tìm thấy Key trong file .env!")
+api_key = os.getenv('GEMINI_API_KEY')
+if not api_key:
+    print("Cảnh báo: Chưa cấu hình GEMINI_API_KEY")
 else:
-    genai.configure(api_key=api_key_lay_duoc)
-# Dữ liệu shop của bạn
+    genai.configure(api_key=api_key)
+    
+model = genai.GenerativeModel('gemini-1.5-flash')
+
 SHOP_DATA = """
 - Shop tên: Vintage Store.
 - Giờ làm việc: 8h - 22h hàng ngày.
@@ -32,10 +32,9 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chatbot Shop</title>
+    <title>Vintage Store Chatbot</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <style>
         * {
             box-sizing: border-box;
@@ -169,36 +168,23 @@ HTML_TEMPLATE = """
         </style>
 </head>
 <body>
-
     <div class="phone-container">
-        <img src="https://cdn3d.iconscout.com/3d/premium/thumb/robot-assistant-5649462-4706751.png" class="character-overlay" alt="Bot">
-
         <div class="header">
-            <div class="status-badge">● Online</div>
-            <h3>Trợ lý Shop</h3>
-            <p style="font-size: 0.8rem; opacity: 0.8;">Luôn sẵn sàng hỗ trợ bạn</p>
+            <h3>Trợ lý Vintage Store</h3>
         </div>
-
         <div class="chat-box" id="chatBox">
-            <div class="message bot">
-                Chào bạn! 👋 Mình là trợ lý ảo của Shop. Hôm nay mình có thể giúp gì cho bạn nè?
-            </div>
+            <div class="message bot">Chào bạn! 👋 Mình là trợ lý ảo của Shop. Hôm nay mình có thể giúp gì cho bạn nè?</div>
         </div>
-
         <div class="input-area">
             <div class="input-wrapper">
                 <input type="text" id="userInput" placeholder="Nhập câu hỏi..." onkeypress="handleEnter(event)">
             </div>
-            <button class="send-btn" onclick="sendMessage()">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+            <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
     <script>
-        function handleEnter(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
+        function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
 
         function sendMessage() {
             const input = document.getElementById('userInput');
@@ -206,11 +192,9 @@ HTML_TEMPLATE = """
             const message = input.value.trim();
 
             if (message) {
-                // 1. Hiển thị tin nhắn người dùng
                 appendMessage(message, 'user');
                 input.value = '';
 
-                // 2. Giả lập Bot đang gõ (typing...)
                 const loadingDiv = document.createElement('div');
                 loadingDiv.className = 'message bot';
                 loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i>';
@@ -218,55 +202,55 @@ HTML_TEMPLATE = """
                 chatBox.appendChild(loadingDiv);
                 chatBox.scrollTop = chatBox.scrollHeight;
 
-                // 3. GỌI API GEMINI
-                fetch('http://127.0.0.1:5000/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: message })
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Xóa icon loading
                     document.getElementById('loading').remove();
-                    // Bot trả lời
-                    appendMessage(data.reply, 'bot'); // Hiển thị câu trả lời của Gemini
-                    .catch(error => {
+                    appendMessage(data.reply, 'bot');
+                })
+                .catch(error => {
                     console.error('Lỗi:', error);
-                    document.getElementById('loading').remove();
+                    if(document.getElementById('loading')) document.getElementById('loading').remove();
                     appendMessage("Lỗi kết nối server rồi bạn ơi!", 'bot');
-                    });
+                });
             }
         }
+
         function appendMessage(text, sender) {
             const chatBox = document.getElementById('chatBox');
             const div = document.createElement('div');
             div.className = `message ${sender}`;
             div.textContent = text;
             chatBox.appendChild(div);
-            chatBox.scrollTop = chatBox.scrollHeight; // Tự cuộn xuống cuối
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
     </script>
 </body>
 </html>
 """
 
-# Tạo ứng dụng Flask
+# --- Route 1: Trang chủ (Hiển thị giao diện) ---
+@app.route('/')
+def home():
+    return render_template_string(HTML_TEMPLATE)
+
+# --- Route 2: API Chat ---
 @app.route('/chat', methods=['POST'])
 def chat():
-    # 1. Nhận tin nhắn từ file giao diện HTML gửi lên
     data = request.json
     user_msg = data.get('message')
     
     if not user_msg:
         return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
 
-    # 2. Gửi cho Gemini xử lý
     prompt = f"""
     Bạn là nhân viên tư vấn của Vintage Store. Hãy trả lời câu hỏi sau của khách dựa trên thông tin shop.
     Thông tin shop: {SHOP_DATA}
-    
     Câu hỏi khách: {user_msg}
-    
     Trả lời ngắn gọn, thân thiện, có icon:
     """
     
@@ -274,12 +258,10 @@ def chat():
         response = model.generate_content(prompt)
         bot_reply = response.text
     except Exception as e:
+        print(f"Lỗi Gemini: {e}")
         bot_reply = "Xin lỗi, hệ thống đang bận. Bạn thử lại sau nhé!"
 
-    # 3. Trả câu trả lời về cho giao diện HTML
     return jsonify({'reply': bot_reply})
 
-# Chạy server
 if __name__ == '__main__':
-    print("Server đang chạy tại http://127.0.0.1:5000")
-    app.run(port=5000, debug=True)
+    app.run(debug=True)
