@@ -105,7 +105,7 @@ HTML_TEMPLATE = """
         /* Tin nhắn của Khách (Bên phải) */
         .message.user {
             align-self: flex-end;
-            background: #6C63FF; /* Màu tím giống style bên phải hoặc xanh */
+            background: #6C63FF;
             color: white;
             border-bottom-right-radius: 4px;
             box-shadow: 0 2px 10px rgba(108, 99, 255, 0.3);
@@ -159,7 +159,24 @@ HTML_TEMPLATE = """
         .send-btn:hover {
             transform: scale(1.1);
         }
-
+        /*Thêm CSS cho Header*/
+        .header { 
+            padding: 20px; 
+            color: white; 
+            text-align: center; 
+            background: rgba(0,0,0,0.2); /* Tạo nền mờ cho Header */
+        }
+        .header h3 {
+            font-size: 1.2rem; 
+            font-weight: 600; 
+            margin-top: 5px;
+        }
+        .status-badge {
+            font-size: 0.8rem; 
+            opacity: 0.8;
+            color: #7FFF00; /* Màu xanh lá cây cho Online */
+        }
+        /* ... tiếp tục với @keyframes fadeIn */
         /* Hiệu ứng xuất hiện */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
