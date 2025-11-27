@@ -1,3 +1,5 @@
 flask
-scikit-learn
-flask-session
+flask-cors
+python-dotenv
+google-generative-ai
+gunicorn
