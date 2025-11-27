@@ -170,7 +170,7 @@ HTML_TEMPLATE = """
 <body>
     <div class="phone-container">
         <div class="header">
-            <h3>Trợ lý Vintage Store</h3>
+            <h4>Trợ lý Vintage Store</h4>
         </div>
         <div class="chat-box" id="chatBox">
             <div class="message bot">Chào bạn! 👋 Mình là trợ lý ảo của Shop. Hôm nay mình có thể giúp gì cho bạn nè?</div>
