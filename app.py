@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import google.generativeai as genai
 
@@ -27,7 +27,7 @@ CORS(app)
 # --- Route 1: Trang chủ (Hiển thị giao diện) ---
 @app.route('/')
 def home():
-    return render_template_string(HTML_TEMPLATE)
+    return render_template('index.html')
 
 # --- Route 2: API Chat ---
 @app.route('/chat', methods=['POST'])
