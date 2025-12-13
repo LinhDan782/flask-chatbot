@@ -211,82 +211,99 @@
     </div>
 
 <script>
-        function handleEnter(e) { 
-            if (e.key === 'Enter') sendMessage(); 
-        }
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const chatBox = document.getElementById('chatBox');
-            const message = input.value.trim();
-            if (message) {
-                appendMessage(message, 'user');
-                input.value = '';
+    function handleEnter(e) { 
+        if (e.key === 'Enter') sendMessage(); 
+    }
 
-                // Tạo loading spinner
-                const loadingDiv = document.createElement('div');
-                loadingDiv.className = 'message bot';
-                loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i>';
-                loadingDiv.id = 'loading';
-                chatBox.appendChild(loadingDiv);
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const chatBox = document.getElementById('chatBox');
+        const message = input.value.trim();
+
+        if (message) {
+            appendMessage(message, 'user');
+            input.value = '';
+
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message bot';
+            loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i>';
+            loadingDiv.id = 'loading';
+            chatBox.appendChild(loadingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 1. Loại bỏ loading spinner
+                const loading = document.getElementById('loading');
+                if (loading) {
+                    loading.remove();
+                }
+                
+                // 2. Hiển thị câu trả lời text
+                const botReplyText = data.reply;
+                appendMessage(botReplyText, 'bot'); // Đã sửa lại thứ tự tham số nếu cần
+
+                // 3. Xử lý thông tin sản phẩm (Logic hiển thị ảnh)
+                const productInfo = data.product_info;
+                if (productInfo) {
+                    // Tạo thẻ hiển thị chi tiết sản phẩm
+                    const productHtml = `
+                        <div class="product-card">
+                            <img src="${productInfo.image_url}" alt="${productInfo.name}" class="product-image">
+                            <div class="product-details">
+                                <p class="product-name"><strong>${productInfo.name}</strong></p>
+                                <p class="product-price">${productInfo.price}</p>
+                                <a href="https://www.olv.vn${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
+                            </div>
+                        </div>
+                    `;
+                    appendProductCard(productHtml);
+                }
+                
+                // 4. Cuộn xuống cuối
                 chatBox.scrollTop = chatBox.scrollHeight;
 
-                fetch('/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (document.getElementById('loading')) {
-                        document.getElementById('loading').remove();
-                    }
-                    // Hiển thị câu trả lời text
-                    const botReplyText = data.reply;
-                    appendMessage(botReplyText, 'bot');
-                    // Xử lý thông tin sản phẩm
-                    const productInfo = data.product_info;
-                    if (productInfo) {
-                        // Tạo thẻ hiển thị chi tiết sản phẩm
-                        const productHtml = `
-                            <div class="product-card">
-                                <img src="${productInfo.image_url}" alt="${productInfo.name}" class="product-image">
-                                <div class="product-details">
-                                    <p class="product-name"><strong>${productInfo.name}</strong></p>
-                                    <p class="product-price">${productInfo.price}</p>
-                                    <a href="${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
-                                </div>
-                            </div>
-                        `;
-                        appendProductCard(productHtml);
-                    }
-                    // Cuộn xuống cuối
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                })
-                .catch(error => {
-                    console.error('Lỗi:', error);
-                    if (document.getElementById('loading')) {
-                        document.getElementById('loading').remove();
-                    }
-                    appendMessage('Xin lỗi, đã xảy ra lỗi kết nối.', 'bot');
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                });
-            }
-        }
-        function appendMessage(text, sender) { 
-            const chatBox = document.getElementById('chatBox');
-            const div = document.createElement('div');
-            div.className = `message ${sender}`;
-            div.textContent = text;
-            chatBox.appendChild(div);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-        function appendProductCard(htmlContent) {
-            const chatBox = document.getElementById('chatBox');
-            const productContainer = document.createElement('div');
-            productContainer.classList.add('message', 'bot'); 
-            productContainer.innerHTML = htmlContent; 
-            chatBox.appendChild(productContainer);
-        }
-    </script>
+            })
+            .catch(error => {
+                console.error('Lỗi kết nối server:', error);
+                // Loại bỏ loading cả khi có lỗi
+                const loading = document.getElementById('loading');
+                if (loading) {
+                    loading.remove();
+                }
+                appendMessage('Xin lỗi, đã xảy ra lỗi kết nối server.', 'bot');
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+
+    // Hàm hiển thị Text
+    function appendMessage(text, sender) {
+        const chatBox = document.getElementById('chatBox');
+        const div = document.createElement('div');
+        div.className = `message ${sender}`;
+        div.textContent = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Hàm hiển thị Card sản phẩm
+    function appendProductCard(htmlContent) {
+        const chatBox = document.getElementById('chatBox'); // Đã sửa từ chatbox thành chatBox
+        
+        // Tạo container cho sản phẩm
+        const productContainer = document.createElement('div');
+        // Thêm class 'message bot' để thẻ này căn lề giống tin nhắn bot
+        productContainer.classList.add('message', 'bot'); 
+        
+        // Thêm nội dung HTML sản phẩm
+        productContainer.innerHTML = htmlContent; 
+        
+        chatBox.appendChild(productContainer);
+    }
+</script>
 </body>
 </html>
