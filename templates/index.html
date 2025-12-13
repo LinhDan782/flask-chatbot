@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vintage Store Chatbot</title>
+    <title>OLV Boutique Chatbot</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -152,12 +152,51 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .product-card {
+        display: flex;
+        padding: 10px;
+        margin-top: 5px;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        max-width: 80%;
+        align-items: center;
+        margin-left: 10px; /* Căn lề như tin nhắn Bot */
+        margin-right: auto;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+    
+        .product-details {
+            font-size: 14px;
+        }
+    
+        .product-name {
+            margin: 0;
+            font-weight: bold;
+        }
+    
+        .product-price {
+            color: #e91e63; /* Màu hồng đặc trưng */
+            margin: 5px 0;
+        }
+    
+        .product-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 13px;
+        }
         </style>
 </head>
 <body>
         <div class="phone-container"> <div class="header">
         <div class="status-badge">● Online</div>
-            <h3>Trợ lý Vintage Store</h3>
+            <h3>Trợ lý OLV Boutique</h3>
             <p style="font-size: 0.8rem; opacity: 0.8;">Luôn sẵn sàng hỗ trợ bạn</p>
         </div>
         <div class="chat-box" id="chatBox">
@@ -197,13 +236,30 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('loading').remove();
-                    appendMessage(data.reply, 'bot');
+                    const botReplyText = data.reply;
+                    appendMessage('bot', botReplyText);
                 })
+                    const productInfo = data.product_info;
+                    if (productInfo) {
+                        // Tạo thẻ hiển thị chi tiết sản phẩm
+                        const productHtml = `
+                            <div class="product-card">
+                                <img src="${productInfo.image_url}" alt="${productInfo.name}" class="product-image">
+                                <div class="product-details">
+                                    <p class="product-name"><strong>${productInfo.name}</strong></p>
+                                    <p class="product-price">${productInfo.price}</p>
+                                    <a href="https://www.olv.vn${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
+                                </div>
+                            </div>
+                        `;
+                appendProductCard(productHtml);
+            }
+            // Cuộn xuống cuối
+            chatbox.scrollTop = chatbox.scrollHeight;
+        })
                 .catch(error => {
                     console.error('Lỗi:', error);
-                    if(document.getElementById('loading')) document.getElementById('loading').remove();
-                    appendMessage("Lỗi kết nối server rồi bạn ơi!", 'bot');
+                    appendMessage('bot', 'Xin lỗi, đã xảy ra lỗi kết nối.');
                 });
             }
         }
@@ -215,6 +271,18 @@
             div.textContent = text;
             chatBox.appendChild(div);
             chatBox.scrollTop = chatBox.scrollHeight;
+        }
+        function appendProductCard(htmlContent) {
+        const chatbox = document.getElementById('chatbox');
+        
+        // Tạo container cho sản phẩm
+        const productContainer = document.createElement('div');
+        productContainer.classList.add('message');
+        
+        // Thêm nội dung HTML sản phẩm
+        productContainer.innerHTML = htmlContent; 
+        
+        chatbox.appendChild(productContainer);
         }
     </script>
 </body>
