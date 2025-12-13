@@ -210,18 +210,19 @@
         </div>
     </div>
 
-    <script>
-        function handleEnter(e) { if (e.key === 'Enter') sendMessage(); }
-
+<script>
+        function handleEnter(e) { 
+            if (e.key === 'Enter') sendMessage(); 
+        }
         function sendMessage() {
             const input = document.getElementById('userInput');
             const chatBox = document.getElementById('chatBox');
             const message = input.value.trim();
-
             if (message) {
                 appendMessage(message, 'user');
                 input.value = '';
 
+                // Tạo loading spinner
                 const loadingDiv = document.createElement('div');
                 loadingDiv.className = 'message bot';
                 loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i>';
@@ -236,9 +237,13 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    if (document.getElementById('loading')) {
+                        document.getElementById('loading').remove();
+                    }
+                    // Hiển thị câu trả lời text
                     const botReplyText = data.reply;
-                    appendMessage('bot', botReplyText);
-                })
+                    appendMessage(botReplyText, 'bot');
+                    // Xử lý thông tin sản phẩm
                     const productInfo = data.product_info;
                     if (productInfo) {
                         // Tạo thẻ hiển thị chi tiết sản phẩm
@@ -248,23 +253,26 @@
                                 <div class="product-details">
                                     <p class="product-name"><strong>${productInfo.name}</strong></p>
                                     <p class="product-price">${productInfo.price}</p>
-                                    <a href="https://www.olv.vn${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
+                                    <a href="${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
                                 </div>
                             </div>
                         `;
-                appendProductCard(productHtml);
-            }
-            // Cuộn xuống cuối
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
+                        appendProductCard(productHtml);
+                    }
+                    // Cuộn xuống cuối
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
                 .catch(error => {
                     console.error('Lỗi:', error);
-                    appendMessage('bot', 'Xin lỗi, đã xảy ra lỗi kết nối.');
+                    if (document.getElementById('loading')) {
+                        document.getElementById('loading').remove();
+                    }
+                    appendMessage('Xin lỗi, đã xảy ra lỗi kết nối.', 'bot');
+                    chatBox.scrollTop = chatBox.scrollHeight;
                 });
             }
         }
-
-        function appendMessage(text, sender) {
+        function appendMessage(text, sender) { 
             const chatBox = document.getElementById('chatBox');
             const div = document.createElement('div');
             div.className = `message ${sender}`;
@@ -273,16 +281,11 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
         function appendProductCard(htmlContent) {
-        const chatbox = document.getElementById('chatbox');
-        
-        // Tạo container cho sản phẩm
-        const productContainer = document.createElement('div');
-        productContainer.classList.add('message');
-        
-        // Thêm nội dung HTML sản phẩm
-        productContainer.innerHTML = htmlContent; 
-        
-        chatbox.appendChild(productContainer);
+            const chatBox = document.getElementById('chatBox');
+            const productContainer = document.createElement('div');
+            productContainer.classList.add('message', 'bot'); 
+            productContainer.innerHTML = htmlContent; 
+            chatBox.appendChild(productContainer);
         }
     </script>
 </body>
