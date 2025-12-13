@@ -37,12 +37,37 @@ def load_product_data():
 # Load dữ liệu ngay khi khởi động
 PRODUCT_DATA = load_product_data()
 
+# LƯU DỮ LIỆU JSON DẠNG LIST ĐỂ TÌM KIẾM
+def load_product_list():
+    try:
+        with open('products.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except:
+        return []
+        
+PRODUCT_LIST = load_product_list() # Danh sách các Object sản phẩm
+
 STATIC_SHOP_INFO = """
 - Shop: OLV Boutique
 - Địa chỉ: 224 Yersin, Hiệp Thành, Thủ Dầu Một, Bình Dương
 - Liên hệ: 0923003158
 - Chính sách: Đổi trả 7 ngày. Freeship đơn > 500k.
 """
+#Dò tìm sản phẩm trong câu trả lời của Gemini
+def find_product_details(text):
+    """Dò tìm tên sản phẩm trong câu trả lời của Bot và trả về Object sản phẩm tương ứng."""
+    for product in PRODUCT_LIST:
+        # Kiểm tra xem tên sản phẩm có xuất hiện trong câu trả lời của Bot không
+        if product['name'] in text:
+            # Ghi đè URL ảnh để đảm bảo có https:
+            image_url_full = "https:" + product['image_url']
+            return {
+                'name': product['name'],
+                'price': product['price'],
+                'url': product['url'],
+                'image_url': image_url_full
+            }
+    return None
 app = Flask(__name__)
 CORS(app)
 
@@ -76,16 +101,27 @@ def chat():
     {STATIC_SHOP_INFO}
     
     KHÁCH HỎI: {user_msg}
+    YÊU CẦU:
+    1. Nếu khách hỏi câu tương tự trong "Cẩm nang", hãy trả lời giống như mẫu.
+    2. Nếu khách hỏi về sản phẩm, hãy tra cứu trong "Danh sách sản phẩm".
+    3. Dùng icon (🌸, 👗) để câu văn sinh động.
     """
     
     try:
         response = model.generate_content(prompt)
         bot_reply = response.text
+    # Tìm kiếm chi tiết sản phẩm sau khi Bot trả lời
+        product_detail = find_product_details(bot_reply)
+        
     except Exception as e:
-        print(f"Lỗi Gemini: {e}")
-        bot_reply = "Xin lỗi, hệ thống đang bận. Bạn thử lại sau nhé!"
+        bot_reply = "Xin lỗi, hệ thống đang bận xíu."
+        product_detail = None
 
-    return jsonify({'reply': bot_reply})
+    # Trả về cả câu trả lời và chi tiết sản phẩm (nếu tìm thấy)
+    return jsonify({
+        'reply': bot_reply,
+        'product_info': product_detail 
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
