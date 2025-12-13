@@ -59,14 +59,27 @@ def find_product_details(text):
     for product in PRODUCT_LIST:
         # Kiểm tra xem tên sản phẩm có xuất hiện trong câu trả lời của Bot không
         if product['name'] in text:
-            # Ghi đè URL ảnh để đảm bảo có https:
-            image_url_full = "https:" + product['image_url']
-            product_url_full = "https://www.olv.vn" + product['url']
+            # 1. URL ẢNH: Đảm bảo có 'https:' và '//'
+            # product['image_url'] thường là '//product.hstatic.net/...'
+            if product['image_url'].startswith('//'):
+                image_url_full = "https:" + product['image_url']
+            else:
+                image_url_full = product['image_url'] # Trường hợp đã có https://
+
+            # 2. URL SẢN PHẨM: Đảm bảo có 'https://www.olv.vn'
+            # product['url'] thường là '/products/...'
+            base_url = "https://www.olv.vn"
+            
+            if product['url'].startswith(base_url):
+                 product_url_full = product['url']
+            else:
+                 product_url_full = base_url + product['url']
+            
             return {
                 'name': product['name'],
                 'price': product['price'],
-                'url': product_url_full,
-                'image_url': image_url_full
+                'url': product_url_full, # <--- TRẢ VỀ LINK ĐẦY ĐỦ VÀ HỢP LỆ
+                'image_url': image_url_full # <--- TRẢ VỀ LINK ẢNH ĐẦY ĐỦ VÀ HỢP LỆ
             }
     return None
 app = Flask(__name__)
