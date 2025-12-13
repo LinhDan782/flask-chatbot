@@ -1,0 +1,562 @@
+[
+  {
+    "id": "OLV01",
+    "name": "Áo Cotton Babytee nhiều màu",
+    "price": "290,000₫",
+    "sizes": "S, M, L",
+    "colors": "Trắng, Đen, Xanh",
+    "description": "Áo thun kiểu dáng Babytee ôm vừa, chất liệu cotton mềm mịn, thoáng mát. Mã sản phẩm: 23-14A-01.",
+    "url": "https://www.olv.vn/products/ao-cotton-babytee-nhieu-mau",
+    "image_url": "//product.hstatic.net/200000309995/product/23-14a-01-c30-01__1__9d58055c3c0b469b828a2a472c95a289_grande.jpg"
+  },
+  {
+    "id": "OLV02",
+    "name": "Chân Váy Tú Chi",
+    "price": "590,000₫",
+    "sizes": "S, M, L",
+    "colors": "Đen, Xám Nhạt",
+    "description": "Chân váy chữ A dáng dài, chất liệu cao cấp, có thiết kế túi lớn độc đáo. Mã sản phẩm: 23-17C-03.",
+    "url": "https://www.olv.vn/products/chan-vay-tu-chi",
+    "image_url": "//product.hstatic.net/200000309995/product/23-17c-03-c30-01_1307b27072484a9386c1c96a927d6d37_grande.jpg"
+  },
+  {
+    "id": "OLV03",
+    "name": "Áo Beige Kate Belted Coat",
+    "price": "990,000₫",
+    "sizes": "M, L",
+    "colors": "Beige, Kem",
+    "description": "Áo khoác dáng dài có đai thắt lưng, chất liệu Kate cao cấp, phong cách thanh lịch. Mã sản phẩm: 23-15B-01.",
+    "url": "https://www.olv.vn/products/ao-beige-kate-belted-coat",
+    "image_url": "//product.hstatic.net/200000309995/product/23-15b-01-c30-01__1__92994e6377754d588a44b360f269a940_grande.jpg"
+  },
+  {
+    "id": "OLV04",
+    "name": "Chân Váy Beige Kate Mini Skirt",
+    "price": "490,000₫",
+    "sizes": "S, M",
+    "colors": "Beige",
+    "description": "Chân váy ngắn chữ A, chất liệu Kate cứng cáp, dễ phối đồ. Mã sản phẩm: 23-15C-01.",
+    "url": "https://www.olv.vn/products/chan-vay-beige-kate-mini-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-15c-01-c30-01__1__8f7a6021ed6a43f889218d6a8b79f2fe_grande.jpg"
+  },
+  {
+    "id": "OLV05",
+    "name": "Navy Kate Plaid Long Sleeves Set",
+    "price": "1,390,000₫",
+    "sizes": "S, M",
+    "colors": "Xanh Navy, Kẻ Sọc",
+    "description": "Set áo và chân váy dài tay, họa tiết kẻ sọc Kate, thiết kế đồng bộ, phong cách công sở. Mã sản phẩm: 23-15B-03.",
+    "url": "https://www.olv.vn/products/navy-kate-plaid-long-sleeves-set",
+    "image_url": "//product.hstatic.net/200000309995/product/23-15b-03-c30-01__1__660c238b1f7f45b597c55896b0521e7d_grande.jpg"
+  },
+  {
+    "id": "OLV06",
+    "name": "Gray Bow Long Sleeves Knit Set",
+    "price": "1,190,000₫",
+    "sizes": "Free Size",
+    "colors": "Xám Nhạt, Trắng",
+    "description": "Set đồ len dệt kim, chi tiết nơ thắt điệu đà, chất liệu len mềm mại. Mã sản phẩm: 23-15B-02.",
+    "url": "https://www.olv.vn/products/gray-bow-long-sleeves-knit-set",
+    "image_url": "//product.hstatic.net/200000309995/product/23-15b-02-c30-01__1__63c3338575a74697b088017c664326f5_grande.jpg"
+  },
+  {
+    "id": "OLV07",
+    "name": "Charcoal Hooded Knit Set",
+    "price": "1,090,000₫",
+    "sizes": "S, M",
+    "colors": "Xám Đậm (Charcoal)",
+    "description": "Set đồ len dệt kim có mũ trùm đầu, phong cách thể thao nhưng vẫn giữ nét nữ tính. Mã sản phẩm: 23-15B-05.",
+    "url": "https://www.olv.vn/products/charcoal-hooded-knit-set",
+    "image_url": "//product.hstatic.net/200000309995/product/23-15b-05-c30-01__1__4c00ed9286d9418292837ff653833d8c_grande.jpg"
+  },
+  {
+    "id": "OLV08",
+    "name": "Chân váy Gray Floral Skirt",
+    "price": "790,000₫",
+    "sizes": "M, L",
+    "colors": "Xám, Hoa Nhí",
+    "description": "Chân váy midi họa tiết hoa, dáng xòe nhẹ nhàng, chất liệu voan/lụa. Mã sản phẩm: 23-15C-04.",
+    "url": "https://www.olv.vn/products/chan-vay-gray-floral-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-15c-04-c30-01__1__6519894411134a41ad261a868f121df0_grande.jpg"
+  },
+  {
+    "id": "OLV09",
+    "name": "Charcoal Lace Trim Knit Set",
+    "price": "1,090,000₫",
+    "sizes": "Free Size",
+    "colors": "Xám Đậm (Charcoal), Ren",
+    "description": "Set len có chi tiết ren viền tinh tế, tạo vẻ ngoài gợi cảm và ấm áp. Mã sản phẩm: 23-15B-04.",
+    "url": "https://www.olv.vn/products/charcoal-lace-trim-knit-set",
+    "image_url": "//product.hstatic.net/200000309995/product/23-15b-04-c30-01__1__52f1e29202514e82b7931f67f2e153e3_grande.jpg"
+  },
+  {
+    "id": "OLV10",
+    "name": "Áo Knit Oversized Sweater nhiều màu",
+    "price": "690,000₫",
+    "sizes": "Free Size",
+    "colors": "Trắng, Đỏ, Xanh",
+    "description": "Áo len cổ tròn dáng rộng (Oversized), chất liệu len lông cừu giả, cực kỳ ấm áp. Mã sản phẩm: 23-14A-05.",
+    "url": "https://www.olv.vn/products/ao-knit-oversized-sweater-nhieu-mau",
+    "image_url": "//product.hstatic.net/200000309995/product/23-14a-05-c30-01__1__7080e75525fc4948a4d1f2e96ed0946d_grande.jpg"
+  },
+  {
+    "id": "OLV11",
+    "name": "Navy Knit Off Shoulder Set",
+    "price": "890,000₫",
+    "sizes": "S, M",
+    "colors": "Xanh Navy",
+    "description": "Set đồ len dệt kim hở vai (Off Shoulder) quyến rũ, thiết kế ôm vừa, tôn dáng. Mã sản phẩm: 23-14B-04.",
+    "url": "https://www.olv.vn/products/navy-knit-off-shoulder-set",
+    "image_url": "//product.hstatic.net/200000309995/product/23-14b-04-c30-01__1__bf5d52a22cc34e9e99a806c9e2b10091_grande.jpg"
+  },
+  {
+    "id": "OLV12",
+    "name": "Navy Kate Sailor Set",
+    "price": "1,190,000₫",
+    "sizes": "S, M",
+    "colors": "Xanh Navy, Trắng",
+    "description": "Set đồ thủy thủ (Sailor) trẻ trung, cổ áo bản lớn, chất liệu Kate đứng form. Mã sản phẩm: 23-14B-01.",
+    "url": "https://www.olv.vn/products/navy-kate-sailor-set",
+    "image_url": "//product.hstatic.net/200000309995/product/23-14b-01-c30-01__1__c377a0c8b32948c2b79a83d7353f868c_grande.jpg"
+  },
+  {
+    "id": "OLV13",
+    "name": "Áo Cream Mesh Bow Knit Top nhiều màu",
+    "price": "590,000₫",
+    "sizes": "S, M",
+    "colors": "Kem, Hồng Nhạt",
+    "description": "Áo dệt kim phối lưới (Mesh) và nơ, kiểu dáng tiểu thư Hàn Quốc. Mã sản phẩm: 23-13A-01.",
+    "url": "https://www.olv.vn/products/ao-cream-mesh-bow-knit-top-nhieu-mau",
+    "image_url": "//product.hstatic.net/200000309995/product/23-13a-01-c30-01__1__520141b65e71448b814a0d84a7541f92_grande.jpg"
+  },
+  {
+    "id": "OLV14",
+    "name": "Áo Dài Diêu Uyển (Không kèm quần)",
+    "price": "990,000₫",
+    "sizes": "S, M",
+    "colors": "Hồng Nhạt, Hoa Thêu",
+    "description": "Áo dài cách tân, chất liệu lụa, thêu hoa tinh xảo. (Sản phẩm đặt hàng trước). Mã sản phẩm: 23-13A-02.",
+    "url": "https://www.olv.vn/products/ao-dai-dieu-uyen-khong-kem-quan",
+    "image_url": "//product.hstatic.net/200000309995/product/23-13a-02-c30-01__1__1f6d1d4d84c34ff8b2c5897c9b2f671c_grande.jpg"
+  },
+  {
+    "id": "OLV15",
+    "name": "Áo Dài Tố Dung (Không kèm quần)",
+    "price": "990,000₫",
+    "sizes": "S, M, L",
+    "colors": "Xanh Pastel, Hoa Thêu",
+    "description": "Áo dài cách tân cổ tròn, màu sắc trang nhã, thêu họa tiết chim hạc. Mã sản phẩm: 23-13A-03.",
+    "url": "https://www.olv.vn/products/ao-dai-to-dung-khong-kem-quan",
+    "image_url": "//product.hstatic.net/200000309995/product/23-13a-03-c30-01__1__92a401c136364b4c81414e2624d6718d_grande.jpg"
+  },
+  {
+    "id": "OLV16",
+    "name": "Knit Collar Set nhiều màu",
+    "price": "990,000₫",
+    "sizes": "Free Size",
+    "colors": "Trắng, Be, Xanh",
+    "description": "Set đồ len có cổ bẻ (Collar), phong cách preppy, chất liệu len dày dặn. Mã sản phẩm: 23-13B-01.",
+    "url": "https://www.olv.vn/products/knit-collar-set-nhieu-mau",
+    "image_url": "//product.hstatic.net/200000309995/product/23-13b-01-c30-01__1__6092040d7e6c46a6839a89d311537237_grande.jpg"
+  },
+  {
+    "id": "OLV17",
+    "name": "Chân váy White Parachute Tiered Ruffled Skirt",
+    "price": "390,000₫",
+    "sizes": "Free Size",
+    "colors": "Trắng",
+    "description": "Chân váy tầng nhún bèo, dáng Parachute, chất liệu mỏng nhẹ, bồng bềnh. Mã sản phẩm: 23-12C-03.",
+    "url": "https://www.olv.vn/products/chan-vay-white-parachute-tiered-ruffled-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-12c-03-c30-01__1__8f7a6021ed6a43f889218d6a8b79f2fe_grande.jpg"
+  },
+  {
+    "id": "OLV18",
+    "name": "Chân váy White Linen Flared Skirt",
+    "price": "590,000₫",
+    "sizes": "S, M",
+    "colors": "Trắng",
+    "description": "Chân váy xòe (Flared), chất liệu Linen mát mẻ, phù hợp cho mùa hè. Mã sản phẩm: 23-12C-01.",
+    "url": "https://www.olv.vn/products/chan-vay-white-linen-flared-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-12c-01-c30-01__1__f8c1f061e860472488a0b0d3d5f35639_grande.jpg"
+  },
+  {
+    "id": "OLV19",
+    "name": "Chân váy Gray Pleated Button Mini Skirt",
+    "price": "450,000₫",
+    "sizes": "S, M",
+    "colors": "Xám, Kẻ Sọc",
+    "description": "Chân váy mini xếp ly (Pleated), có chi tiết nút trang trí, phong cách học sinh. Mã sản phẩm: 23-12C-04.",
+    "url": "https://www.olv.vn/products/chan-vay-gray-pleated-button-mini-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-12c-04-c30-01__1__4f2220f8373b4d4586d081f26a11e031_grande.jpg"
+  },
+  {
+    "id": "OLV20",
+    "name": "Chân váy Black Checked Ruffled Maxi Skirt",
+    "price": "590,000₫",
+    "sizes": "M, L",
+    "colors": "Đen, Kẻ Caro",
+    "description": "Chân váy Maxi dài, có nhún bèo, họa tiết kẻ caro đen trắng. Mã sản phẩm: 23-12C-05.",
+    "url": "https://www.olv.vn/products/chan-vay-black-checked-ruffled-maxi-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-12c-05-c30-01__1__be0f545a1f6a4220b22a27d21b7987a0_grande.jpg"
+  },
+  {
+    "id": "OLV21",
+    "name": "Chân váy Plain Cotton Mini Skirt nhiều màu",
+    "price": "450,000₫",
+    "sizes": "S, M, L",
+    "colors": "Đen, Xanh, Trắng",
+    "description": "Chân váy mini cotton trơn, basic, dễ dàng phối với mọi loại áo. Mã sản phẩm: 23-12C-06.",
+    "url": "https://www.olv.vn/products/chan-vay-plain-cotton-mini-skirt-nhieu-mau",
+    "image_url": "//product.hstatic.net/200000309995/product/23-12c-06-c30-01__1__0311099689b646c0989f66675037a34e_grande.jpg"
+  },
+  {
+    "id": "OLV22",
+    "name": "Chân váy Red Satin Long Skirt",
+    "price": "490,000₫",
+    "sizes": "Free Size",
+    "colors": "Đỏ, Đỏ Đô",
+    "description": "Chân váy dài lụa satin, màu đỏ nổi bật, tạo cảm giác sang trọng, mềm mại. Mã sản phẩm: 23-11C-01.",
+    "url": "https://www.olv.vn/products/chan-vay-red-satin-long-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-11c-01-c30-01__1__d6c29759d57a4497801a2c35817c093a_grande.jpg"
+  },
+  {
+    "id": "OLV23",
+    "name": "Quần Silk Trouser nhiều màu",
+    "price": "490,000₫",
+    "sizes": "S, M, L",
+    "colors": "Xanh Navy, Đen, Kem",
+    "description": "Quần tây ống rộng, chất liệu Silk (lụa) mềm, rũ, rất thoải mái. Mã sản phẩm: 23-11P-01.",
+    "url": "https://www.olv.vn/products/quan-silk-trouser-nhieu-mau",
+    "image_url": "//product.hstatic.net/200000309995/product/23-11p-01-c30-01__1__049b14299b9542a98f411b02131238ef_grande.jpg"
+  },
+  {
+    "id": "OLV24",
+    "name": "Chân váy Cream Dot Cotton A Line Skirt",
+    "price": "490,000₫",
+    "sizes": "S, M",
+    "colors": "Kem, Chấm Bi",
+    "description": "Chân váy chữ A, họa tiết chấm bi nhỏ, chất liệu cotton thoáng mát. Mã sản phẩm: 23-11C-02.",
+    "url": "https://www.olv.vn/products/chan-vay-cream-dot-cotton-a-line-skirt",
+    "image_url": "//product.hstatic.net/200000309995/product/23-11c-02-c30-01__1__52f1e29202514e82b7931f67f2e153e3_grande.jpg"
+  },
+  {
+    "id": "OLV25",
+    "name": "Áo Lụa Phối Nơ Silk Tie Top",
+    "price": "490,000₫",
+    "sizes": "Free Size",
+    "colors": "Trắng, Đen",
+    "description": "Áo lụa tay bồng, có chi tiết nơ thắt ở cổ, kiểu dáng nữ tính, sang trọng. Mã sản phẩm: 23-10A-02.",
+    "url": "https://www.olv.vn/products/ao-lua-phoi-no-silk-tie-top",
+    "image_url": "//product.hstatic.net/200000309995/product/23-10a-02-c30-01__1__d03991871a2a46e18f885e7d5ef769e8_grande.jpg"
+  },
+  {
+    "id": "OLV26",
+    "name": "Áo Khoác Da Thắt Nút Belted Jacket",
+    "price": "1,290,000₫",
+    "sizes": "S, M",
+    "colors": "Đen",
+    "description": "Áo khoác da dáng ngắn, có đai thắt eo tạo form, phong cách biker sang trọng. Mã sản phẩm: 23-10B-01.",
+    "url": "https://www.olv.vn/products/ao-khoac-da-that-nut-belted-jacket",
+    "image_url": "//product.hstatic.net/200000309995/product/23-10b-01-c30-01__1__97063d3e74b7496e9596001007b89791_grande.jpg"
+  },
+  {
+    "id": "OLV27",
+    "name": "Quần Short Kaki Lưng Cao (Hết hàng)",
+    "price": "290,000₫",
+    "sizes": "S, M, L",
+    "colors": "Kem, Xanh Rêu",
+    "description": "Quần short chất liệu kaki đứng form, cạp cao, trẻ trung, năng động. Mã sản phẩm: 23-09P-03.",
+    "url": "https://www.olv.vn/products/quan-short-kaki-lung-cao",
+    "image_url": "//product.hstatic.net/200000309995/product/23-09p-03-c30-01__1__17849925e513467c85888e2858b9f715_grande.jpg"
+  },
+  {
+    "id": "OLV28",
+    "name": "Đầm Mini Nhún Eo Cổ Vuông",
+    "price": "550,000₫",
+    "sizes": "S, M",
+    "colors": "Trắng, Đen",
+    "description": "Đầm ngắn, cổ vuông tôn dáng, có chi tiết nhún eo tạo độ bồng bềnh. Mã sản phẩm: 23-09D-01.",
+    "url": "https://www.olv.vn/products/dam-mini-nhun-eo-co-vuong",
+    "image_url": "//product.hstatic.net/200000309995/product/23-09d-01-c30-01__1__8f7a6021ed6a43f889218d6a8b79f2fe_grande.jpg"
+  },
+  {
+    "id": "OLV29",
+    "name": "Váy Thun Gân Ôm Body (Hết hàng)",
+    "price": "450,000₫",
+    "sizes": "S, M",
+    "colors": "Đen, Đỏ Đô",
+    "description": "Váy bodycon chất liệu thun gân co giãn 4 chiều, tôn dáng. Mã sản phẩm: 23-08D-02.",
+    "url": "https://www.olv.vn/products/vay-thun-gan-om-body",
+    "image_url": "//product.hstatic.net/200000309995/product/23-08d-02-c30-01__1__1b86d1487c6948018260490b83321151_grande.jpg"
+  },
+  {
+    "id": "OLV30",
+    "name": "Chân Váy Jean Xẻ Tà",
+    "price": "490,000₫",
+    "sizes": "S, M, L",
+    "colors": "Xanh Denim",
+    "description": "Chân váy jeans midi, có xẻ tà phía trước, phong cách cá tính. Mã sản phẩm: 23-08C-01.",
+    "url": "https://www.olv.vn/products/chan-vay-jean-xe-ta",
+    "image_url": "//product.hstatic.net/200000309995/product/23-08c-01-c30-01__1__6092040d7e6c46a6839a89d311537237_grande.jpg"
+  },
+  {
+    "id": "OLV31",
+    "name": "Set Áo Croptop Chân Váy Xòe",
+    "price": "790,000₫",
+    "sizes": "S, M",
+    "colors": "Hồng Đất",
+    "description": "Set đồ ton-sur-ton, áo croptop và chân váy xòe, phù hợp dạo phố. Mã sản phẩm: 23-08B-01.",
+    "url": "https://www.olv.vn/products/set-ao-croptop-chan-vay-xoe",
+    "image_url": "//product.hstatic.net/200000309995/product/23-08b-01-c30-01__1__4f2220f8373b4d4586d081f26a11e031_grande.jpg"
+  },
+  {
+    "id": "OLV32",
+    "name": "Áo Khoác Blazer Kẻ Caro",
+    "price": "1,090,000₫",
+    "sizes": "M, L",
+    "colors": "Xám Kẻ",
+    "description": "Áo Blazer chất liệu dày dặn, họa tiết kẻ caro tinh tế, phù hợp công sở. Mã sản phẩm: 23-07B-01.",
+    "url": "https://www.olv.vn/products/ao-khoac-blazer-ke-caro",
+    "image_url": "//product.hstatic.net/200000309995/product/23-07b-01-c30-01__1__8d34d8527a2046c8b0e796033c4153b6_grande.jpg"
+  },
+  {
+    "id": "OLV33",
+    "name": "Đầm Maxi Hoa Lá Rộng",
+    "price": "650,000₫",
+    "sizes": "Free Size",
+    "colors": "Họa Tiết Hoa Xanh",
+    "description": "Đầm Maxi dáng suông, họa tiết hoa lá nhiệt đới, chất liệu voan mát. Mã sản phẩm: 23-06D-02.",
+    "url": "https://www.olv.vn/products/dam-maxi-hoa-la-rong",
+    "image_url": "//product.hstatic.net/200000309995/product/23-06d-02-c30-01__1__6b7b203c9b73468582772719a2e6f4a8_grande.jpg"
+  },
+  {
+    "id": "OLV34",
+    "name": "Quần Legging Da Lộn (Hết hàng)",
+    "price": "350,000₫",
+    "sizes": "S, M, L",
+    "colors": "Đen, Nâu",
+    "description": "Quần Legging chất liệu da lộn mềm, giữ ấm tốt, có thể mặc thay quần dài. Mã sản phẩm: 23-06P-01.",
+    "url": "https://www.olv.vn/products/quan-legging-da-lon",
+    "image_url": "//product.hstatic.net/200000309995/product/23-06p-01-c30-01__1__be0f545a1f6a4220b22a27d21b7987a0_grande.jpg"
+  },
+  {
+    "id": "OLV35",
+    "name": "Áo Thun Cổ Tim Basic",
+    "price": "220,000₫",
+    "sizes": "S, M, L",
+    "colors": "Trắng, Đen, Xanh",
+    "description": "Áo thun cổ tim cơ bản, chất liệu cotton co giãn tốt, dễ dàng phối đồ. Mã sản phẩm: 23-05A-01.",
+    "url": "https://www.olv.vn/products/ao-thun-co-tim-basic",
+    "image_url": "//product.hstatic.net/200000309995/product/23-05a-01-c30-01__1__f8c1f061e860472488a0b0d3d5f35639_grande.jpg"
+  },
+  {
+    "id": "OLV36",
+    "name": "Váy Yếm Jean Ngắn",
+    "price": "490,000₫",
+    "sizes": "S, M",
+    "colors": "Xanh Jeans",
+    "description": "Váy yếm (Overall) ngắn, phong cách năng động, trẻ trung. Mã sản phẩm: 23-05D-01.",
+    "url": "https://www.olv.vn/products/vay-yem-jean-ngan",
+    "image_url": "//product.hstatic.net/200000309995/product/23-05d-01-c30-01__1__92994e6377754d588a44b360f269a940_grande.jpg"
+  },
+  {
+    "id": "OLV37",
+    "name": "Áo Len Ghi Lê Form Rộng",
+    "price": "380,000₫",
+    "sizes": "Free Size",
+    "colors": "Kem, Kẻ Sọc",
+    "description": "Áo len Ghi Lê (Vest) không tay, form rộng, phong cách Hàn Quốc. Mã sản phẩm: 23-04A-02.",
+    "url": "https://www.olv.vn/products/ao-len-ghi-le-form-rong",
+    "image_url": "//product.hstatic.net/200000309995/product/23-04a-02-c30-01__1__52f1e29202514e82b7931f67f2e153e3_grande.jpg"
+  },
+  {
+    "id": "OLV38",
+    "name": "Chân Váy Da Lộn Mini",
+    "price": "420,000₫",
+    "sizes": "S, M",
+    "colors": "Nâu Đất",
+    "description": "Chân váy ngắn chất liệu da lộn, kiểu dáng chữ A, cá tính. Mã sản phẩm: 23-04C-01.",
+    "url": "https://www.olv.vn/products/chan-vay-da-lon-mini",
+    "image_url": "//product.hstatic.net/200000309995/product/23-04c-01-c30-01__1__be0f545a1f6a4220b22a27d21b7987a0_grande.jpg"
+  },
+  {
+    "id": "OLV39",
+    "name": "Áo Sơ Mi Denim Cài Nút",
+    "price": "450,000₫",
+    "sizes": "M, L",
+    "colors": "Xanh Denim Nhạt",
+    "description": "Áo sơ mi chất liệu Denim mỏng, có thể mặc như áo khoác ngoài. Mã sản phẩm: 23-03A-01.",
+    "url": "https://www.olv.vn/products/ao-so-mi-denim-cai-nut",
+    "image_url": "//product.hstatic.net/200000309995/product/23-03a-01-c30-01__1__d6c29759d57a4497801a2c35817c093a_grande.jpg"
+  },
+  {
+    "id": "OLV40",
+    "name": "Đầm Ôm Dáng Dài Cổ Thuyền",
+    "price": "590,000₫",
+    "sizes": "S, M",
+    "colors": "Đen, Đỏ",
+    "description": "Đầm ôm body dáng dài, cổ thuyền khoe xương quai xanh nhẹ nhàng. Mã sản phẩm: 23-03D-02.",
+    "url": "https://www.olv.vn/products/dam-om-dang-dai-co-thuyen",
+    "image_url": "//product.hstatic.net/200000309995/product/23-03d-02-c30-01__1__c377a0c8b32948c2b79a83d7353f868c_grande.jpg"
+  },
+  {
+    "id": "OLV41",
+    "name": "Quần Culottes Lụa Đứng Form",
+    "price": "480,000₫",
+    "sizes": "S, M, L",
+    "colors": "Beige, Xanh Rêu",
+    "description": "Quần Culottes ống lửng, chất liệu lụa đứng form, thoải mái. Mã sản phẩm: 23-02P-01.",
+    "url": "https://www.olv.vn/products/quan-culottes-lua-dung-form",
+    "image_url": "//product.hstatic.net/200000309995/product/23-02p-01-c30-01__1__0311099689b646c0989f66675037a34e_grande.jpg"
+  },
+  {
+    "id": "OLV42",
+    "name": "Áo Khoác Trench Coat Dài",
+    "price": "1,490,000₫",
+    "sizes": "S, M",
+    "colors": "Nâu, Kem",
+    "description": "Áo Trench Coat dáng dài kinh điển, chất liệu Kaki dày dặn, phong cách Hàn Quốc. Mã sản phẩm: 23-01B-01.",
+    "url": "https://www.olv.vn/products/ao-khoac-trench-coat-dai",
+    "image_url": "//product.hstatic.net/200000309995/product/23-01b-01-c30-01__1__660c238b1f7f45b597c55896b0521e7d_grande.jpg"
+  },
+  {
+    "id": "OLV43",
+    "name": "Chân Váy Xếp Ly Dài Midi",
+    "price": "450,000₫",
+    "sizes": "Free Size",
+    "colors": "Xám, Đen",
+    "description": "Chân váy xếp ly nhỏ, dài midi, chất liệu nhẹ nhàng, bay bổng. Mã sản phẩm: 23-01C-02.",
+    "url": "https://www.olv.vn/products/chan-vay-xep-ly-dai-midi",
+    "image_url": "//product.hstatic.net/200000309995/product/23-01c-02-c30-01__1__9d58055c3c0b469b828a2a472c95a289_grande.jpg"
+  },
+  {
+    "id": "OLV44",
+    "name": "Áo Blazer Hai Hàng Nút",
+    "price": "990,000₫",
+    "sizes": "M, L",
+    "colors": "Trắng Kem",
+    "description": "Áo Blazer cổ điển, thiết kế hai hàng nút, form rộng vừa, sang trọng. Mã sản phẩm: 22-12B-01.",
+    "url": "https://www.olv.vn/products/ao-blazer-hai-hang-nut",
+    "image_url": "//product.hstatic.net/200000309995/product/22-12b-01-c30-01__1__bf5d52a22cc34e9e99a806c9e2b10091_grande.jpg"
+  },
+  {
+    "id": "OLV45",
+    "name": "Đầm Linen Cổ V Tối Giản",
+    "price": "620,000₫",
+    "sizes": "S, M",
+    "colors": "Xanh Olive",
+    "description": "Đầm Linen dáng suông, cổ V, thiết kế tối giản, chất liệu mát mẻ. Mã sản phẩm: 22-11D-01.",
+    "url": "https://www.olv.vn/products/dam-linen-co-v-toi-gian",
+    "image_url": "//product.hstatic.net/200000309995/product/22-11d-01-c30-01__1__6b7b203c9b73468582772719a2e6f4a8_grande.jpg"
+  },
+  {
+    "id": "OLV46",
+    "name": "Quần Tây Ống Suông Lưng Cao",
+    "price": "450,000₫",
+    "sizes": "S, M, L",
+    "colors": "Nâu Đậm, Xám Chuột",
+    "description": "Quần tây ống suông (ống đứng) đứng form, chất liệu mềm, không nhăn. Mã sản phẩm: 22-10P-01.",
+    "url": "https://www.olv.vn/products/quan-tay-ong-suong-lung-cao",
+    "image_url": "//product.hstatic.net/200000309995/product/22-10p-01-c30-01__1__d03991871a2a46e18f885e7d5ef769e8_grande.jpg"
+  },
+  {
+    "id": "OLV47",
+    "name": "Áo Thun In Hình Graphic",
+    "price": "270,000₫",
+    "sizes": "Free Size",
+    "colors": "Trắng",
+    "description": "Áo thun cotton, in họa tiết chữ/graphic nhỏ, phong cách đường phố. Mã sản phẩm: 22-09A-02.",
+    "url": "https://www.olv.vn/products/ao-thun-in-hinh-graphic",
+    "image_url": "//product.hstatic.net/200000309995/product/22-09a-02-c30-01__1__92a401c136364b4c81414e2624d6718d_grande.jpg"
+  },
+  {
+    "id": "OLV48",
+    "name": "Chân Váy Denim Dáng Dài",
+    "price": "550,000₫",
+    "sizes": "M, L",
+    "colors": "Xanh Đậm",
+    "description": "Chân váy denim dài, có đường xẻ sau nhẹ, phong cách cổ điển. Mã sản phẩm: 22-08C-01.",
+    "url": "https://www.olv.vn/products/chan-vay-denim-dang-dai",
+    "image_url": "//product.hstatic.net/200000309995/product/22-08c-01-c30-01__1__4f2220f8373b4d4586d081f26a11e031_grande.jpg"
+  },
+  {
+    "id": "OLV49",
+    "name": "Set Áo Len Tay Ngắn & Quần",
+    "price": "890,000₫",
+    "sizes": "Free Size",
+    "colors": "Beige",
+    "description": "Set đồ len dệt kim tay ngắn, kèm quần short/quần dài đồng bộ. Mã sản phẩm: 22-07B-02.",
+    "url": "https://www.olv.vn/products/set-ao-len-tay-ngan-quan",
+    "image_url": "//product.hstatic.net/200000309995/product/22-07b-02-c30-01__1__6092040d7e6c46a6839a89d311537237_grande.jpg"
+  },
+  {
+    "id": "OLV50",
+    "name": "Đầm Sơ Mi Thắt Eo",
+    "price": "680,000₫",
+    "sizes": "S, M",
+    "colors": "Kẻ Sọc Xanh",
+    "description": "Đầm dáng sơ mi, có dây thắt eo tạo điểm nhấn, phong cách thanh lịch. Mã sản phẩm: 22-06D-01.",
+    "url": "https://www.olv.vn/products/dam-so-mi-that-eo",
+    "image_url": "//product.hstatic.net/200000309995/product/22-06d-01-c30-01__1__d6c29759d57a4497801a2c35817c093a_grande.jpg"
+  },
+  {
+    "id": "OLV51",
+    "name": "Áo Polo Nữ Tay Phồng",
+    "price": "390,000₫",
+    "sizes": "S, M",
+    "colors": "Trắng, Đen",
+    "description": "Áo Polo nữ, tay ngắn phồng nhẹ, tạo vẻ ngoài nữ tính. Mã sản phẩm: 22-05A-01.",
+    "url": "https://www.olv.vn/products/ao-polo-nu-tay-phong",
+    "image_url": "//product.hstatic.net/200000309995/product/22-05a-01-c30-01__1__9d58055c3c0b469b828a2a472c95a289_grande.jpg"
+  },
+  {
+    "id": "OLV52",
+    "name": "Chân Váy Tulle Xòe Bồng",
+    "price": "450,000₫",
+    "sizes": "Free Size",
+    "colors": "Kem, Xám",
+    "description": "Chân váy Tulle (Voan lưới) nhiều lớp, xòe bồng công chúa. Mã sản phẩm: 22-04C-02.",
+    "url": "https://www.olv.vn/products/chan-vay-tulle-xoe-bong",
+    "image_url": "//product.hstatic.net/200000309995/product/22-04c-02-c30-01__1__92a401c136364b4c81414e2624d6718d_grande.jpg"
+  },
+  {
+    "id": "OLV53",
+    "name": "Quần Jeans Ống Đứng Cổ Điển",
+    "price": "550,000₫",
+    "sizes": "27, 28, 29, 30",
+    "colors": "Xanh Vừa",
+    "description": "Quần Jeans ống đứng (Straight-leg), cạp cao, chất liệu denim dày dặn. Mã sản phẩm: 22-03P-01.",
+    "url": "https://www.olv.vn/products/quan-jeans-ong-dung-co-dien",
+    "image_url": "//product.hstatic.net/200000309995/product/22-03p-01-c30-01__1__be0f545a1f6a4220b22a27d21b7987a0_grande.jpg"
+  },
+  {
+    "id": "OLV54",
+    "name": "Áo Len Croptop Lệch Vai",
+    "price": "420,000₫",
+    "sizes": "Free Size",
+    "colors": "Đen, Trắng",
+    "description": "Áo len dáng lửng (Croptop), thiết kế lệch vai gợi cảm, chất len mỏng nhẹ. Mã sản phẩm: 22-02A-01.",
+    "url": "https://www.olv.vn/products/ao-len-croptop-lech-vai",
+    "image_url": "//product.hstatic.net/200000309995/product/22-02a-01-c30-01__1__520141b65e71448b814a0d84a7541f92_grande.jpg"
+  },
+  {
+    "id": "OLV55",
+    "name": "Đầm Hai Dây Xẻ Tà",
+    "price": "690,000₫",
+    "sizes": "S, M",
+    "colors": "Họa Tiết Da Báo",
+    "description": "Đầm hai dây, dáng ôm nhẹ, có xẻ tà, phù hợp đi tiệc hoặc dạo phố. Mã sản phẩm: 22-01D-01.",
+    "url": "https://www.olv.vn/products/dam-hai-day-xe-ta",
+    "image_url": "//product.hstatic.net/200000309995/product/22-01d-01-c30-01__1__6b7b203c9b73468582772719a2e6f4a8_grande.jpg"
+  },
+  {
+    "id": "OLV56",
+    "name": "Áo Khoác Da Lộn Suede Biker",
+    "price": "1,390,000₫",
+    "sizes": "S, M",
+    "colors": "Nâu Camel",
+    "description": "Áo khoác Biker chất liệu giả da lộn (Suede), phong cách cá tính. Mã sản phẩm: 22-01B-02.",
+    "url": "https://www.olv.vn/products/ao-khoac-da-lon-suede-biker",
+    "image_url": "//product.hstatic.net/200000309995/product/22-01b-02-c30-01__1__97063d3e74b7496e9596001007b89791_grande.jpg"
+  }
+]
