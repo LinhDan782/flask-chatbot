@@ -246,9 +246,9 @@
                 
                 // 2. Hiển thị câu trả lời text
                 const botReplyText = data.reply;
-                appendMessage(botReplyText, 'bot'); // Đã sửa lại thứ tự tham số nếu cần
+                appendMessage(botReplyText, 'bot');
 
-                // 3. Xử lý thông tin sản phẩm (Logic hiển thị ảnh)
+                // 3. Xử lý thông tin sản phẩm (Hiển thị ảnh)
                 const productInfo = data.product_info;
                 if (productInfo) {
                     // Tạo thẻ hiển thị chi tiết sản phẩm
@@ -279,6 +279,8 @@
                 appendMessage('Xin lỗi, đã xảy ra lỗi kết nối server.', 'bot');
                 chatBox.scrollTop = chatBox.scrollHeight;
             });
+        }
+    }
 
     // Hàm hiển thị Text
     function appendMessage(text, sender) {
@@ -292,7 +294,7 @@
 
     // Hàm hiển thị Card sản phẩm
     function appendProductCard(htmlContent) {
-        const chatBox = document.getElementById('chatBox'); // Đã sửa từ chatbox thành chatBox
+        const chatBox = document.getElementById('chatBox'); 
         
         // Tạo container cho sản phẩm
         const productContainer = document.createElement('div');
