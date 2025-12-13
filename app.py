@@ -61,10 +61,11 @@ def find_product_details(text):
         if product['name'] in text:
             # Ghi đè URL ảnh để đảm bảo có https:
             image_url_full = "https:" + product['image_url']
+            product_url_full = "https://www.olv.vn" + product['url']
             return {
                 'name': product['name'],
                 'price': product['price'],
-                'url': product['url'],
+                'url': product_url_full,
                 'image_url': image_url_full
             }
     return None
