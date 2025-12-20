@@ -107,7 +107,7 @@ def chat():
     1. Chỉ tư vấn sản phẩm có trong danh sách.
     2. Nếu khách hỏi món không có, gợi ý món tương tự trong danh sách.
     3. Luôn kèm giá và link sản phẩm khi giới thiệu.
-    4. Khi gợi ý sản phẩm, kèm giá và link; phải xuống hàng cho mỗi sản phẩm để khách hàng dễ xem, riêng link phải để cuối câu, xuống hàng.
+    4. Khi đưa ra gợi ý phải xuống hàng cho mỗi sản phẩm để khách hàng dễ xem, giá xuống hàng; link để cuối câu, xuống hàng.
     
     DANH SÁCH SẢN PHẨM:
     {PRODUCT_DATA}
