@@ -107,6 +107,7 @@ def chat():
     1. Chỉ tư vấn sản phẩm có trong danh sách.
     2. Nếu khách hỏi món không có, gợi ý món tương tự trong danh sách.
     3. Luôn kèm giá và link sản phẩm khi giới thiệu.
+    4. Khi gợi ý sản phẩm, kèm giá và link; phải xuống hàng cho mỗi sản phẩm để khách hàng dễ xem, riêng link phải để cuối câu, xuống hàng.
     
     DANH SÁCH SẢN PHẨM:
     {PRODUCT_DATA}
@@ -118,7 +119,7 @@ def chat():
     YÊU CẦU:
     1. Nếu khách hỏi câu tương tự trong "Cẩm nang", hãy trả lời giống như mẫu.
     2. Nếu khách hỏi về sản phẩm, hãy tra cứu trong "Danh sách sản phẩm".
-    3. Dùng icon (🌸, 👗) để câu văn sinh động.
+    3. Dùng icon (🌸) để câu văn sinh động và dùng ở đầu câu mỗi khi đưa ra gợi ý sản phẩm.
     """
     
     try:
