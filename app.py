@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-import google.genai as genai
+from google import genai
 
 # Cấu hình
 load_dotenv()
