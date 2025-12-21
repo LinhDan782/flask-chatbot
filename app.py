@@ -38,7 +38,6 @@ def crawl_olv_data(max_pages=3):
             response = requests.get(url, headers=headers)
             soup = BeautifulSoup(response.text, 'html.parser')
             
-            # Selector này phải đúng với web OLV hiện tại (check class HTML)
             items = soup.find_all('div', class_='product-block')
             
             if not items: break
@@ -54,7 +53,6 @@ def crawl_olv_data(max_pages=3):
                         link = "https://www.olv.vn" + name_tag['href']
                         price = price_tag.text.strip().replace('\n', ' ').split('₫')[0] + '₫'
                         
-                        # Xử lý ảnh (thường ảnh lazyload sẽ nằm ở data-src hoặc src)
                         img_url = ""
                         if img_tag:
                             src = img_tag.get('src') or img_tag.get('data-src')
@@ -83,13 +81,11 @@ def crawl_olv_data(max_pages=3):
 def save_and_reload_data(new_data=None):
     global PRODUCT_DATA_TEXT, PRODUCT_LIST_JSON
     
-    # Nếu có dữ liệu mới từ Crawler thì lưu vào file
     if new_data:
         with open('products.json', 'w', encoding='utf-8') as f:
             json.dump(new_data, f, ensure_ascii=False, indent=2)
             print("💾 Đã lưu file products.json mới.")
 
-    # Đọc lại từ file (Load vào RAM)
     try:
         with open('products.json', 'r', encoding='utf-8') as f:
             PRODUCT_LIST_JSON = json.load(f)
@@ -156,7 +152,8 @@ def chat():
     Bạn là AI tư vấn của OLV Boutique.
     Dữ liệu sản phẩm hiện có:
     {PRODUCT_DATA_TEXT}
-    
+    Thông tin shop:
+    {STATIC_SHOP_INFO}
     Yêu cầu:
     1. Trả lời ngắn gọn, thân thiện (dùng icon 🌸).
     2. Nếu khách hỏi sản phẩm, tìm trong danh sách trên.
@@ -167,7 +164,10 @@ def chat():
     """
 
     try:
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model=MODEL_ID,
+            contents=prompt
+        )
         bot_reply = response.text
 # Tìm lại thông tin chi tiết để hiển thị thẻ sản phẩm (Product Card)
         product_detail = None
