@@ -165,10 +165,7 @@ def chat():
     
     Khách: {user_msg}
     """
-    
-    THÔNG TIN CHUNG:
-    {STATIC_SHOP_INFO}
-        
+
     try:
         response = model.generate_content(prompt)
         bot_reply = response.text
