@@ -15,8 +15,8 @@ if not api_key:
     print("Cảnh báo: Chưa cấu hình GEMINI_API_KEY")
 else:
     genai.configure(api_key=api_key)
-    
-model = genai.GenerativeModel('gemini-2.5-flash')
+client = genai.Client(api_key=api_key)    
+MODEL_ID ="gemini-2.5-flash"
 
 # Biến toàn cục lưu dữ liệu trong RAM
 PRODUCT_DATA_TEXT = ""
