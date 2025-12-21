@@ -152,9 +152,9 @@ def chat():
     {STATIC_SHOP_INFO}
     Yêu cầu:
     1. Trả lời ngắn gọn, thân thiện (dùng icon 🌸).
-    2. Nếu khách hỏi sản phẩm, tìm trong danh sách trên.
-    3. Phải có tên, giá và link mua hàng.
-    4. Link ảnh gốc trong dữ liệu (image_url) để hiển thị card.
+    2. Nếu khách hỏi sản phẩm, hãy giới thiệu tên và giá. 
+    3. TUYỆT ĐỐI KHÔNG viết các link URL dài (link sản phẩm và link ảnh) vào phần trả lời văn bản.
+    4. Chỉ cần nhắc đến tên sản phẩm chính xác như trong dữ liệu để hệ thống tự hiển thị thẻ sản phẩm.
     
     Khách: {user_msg}
     """
@@ -165,12 +165,13 @@ def chat():
             contents=prompt
         )
         bot_reply = response.text
-# Tìm lại thông tin chi tiết để hiển thị thẻ sản phẩm (Product Card)
         product_detail = None
+        # Duyệt qua danh sách sản phẩm để tìm sản phẩm được nhắc đến đầu tiên
         for p in PRODUCT_LIST_JSON:
-            if p['name'] in bot_reply: # So khớp đơn giản
+            # Kiểm tra xem tên sản phẩm có xuất hiện trong câu trả lời của Bot không
+            if p['name'].lower() in bot_reply.lower(): 
                 product_detail = p
-                break
+                break # Lấy sản phẩm đầu tiên tìm thấy để hiển thị Card
                 
         return jsonify({
             'reply': bot_reply,
