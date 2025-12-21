@@ -1,5 +1,8 @@
 import os
 import json
+import time
+import requests
+from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
@@ -15,37 +18,98 @@ else:
     
 model = genai.GenerativeModel('gemini-2.5-flash')
 
-# --- HÀM ĐỌC DỮ LIỆU TỪ FILE JSON ---
-def load_product_data():
+# Biến toàn cục lưu dữ liệu trong RAM
+PRODUCT_DATA_TEXT = ""
+PRODUCT_LIST_JSON = []
+
+# --- PHẦN 1: HÀM CRAWL DỮ LIỆU TỰ ĐỘNG (SCRAPER) ---
+def crawl_olv_data(max_pages=3):
+    """Hàm này sẽ đi lấy dữ liệu trực tiếp từ web OLV"""
+    base_url = "https://www.olv.vn/collections/tat-ca-san-pham"
+    crawled_products = []
+    
+    headers = {'User-Agent': 'Mozilla/5.0...'} # Giả lập trình duyệt
+
+    print("🚀 Bắt đầu cập nhật dữ liệu từ OLV...")
+    
+    for page in range(1, max_pages + 1):
+        try:
+            url = f"{base_url}?sort_by=created-descending&page={page}" # Lấy sản phẩm mới nhất
+            response = requests.get(url, headers=headers)
+            soup = BeautifulSoup(response.text, 'html.parser')
+            
+            # Selector này phải đúng với web OLV hiện tại (check class HTML)
+            items = soup.find_all('div', class_='product-block')
+            
+            if not items: break
+
+            for item in items:
+                try:
+                    name_tag = item.find('h3', class_='pro-name').find('a')
+                    price_tag = item.find('p', class_='pro-price')
+                    img_tag = item.find('div', class_='product-img').find('img')
+                    
+                    if name_tag and price_tag:
+                        name = name_tag.text.strip()
+                        link = "https://www.olv.vn" + name_tag['href']
+                        price = price_tag.text.strip().replace('\n', ' ').split('₫')[0] + '₫'
+                        
+                        # Xử lý ảnh (thường ảnh lazyload sẽ nằm ở data-src hoặc src)
+                        img_url = ""
+                        if img_tag:
+                            src = img_tag.get('src') or img_tag.get('data-src')
+                            if src:
+                                img_url = "https:" + src if src.startswith('//') else src
+
+                        crawled_products.append({
+                            "id": f"OLV_{len(crawled_products)}", # Tạo ID tự động
+                            "name": name,
+                            "price": price,
+                            "sizes": "S, M, L (Xem chi tiết)", 
+                            "colors": "Theo hình",
+                            "description": f"Sản phẩm {name} chính hãng OLV.",
+                            "url": link,
+                            "image_url": img_url
+                        })
+                except Exception as e:
+                    continue
+        except Exception as e:
+            print(f"Lỗi trang {page}: {e}")
+            
+    print(f"✅ Đã lấy được {len(crawled_products)} sản phẩm.")
+    return crawled_products
+
+# --- PHẦN 2: HÀM QUẢN LÝ DỮ LIỆU ---
+def save_and_reload_data(new_data=None):
+    global PRODUCT_DATA_TEXT, PRODUCT_LIST_JSON
+    
+    # Nếu có dữ liệu mới từ Crawler thì lưu vào file
+    if new_data:
+        with open('products.json', 'w', encoding='utf-8') as f:
+            json.dump(new_data, f, ensure_ascii=False, indent=2)
+            print("💾 Đã lưu file products.json mới.")
+
+    # Đọc lại từ file (Load vào RAM)
     try:
         with open('products.json', 'r', encoding='utf-8') as f:
-            products = json.load(f)
+            PRODUCT_LIST_JSON = json.load(f)
             
-        # Chuyển đổi JSON thành văn bản để Gemini đọc
+        # Chuyển đổi sang text cho Gemini học
         text_data = ""
-        for p in products:
-            text_data += f"- Tên: {p['name']}\n"
-            text_data += f"  Giá: {p['price']} | Size: {p['sizes']} | Màu: {p['colors']}\n"
-            text_data += f"  Mô tả: {p['description']}\n"
-            text_data += f"  Link ảnh/mua: {p['url']}\n"
-            text_data += "---\n"
-            
-        return text_data
-    except Exception as e:
-        return "" # Trả về rỗng nếu lỗi
-
-# Load dữ liệu ngay khi khởi động
-PRODUCT_DATA = load_product_data()
-
-# LƯU DỮ LIỆU JSON DẠNG LIST ĐỂ TÌM KIẾM
-def load_product_list():
-    try:
-        with open('products.json', 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except:
-        return []
+        for p in PRODUCT_LIST_JSON:
+            text_data += f"- Tên: {p['name']} | Giá: {p['price']}\n"
+            text_data += f"  Link: {p['url']}\n"
+            text_data += f"  Ảnh: {p['image_url']}\n---\n"
         
-PRODUCT_LIST = load_product_list() # Danh sách các Object sản phẩm
+        PRODUCT_DATA_TEXT = text_data
+        print("🔄 Đã nạp dữ liệu vào bộ nhớ Bot.")
+        
+    except FileNotFoundError:
+        PRODUCT_LIST_JSON = []
+        PRODUCT_DATA_TEXT = ""
+
+# Khởi động lần đầu
+save_and_reload_data()
 
 STATIC_SHOP_INFO = """
 - Shop: OLV Boutique
@@ -53,35 +117,6 @@ STATIC_SHOP_INFO = """
 - Liên hệ: 0923003158
 - Chính sách: Đổi trả 7 ngày. Freeship đơn > 500k.
 """
-#Dò tìm sản phẩm trong câu trả lời của Gemini
-def find_product_details(text):
-    """Dò tìm tên sản phẩm trong câu trả lời của Bot và trả về Object sản phẩm tương ứng."""
-    for product in PRODUCT_LIST:
-        # Kiểm tra xem tên sản phẩm có xuất hiện trong câu trả lời của Bot không
-        if product['name'] in text:
-            # 1. URL ẢNH: Đảm bảo có 'https:' và '//'
-            # product['image_url'] thường là '//product.hstatic.net/...'
-            if product['image_url'].startswith('//'):
-                image_url_full = "https:" + product['image_url']
-            else:
-                image_url_full = product['image_url'] # Trường hợp đã có https://
-
-            # 2. URL SẢN PHẨM: Đảm bảo có 'https://www.olv.vn'
-            # product['url'] thường là '/products/...'
-            base_url = "https://www.olv.vn"
-            
-            if product['url'].startswith(base_url):
-                 product_url_full = product['url']
-            else:
-                 product_url_full = base_url + product['url']
-            
-            return {
-                'name': product['name'],
-                'price': product['price'],
-                'url': product_url_full, # <--- TRẢ VỀ LINK ĐẦY ĐỦ VÀ HỢP LỆ
-                'image_url': image_url_full # <--- TRẢ VỀ LINK ẢNH ĐẦY ĐỦ VÀ HỢP LỆ
-            }
-    return None
 app = Flask(__name__)
 CORS(app)
 
@@ -89,6 +124,24 @@ CORS(app)
 @app.route('/')
 def home():
     return render_template('index.html')
+    
+# ===> ROUTE MỚI: Bấm vào đây để cập nhật dữ liệu <===
+@app.route('/admin/update-products', methods=['GET'])
+def update_products():
+    try:
+        # 1. Chạy Crawler lấy 2 trang đầu (khoảng 60 sp mới nhất)
+        new_data = crawl_olv_data(max_pages=2) 
+        
+        # 2. Lưu và nạp lại dữ liệu
+        save_and_reload_data(new_data)
+        
+        return jsonify({
+            "status": "success", 
+            "message": f"Đã cập nhật thành công {len(new_data)} sản phẩm mới nhất!",
+            "total_products": len(new_data)
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
 
 # --- Route 2: API Chat ---
 @app.route('/chat', methods=['POST'])
@@ -100,43 +153,40 @@ def chat():
         return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
 
     prompt = f"""
-    Bạn là nhân viên tư vấn của shop thời trang OLV.
-    Nhiệm vụ: Tư vấn sản phẩm dựa trên danh sách bên dưới.
+    Bạn là AI tư vấn của OLV Boutique.
+    Dữ liệu sản phẩm hiện có:
+    {PRODUCT_DATA_TEXT}
     
-    QUY TẮC:
-    1. Chỉ tư vấn sản phẩm có trong danh sách.
-    2. Nếu khách hỏi món không có, gợi ý món tương tự trong danh sách.
-    3. Luôn kèm giá và link sản phẩm khi giới thiệu.
-    4. Khi đưa ra gợi ý phải xuống hàng cho mỗi sản phẩm để khách hàng dễ xem; giá, mô tả, màu xuống hàng; link để cuối câu, xuống hàng; không viết dính liền
+    Yêu cầu:
+    1. Trả lời ngắn gọn, thân thiện (dùng icon 🌸).
+    2. Nếu khách hỏi sản phẩm, tìm trong danh sách trên.
+    3. Phải có tên, giá và link mua hàng.
+    4. Link ảnh gốc trong dữ liệu (image_url) để hiển thị card.
     
-    DANH SÁCH SẢN PHẨM:
-    {PRODUCT_DATA}
+    Khách: {user_msg}
+    """
     
     THÔNG TIN CHUNG:
     {STATIC_SHOP_INFO}
-    
-    KHÁCH HỎI: {user_msg}
-    YÊU CẦU:
-    1. Nếu khách hỏi câu tương tự trong "Cẩm nang", hãy trả lời giống như mẫu.
-    2. Nếu khách hỏi về sản phẩm, hãy tra cứu trong "Danh sách sản phẩm".
-    3. Dùng icon (🌸) để câu văn sinh động và dùng ở đầu câu mỗi khi đưa ra gợi ý sản phẩm.
-    """
-    
+        
     try:
         response = model.generate_content(prompt)
         bot_reply = response.text
-    # Tìm kiếm chi tiết sản phẩm sau khi Bot trả lời
-        product_detail = find_product_details(bot_reply)
+# Tìm lại thông tin chi tiết để hiển thị thẻ sản phẩm (Product Card)
+        product_detail = None
+        for p in PRODUCT_LIST_JSON:
+            if p['name'] in bot_reply: # So khớp đơn giản
+                product_detail = p
+                break
+                
+        return jsonify({
+            'reply': bot_reply,
+            'product_info': product_detail
+        })
         
     except Exception as e:
-        bot_reply = "Xin lỗi, hệ thống đang bận xíu."
-        product_detail = None
-
-    # Trả về cả câu trả lời và chi tiết sản phẩm (nếu tìm thấy)
-    return jsonify({
-        'reply': bot_reply,
-        'product_info': product_detail 
-    })
+        print(e)
+        return jsonify({'reply': 'Hệ thống đang bảo trì một chút xíu ạ 😅'})
 
 if __name__ == '__main__':
     app.run(debug=True)
