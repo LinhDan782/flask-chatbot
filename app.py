@@ -11,10 +11,6 @@ from google import genai
 # Cấu hình
 load_dotenv()
 api_key = os.getenv('GEMINI_API_KEY')
-if not api_key:
-    print("Cảnh báo: Chưa cấu hình GEMINI_API_KEY")
-else:
-    genai.configure(api_key=api_key)
 client = genai.Client(api_key=api_key)    
 MODEL_ID ="gemini-2.5-flash"
 
