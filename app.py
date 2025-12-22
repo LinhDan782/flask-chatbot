@@ -19,7 +19,7 @@ PRODUCT_DATA_TEXT = ""
 PRODUCT_LIST_JSON = []
 
 # --- PHẦN 1: HÀM CRAWL DỮ LIỆU TỰ ĐỘNG ---
-def crawl_olv_data():
+def crawl_olv_data(max_pages=1):
     """Hàm lấy dữ liệu từ nhiều danh mục khác nhau"""
     categories = {
         "Giảm giá": "https://www.olv.vn/pages/flash-sale",
