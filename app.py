@@ -22,56 +22,88 @@ PRODUCT_LIST_JSON = []
 def crawl_olv_data():
     """Hàm lấy dữ liệu từ nhiều danh mục khác nhau"""
     categories = {
-        "Giảm giá (Flash Sale)": "https://www.olv.vn/pages/flash-sale",
-        "Hàng mới về (Pure Fairy)": "https://www.olv.vn/collections/pure-fairy",
+        "Giảm giá": "https://www.olv.vn/pages/flash-sale",
+        "Hàng mới về": "https://www.olv.vn/collections/pure-fairy",
         "Bán chạy": "https://www.olv.vn/collections/san-pham-ban-chay",
         "Tất cả sản phẩm": "https://www.olv.vn/collections/tat-ca-san-pham",
     }
     
     crawled_products = []
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-
-    print("🚀 Bắt đầu cập nhật dữ liệu từ các danh mục OLV...")
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept-Language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7'
+    }
+    print("🚀 Bắt đầu cập nhật dữ liệu từ OLV...")
     
     for cat_name, url in categories.items():
         try:
-            response = requests.get(url, headers=headers)
+            print(f"--- Đang truy cập: {cat_name} ...")
+            response = requests.get(url, headers=headers, timeout=10)
             soup = BeautifulSoup(response.text, 'html.parser')
-            # Lưu ý: Một số trang Flash Sale có thể dùng class khác, 
-            # nhưng thông thường OLV dùng 'product-block' cho hầu hết danh mục.
-            items = soup.find_all('div', class_='product-block')
             
-            print(f"--- Đang lấy {len(items)} sản phẩm từ: {cat_name}")
-
+            # --- CHIẾN THUẬT TÌM KIẾM ĐA DẠNG ---
+            # Thử tìm bằng nhiều loại class phổ biến trên Shopify/Haravan
+            items = soup.find_all('div', class_='product-block') 
+            if not items:
+                items = soup.find_all('div', class_='product-item')
+            if not items:
+                items = soup.find_all('div', class_='grid__item')
+            
+            print(f"    -> Tìm thấy {len(items)} sản phẩm.")
+            # Nếu không tìm thấy sản phẩm nào, bỏ qua danh mục này
+            if len(items) == 0:
+                continue
             for item in items:
                 try:
-                    name_tag = item.find('h3', class_='pro-name').find('a')
-                    price_tag = item.find('p', class_='pro-price')
-                    img_tag = item.find('div', class_='product-img').find('img')
+                    # Tìm thẻ tên (thử nhiều trường hợp)
+                    name_tag = item.find('h3', class_='pro-name')
+                    if not name_tag: name_tag = item.find('a', class_='product-title')
+                    if not name_tag: name_tag = item.find('div', class_='product-title')
                     
+                    # Tìm thẻ giá
+                    price_tag = item.find('p', class_='pro-price')
+                    if not price_tag: price_tag = item.find('span', class_='price')
+
                     if name_tag and price_tag:
+                        # Xử lý text
                         name = name_tag.text.strip()
-                        link = "https://www.olv.vn" + name_tag['href']
+                        link_tag = name_tag.find('a') if name_tag.name != 'a' else name_tag
+                        link = "https://www.olv.vn" + link_tag['href'] if link_tag else ""
+                        
                         price = price_tag.text.strip().replace('\n', ' ').split('₫')[0] + '₫'
                         
+                        # Xử lý ảnh (ưu tiên ảnh bìa)
+                        img_tag = item.find('img')
                         img_url = ""
                         if img_tag:
-                            src = img_tag.get('src') or img_tag.get('data-src')
+                            # Lấy ảnh từ data-src (ảnh gốc) hoặc src
+                            src = img_tag.get('data-src') or img_tag.get('src')
                             if src:
-                                img_url = "https:" + src if src.startswith('//') else src
+                                if src.startswith('//'): img_url = "https:" + src
+                                elif src.startswith('http'): img_url = src
+                                else: img_url = src
 
-                        crawled_products.append({
-                            "id": f"OLV_{len(crawled_products)}",
-                            "name": name,
-                            "price": price,
-                            "category": cat_name, # Thêm nhãn danh mục để Bot biết
-                            "url": link,
-                            "image_url": img_url
-                        })
-                except: continue
+                        # Chỉ thêm nếu chưa có trong danh sách (tránh trùng lặp)
+                        if not any(p['name'] == name for p in crawled_products):
+                            crawled_products.append({
+                                "id": f"OLV_AUTO_{len(crawled_products)}",
+                                "name": name,
+                                "price": price,
+                                "category": cat_name, # Quan trọng: Gán nhãn để bot nhận biết
+                                "url": link,
+                                "image_url": img_url
+                            })
+                except Exception as inner_e:
+                    continue
+                    
         except Exception as e:
-            print(f"Lỗi khi lấy dữ liệu {cat_name}: {e}")
+            print(f"⚠️ Lỗi khi lấy {cat_name}: {e}")
             
+    # --- QUAN TRỌNG: NẾU KHÔNG CRAWL ĐƯỢC GÌ, DÙNG DỮ LIỆU CŨ ---
+    if len(crawled_products) == 0:
+        print("⚠️ Không lấy được dữ liệu online. Giữ nguyên dữ liệu cũ.")
+        return None # Trả về None để không ghi đè file rỗng
+        
     return crawled_products
 
 # --- PHẦN 2: HÀM QUẢN LÝ DỮ LIỆU ---
