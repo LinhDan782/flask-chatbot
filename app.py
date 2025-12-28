@@ -37,73 +37,64 @@ def crawl_olv_data(max_pages=1):
     
     for cat_name, url in categories.items():
         try:
-            print(f"--- Đang truy cập: {cat_name} ...")
+            print(f"--- Đang truy cập danh mục: {cat_name} ...")
             response = requests.get(url, headers=headers, timeout=10)
             soup = BeautifulSoup(response.text, 'html.parser')
             
-            # --- CHIẾN THUẬT TÌM KIẾM ĐA DẠNG ---
-            # Thử tìm bằng nhiều loại class phổ biến trên Shopify/Haravan
-            items = soup.find_all('div', class_='product-block') 
-            if not items:
-                items = soup.find_all('div', class_='product-item')
-            if not items:
-                items = soup.find_all('div', class_='grid__item')
+            # Tìm các khối sản phẩm (hỗ trợ nhiều class khác nhau của OLV)
+            items = soup.find_all('div', class_=['product-block', 'product-item', 'col-md-3', 'col-sm-6', 'col-xs-6'])
             
-            print(f"    -> Tìm thấy {len(items)} sản phẩm.")
-            # Nếu không tìm thấy sản phẩm nào, bỏ qua danh mục này
-            if len(items) == 0:
-                continue
             for item in items:
                 try:
-                    # Tìm thẻ tên (thử nhiều trường hợp)
-                    name_tag = item.find('h3', class_='pro-name')
-                    if not name_tag: name_tag = item.find('a', class_='product-title')
-                    if not name_tag: name_tag = item.find('div', class_='product-title')
+                    # 1. Tìm tên sản phẩm
+                    name_tag = item.find(['h3', 'h4'], class_=['pro-name', 'product-title'])
                     
-                    # Tìm thẻ giá
-                    price_tag = item.find('p', class_='pro-price')
-                    if not price_tag: price_tag = item.find('span', class_='price')
-
+                    # 2. Tìm giá sản phẩm
+                    # Ưu tiên lấy class 'pro-price' nhưng phải loại bỏ phần giá cũ (thẻ del/s) nếu có
+                    price_tag = item.find(['p', 'span'], class_=['pro-price', 'current-price', 'price'])
+                    
                     if name_tag and price_tag:
-                        # Xử lý text
-                        name = name_tag.text.strip()
-                        link_tag = name_tag.find('a') if name_tag.name != 'a' else name_tag
-                        link = "https://www.olv.vn" + link_tag['href'] if link_tag else ""
+                        name = name_tag.get_text(strip=True)
                         
-                        price = price_tag.text.strip().replace('\n', ' ').split('₫')[0] + '₫'
+                        # Lấy link sản phẩm
+                        a_tag = name_tag.find('a')
+                        product_url = "https://www.olv.vn" + a_tag['href'] if a_tag else ""
                         
-                        # Xử lý ảnh (ưu tiên ảnh bìa)
+                        # Xử lý giá: lấy text và làm sạch
+                        # Chú ý: .split('₫')[0] sẽ lấy con số đầu tiên trước ký hiệu tiền tệ
+                        full_price_text = price_tag.get_text(strip=True)
+                        clean_price = full_price_text.split('₫')[0].strip().replace('\n', '') + '₫'
+                        
+                        # 3. Tìm ảnh sản phẩm
                         img_tag = item.find('img')
                         img_url = ""
                         if img_tag:
-                            # Lấy ảnh từ data-src (ảnh gốc) hoặc src
-                            src = img_tag.get('data-src') or img_tag.get('src')
-                            if src:
-                                if src.startswith('//'): img_url = "https:" + src
-                                elif src.startswith('http'): img_url = src
-                                else: img_url = src
+                            # Haravan/Shopify thường lưu ảnh thật ở data-src
+                            img_url = img_tag.get('data-src') or img_tag.get('src')
+                            if img_url and img_url.startswith('//'):
+                                img_url = "https:" + img_url
 
-                        # Chỉ thêm nếu chưa có trong danh sách (tránh trùng lặp)
+                        # Kiểm tra trùng lặp dựa trên tên
                         if not any(p['name'] == name for p in crawled_products):
                             crawled_products.append({
-                                "id": f"OLV_AUTO_{len(crawled_products)}",
+                                "id": f"OLV_{int(time.time())}_{len(crawled_products)}",
                                 "name": name,
-                                "price": price,
-                                "category": cat_name, # Quan trọng: Gán nhãn để bot nhận biết
-                                "url": link,
+                                "price": clean_price,
+                                "category": cat_name, # Gán nhãn để Gemini nhận biết
+                                "url": product_url,
                                 "image_url": img_url
                             })
-                except Exception as inner_e:
+                except Exception:
                     continue
                     
         except Exception as e:
             print(f"⚠️ Lỗi khi lấy {cat_name}: {e}")
             
-    # --- QUAN TRỌNG: NẾU KHÔNG CRAWL ĐƯỢC GÌ, DÙNG DỮ LIỆU CŨ ---
     if len(crawled_products) == 0:
         print("⚠️ Không lấy được dữ liệu online. Giữ nguyên dữ liệu cũ.")
-        return None # Trả về None để không ghi đè file rỗng
+        return None 
         
+    print(f"✅ Đã crawl xong tổng cộng {len(crawled_products)} sản phẩm.")
     return crawled_products
 
 # --- PHẦN 2: HÀM QUẢN LÝ DỮ LIỆU ---

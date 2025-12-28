@@ -1,232 +1,258 @@
 [
   {
-    "id": "OLV_NEW_01",
-    "name": "Dây nịt White Slim Belt",
-    "price": "150,000₫",
-    "sizes": "Free Size",
-    "colors": "Trắng",
-    "description": "Phụ kiện dây nịt bản nhỏ tinh tế, dễ dàng phối với váy hoặc quần.",
-    "url": "https://www.olv.vn/products/white-slim-belt-2",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_a61bd3d6d53841109051663737233267_grande.jpg"
+    "id": "OLV_1766756352_0",
+    "name": "Áo Ivory Mesh Smocked Layered Top",
+    "price": "590,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/ivory-mesh-smocked-layered-top",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25587_65170f57da6d4b0f8ecf268fb2e4bd4a_grande.jpg"
   },
   {
-    "id": "OLV_NEW_02",
-    "name": "Quần Eldora Shorts nhiều màu",
-    "price": "190,000₫",
-    "sizes": "S, M, L",
-    "colors": "Trắng, Đen",
-    "description": "Quần short chất liệu thun thoáng mát, dày vừa phải, thiết kế khóa kéo bên hông tiện lợi.",
-    "url": "https://www.olv.vn/products/quan-eldora-shorts-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_29c91629854746689710313360216093_grande.jpg"
+    "id": "OLV_1766756352_1",
+    "name": "Áo White Tafta Puff Top",
+    "price": "590,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/ao-white-tafta-puff-top",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25659_9dcf202b69b94e819882094e8d093da1_grande.jpg"
   },
   {
-    "id": "OLV_NEW_03",
-    "name": "Áo Camisole Top nhiều màu",
-    "price": "190,000₫",
-    "sizes": "S, M",
-    "colors": "Đa dạng",
-    "description": "Áo hai dây Camisole cơ bản, chất liệu nhẹ nhàng, phù hợp mặc trong hoặc phối đồ mùa hè.",
-    "url": "https://www.olv.vn/products/ao-camisole-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_9f5d6065574542389146142753228965_grande.jpg"
+    "id": "OLV_1766756352_2",
+    "name": "Chân váy tầng Mesh Layered Ruffled Mini Skirt nhiều màu",
+    "price": "490,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/chan-vay-tang-mesh-layered-ruffled-mini-skirt-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25601-2_df99fc1d84c44decb4306b61fc3c0596_grande.jpg"
   },
   {
-    "id": "OLV_NEW_04",
-    "name": "Áo choàng Ivory Organza Draped Capelet",
-    "price": "190,000₫",
-    "sizes": "Free Size",
-    "colors": "Ngà (Ivory)",
-    "description": "Áo choàng capelet chất liệu Organza sang trọng, tạo điểm nhấn cho trang phục dự tiệc.",
-    "url": "https://www.olv.vn/products/ao-choang-ivory-organza-draped-capelet",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_82865910129744889759495856952778_grande.jpg"
+    "id": "OLV_1766756352_3",
+    "name": "Đầm chiết eo A Line White Layered Mini Dress nhiều màu",
+    "price": "790,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/dam-chiet-eo-a-line-white-layered-mini-dress-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25258_6175d3742c744edabfe2cc733ce5a44d_grande.jpg"
   },
   {
-    "id": "OLV_NEW_05",
-    "name": "Áo quây Brody Tube Top nhiều màu",
-    "price": "190,000₫",
-    "sizes": "S, M",
-    "colors": "Đa dạng",
-    "description": "Áo quây (Tube Top) phong cách Y2K trẻ trung, chất thun co giãn ôm dáng.",
-    "url": "https://www.olv.vn/products/ao-quay-brody-tube-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_47949364448545859714856952865955_grande.jpg"
+    "id": "OLV_1766756352_4",
+    "name": "Đầm dáng bí Izcalli Dress nhiều màu",
+    "price": "1,190,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/izcalli-dress",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_27174_526e89737697462b8757c190255a2e30_grande.jpg"
   },
   {
-    "id": "OLV_NEW_06",
-    "name": "Áo Basic Cami Top nhiều màu",
-    "price": "190,000₫",
-    "sizes": "S, M",
-    "colors": "Kem, Đen",
-    "description": "Áo hai dây bản to basic, dễ phối với mọi loại chân váy và quần.",
-    "url": "https://www.olv.vn/products/ao-basic-cami-top-in-cream-1",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_66288544499144488258525884485522_grande.jpg"
+    "id": "OLV_1766756352_5",
+    "name": "Đầm hai dây Blush Silky Bow Flared Mini Dress",
+    "price": "790,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/dam-hai-day-blush-silky-bow-flared-mini-dress",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26026_1823cfe7b93942db8e93726a6fbabec1_grande.jpg"
   },
   {
-    "id": "OLV_NEW_07",
-    "name": "Áo Amee Top nhiều màu",
-    "price": "250,000₫",
-    "sizes": "S, M",
-    "colors": "Đa dạng",
-    "description": "Áo kiểu nữ tính, thiết kế tay phồng nhẹ, phù hợp đi dạo phố.",
-    "url": "https://www.olv.vn/products/ao-amee-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_88995544411145522558855448855221_grande.jpg"
+    "id": "OLV_1766756352_6",
+    "name": "Đầm suông Blush Tafta Pleated Bow Mini Dress",
+    "price": "890,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/dam-suong-blush-tafta-pleated-bow-mini-dress",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25918_13148210c8d74d80a8e042276f6d7952_grande.jpg"
   },
   {
-    "id": "OLV_NEW_08",
-    "name": "Áo White Cotton T Shirt",
-    "price": "250,000₫",
-    "sizes": "S, M, L",
-    "colors": "Trắng",
-    "description": "Áo thun cotton trắng basic, chất vải mềm mịn, thấm hút mồ hôi tốt.",
-    "url": "https://www.olv.vn/products/ao-white-cotton-t-shirt",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_99885522214455588552211445558882_grande.jpg"
+    "id": "OLV_1766756352_7",
+    "name": "Đầm suông Brown Chiffon Bowy Oversized Mini Dress nhiều màu",
+    "price": "990,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/brown-chiffon-bowy-oversized-mini-dress",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_24479_32c30e1f574a43d5a8b6c9ac4123e806_grande.jpg"
   },
   {
-    "id": "OLV_NEW_09",
-    "name": "Áo Kaori Top nhiều màu",
-    "price": "250,000₫",
-    "sizes": "S, M",
-    "colors": "Đa dạng",
-    "description": "Áo kiểu Kaori thiết kế hiện đại, cổ vuông tôn dáng xương quai xanh.",
-    "url": "https://www.olv.vn/products/ao-kaori-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_77441122558899663322114477885522_grande.jpg"
+    "id": "OLV_1766756352_8",
+    "name": "Đầm suông hai dây Pink Mesh Layered Bow Mini Dress",
+    "price": "890,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/dam-suong-hai-day-pink-mesh-layered-bow-mini-dress",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26059_c3f7e64afa7540f89f7319d6e3d3730a_grande.jpg"
   },
   {
-    "id": "OLV_NEW_10",
-    "name": "Áo Aeri Knit Top nhiều màu",
-    "price": "250,000₫",
-    "sizes": "Free Size",
-    "colors": "Đa dạng",
-    "description": "Áo len dệt kim mỏng (Knit Top), ôm nhẹ, thích hợp tiết trời thu.",
-    "url": "https://www.olv.vn/products/ao-aeri-knit-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_11223344556677889900112233445566_grande.jpg"
+    "id": "OLV_1766756352_9",
+    "name": "Đầm suông White Tafta Pleated Mini Set",
+    "price": "890,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/white-tafta-pleated-mini-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25849_c69a7544ac364acb914c937b3bcfce01_grande.jpg"
   },
   {
-    "id": "OLV_NEW_11",
-    "name": "Áo Square Neck Bodysuit nhiều màu",
-    "price": "290,000₫",
-    "sizes": "S, M",
-    "colors": "Đen, Nude",
-    "description": "Áo Bodysuit cổ vuông, ôm sát cơ thể, giúp định hình vóc dáng gọn gàng.",
-    "url": "https://www.olv.vn/products/ao-square-neck-bodysuit-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_55669988774411223366554477889922_grande.jpg"
+    "id": "OLV_1766756352_10",
+    "name": "Set áo và chân váy lụa Cream Satin Set",
+    "price": "890,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/set-ao-va-chan-vay-lua-cream-satin-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25201_9204ba47b7ac421fbce30843eefef380_grande.jpg"
   },
   {
-    "id": "OLV_NEW_12",
+    "id": "OLV_1766756352_11",
+    "name": "Set bí hai dây Ivory Mesh Smocked Puff Set",
+    "price": "1,290,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/set-bi-hai-day-ivory-mesh-smocked-puff-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25764_b630cdfd8bba40d18f14ee69bd70bc18_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_12",
+    "name": "Set cổ yếm White Kate Halter Puff Mini Set",
+    "price": "1,190,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/set-co-yem-white-kate-halter-puff-mini-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25502-2_bb0f8cd301354039b5bdf23df5fcd86b_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_13",
     "name": "Áo Cotton Babytee nhiều màu",
     "price": "290,000₫",
-    "sizes": "S, M",
-    "colors": "Đa dạng",
-    "description": "Áo thun form nhỏ Babytee hot trend, in hình hoặc trơn màu trẻ trung.",
-    "url": "https://www.olv.vn/products/ao-cotton-babytee-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_33221144556699887744112255663322_grande.jpg"
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-cotton-babytee-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26920_e64c5ea0ae3e4724bf2660146d652f9e_grande.jpg"
   },
   {
-    "id": "OLV_NEW_13",
-    "name": "Áo Lace Trim Cami Top nhiều màu",
-    "price": "290,000₫",
-    "sizes": "S, M",
-    "colors": "Trắng, Đen",
-    "description": "Áo hai dây phối viền ren (Lace Trim) quyến rũ và nữ tính.",
-    "url": "https://www.olv.vn/products/ao-lace-trim-cami-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_99887744556633221100225544889966_grande.jpg"
+    "id": "OLV_1766756352_14",
+    "name": "Chân Váy Tú Chi",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-tu-chi",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_10857-2_32ccd2d35cb14b5caa6a50517aa93d68_grande.jpg"
   },
   {
-    "id": "OLV_NEW_14",
-    "name": "Áo Briar Fleur Top",
-    "price": "290,000₫",
-    "sizes": "S, M",
-    "colors": "Họa tiết hoa",
-    "description": "Áo kiểu họa tiết hoa nhí, bo chun co giãn thoải mái, phong cách đồng quê.",
-    "url": "https://www.olv.vn/products/ao-briar-fleur-top-1",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_12345678901234567890123456789012_grande.jpg"
+    "id": "OLV_1766756352_15",
+    "name": "Áo Beige Kate Belted Coat",
+    "price": "990,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-beige-kate-belted-coat",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26548_9bb1d109908a4f70bec9e7ead331fd5b_grande.jpg"
   },
   {
-    "id": "OLV_NEW_15",
-    "name": "Áo Babette Fleur Top nhiều màu",
-    "price": "320,000₫",
-    "sizes": "S, M",
-    "colors": "Hoa nhiều màu",
-    "description": "Áo croptop hoa, tay phồng, thiết kế dây rút ngực điệu đà.",
-    "url": "https://www.olv.vn/products/ao-babette-fleur-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_babette_fleur_top_grande.jpg"
+    "id": "OLV_1766756352_16",
+    "name": "Chân Váy Beige Kate Mini Skirt",
+    "price": "490,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-beige-kate-mini-skirt",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26593-2_6fa3273ae9464bcfbc494c6b21abd2b4_grande.jpg"
   },
   {
-    "id": "OLV_NEW_16",
-    "name": "Áo Calloway Fleur Top nhiều màu",
-    "price": "320,000₫",
-    "sizes": "S, M",
-    "colors": "Hoa nhí",
-    "description": "Áo kiểu in hoa, chất liệu voan lụa nhẹ mát, phù hợp mùa hè.",
-    "url": "https://www.olv.vn/products/ao-calloway-fleur-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_calloway_fleur_top_grande.jpg"
+    "id": "OLV_1766756352_17",
+    "name": "Navy Kate Plaid Long Sleeves Set",
+    "price": "1,390,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/navy-kate-plaid-long-sleeves-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26834-2_a4eee91d86d94904a3639268b79e125c_grande.jpg"
   },
   {
-    "id": "OLV_NEW_17",
-    "name": "Áo Kaede Top nhiều màu",
-    "price": "320,000₫",
-    "sizes": "S, M",
-    "colors": "Nâu, Be",
-    "description": "Áo thiết kế kiểu Nhật, đơn giản nhưng tinh tế, chất vải linen đứng form.",
-    "url": "https://www.olv.vn/products/ao-kaede-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_kaede_top_grande.jpg"
+    "id": "OLV_1766756352_18",
+    "name": "Gray Bow Long Sleeves Knit Set",
+    "price": "1,190,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/gray-bow-long-sleeves-knit-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26165_43ea3833ae4a434cac7d1c644dc0625d_grande.jpg"
   },
   {
-    "id": "OLV_NEW_18",
-    "name": "Christa Heels nhiều màu",
-    "price": "320,000₫",
-    "sizes": "35, 36, 37, 38, 39",
-    "colors": "Đen, Kem",
-    "description": "Giày cao gót Christa mũi nhọn, gót cao vừa phải, êm chân.",
-    "url": "https://www.olv.vn/products/christa-heels-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_christa_heels_grande.jpg"
+    "id": "OLV_1766756352_19",
+    "name": "Charcoal Hooded Knit Set",
+    "price": "1,090,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/charcoal-hooded-knit-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26484_679380b676ac4b0ca24b30ab909e0513_grande.jpg"
   },
   {
-    "id": "OLV_NEW_19",
-    "name": "Áo Araceli Top nhiều màu",
-    "price": "320,000₫",
-    "sizes": "S, M",
-    "colors": "Đa dạng",
-    "description": "Áo kiểu Araceli phối bèo nhún, phong cách tiểu thư sang chảnh.",
-    "url": "https://www.olv.vn/products/ao-araceli-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_araceli_top_grande.jpg"
+    "id": "OLV_1766756352_20",
+    "name": "Chân váy Gray Floral Skirt",
+    "price": "790,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-gray-floral-skirt",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26470_628987edcf264bb393b5ed4a3a54b3c2_grande.jpg"
   },
   {
-    "id": "OLV_NEW_20",
-    "name": "Chân váy Midi Pencil Skirt nhiều màu",
-    "price": "320,000₫",
-    "sizes": "S, M, L",
-    "colors": "Đen, Xám",
-    "description": "Chân váy bút chì dáng dài Midi, ôm dáng, xẻ sau, thích hợp công sở.",
-    "url": "https://www.olv.vn/products/chan-vay-midi-pencil-skirt-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_midi_pencil_skirt_grande.jpg"
+    "id": "OLV_1766756352_21",
+    "name": "Charcoal Lace Trim Knit Set",
+    "price": "1,090,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/charcoal-lace-trim-knit-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26750_fbf533be13514029bb0b55d29656a973_grande.jpg"
   },
   {
-    "id": "OLV_NEW_21",
-    "name": "Áo Glitter Tank Top nhiều màu",
-    "price": "320,000₫",
-    "sizes": "Free Size",
-    "colors": "Nhũ Bạc, Nhũ Vàng",
-    "description": "Áo tank top chất liệu ánh nhũ (Glitter) nổi bật, phù hợp tiệc tối.",
-    "url": "https://www.olv.vn/products/ao-glitter-tank-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_glitter_tank_top_grande.jpg"
+    "id": "OLV_1766756352_22",
+    "name": "Áo Knit Oversized Sweater nhiều màu",
+    "price": "690,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-knit-oversized-sweater-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26246_a27d068e548346e09b1718114bcea0a4_grande.jpg"
   },
   {
-    "id": "OLV_NEW_22",
-    "name": "Quần Navy Cotton Striped Puff Shorts",
-    "price": "320,000₫",
-    "sizes": "S, M",
-    "colors": "Xanh Navy Kẻ Sọc",
-    "description": "Quần short phồng nhẹ, họa tiết kẻ sọc xanh navy năng động.",
-    "url": "https://www.olv.vn/products/quan-navy-cotton-striped-puff-shorts",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_navy_striped_shorts_grande.jpg"
+    "id": "OLV_1766756352_23",
+    "name": "Navy Knit Off Shoulder Set",
+    "price": "890,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/navy-knit-off-shoulder-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_27052-2_9ed730593f8a418f900da433a0f97661_grande.jpg"
   },
   {
-    "id": "OLV_NEW_23",
-    "name": "Áo Rebel Top nhiều màu",
-    "price": "350,000₫",
-    "sizes": "S, M",
-    "colors": "Đen, Trắng",
-    "description": "Áo kiểu Rebel thiết kế cắt xẻ táo bạo, cá tính và hiện đại.",
-    "url": "https://www.olv.vn/products/ao-rebel-top-nhieu-mau",
-    "image_url": "https://product.hstatic.net/200000309995/product/upload_rebel_top_grande.jpg"
+    "id": "OLV_1766756352_24",
+    "name": "Navy Kate Sailor Set",
+    "price": "1,190,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/navy-kate-sailor-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_27109_fe8d8f1bafa247219f9a1d0179cf8edd_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_25",
+    "name": "Áo Cream Knit Trim Top",
+    "price": "520,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-cream-knit-trim-top",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_22579_7cdc094fdd624332a70bf28a435f68df_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_26",
+    "name": "Áo Cream Mesh Bow Knit Top nhiều màu",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-cream-mesh-bow-knit-top-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26416_45076507bbc042c0ace1826c49863e15_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_27",
+    "name": "Áo Dài Diêu Uyển (Không kèm quần)",
+    "price": "990,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-dieu-uyen-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_11328_07fb00616f484d248ad13c5a8132133e_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_28",
+    "name": "Áo Dài Tố Dung (Không kèm quần)",
+    "price": "990,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-to-dung-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_11120_b1b66edbf41b4f96bbbe9a968c133641_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_29",
+    "name": "Knit Collar Set nhiều màu",
+    "price": "990,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/knit-collar-set-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26613_7422f878acb8453d9032d8321f7131a2_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_30",
+    "name": "Chân váy White Parachute Tiered Ruffled Skirt",
+    "price": "390,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-white-parachute-tiered-ruffled-skirt",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_23220_b7d3a043be1e41e8b7da10567d5e75e9_grande.jpg"
+  },
+  {
+    "id": "OLV_1766756352_31",
+    "name": "Chân váy White Linen Flared Skirt",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-white-linen-flared-skirt",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_23789_5c81de4e37e244589ac5aae9fcbbf82c_grande.jpg"
   }
 ]
