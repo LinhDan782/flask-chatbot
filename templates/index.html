@@ -307,7 +307,7 @@
 
         if (message || currentBase64Image) {
             // Hiển thị tin nhắn User
-            appendMessage(message, 'user', false, currentBase64Imag);
+            appendMessage(message, 'user', false, currentBase64Image);
             
             const payload = { 
                 message: message,
@@ -343,8 +343,10 @@
                 }
             })
             .catch(err => {
-                console.error(err);
-                if(document.getElementById('loading')) document.getElementById('loading').remove();
+                console.error("Lỗi Fetch:", err);
+                const loading = document.getElementById('loading');
+                if (loading) loading.remove();
+                appendMessage("Rất tiếc, đã có lỗi xảy ra khi kết nối với server.", 'bot');
             });
         }
     }
