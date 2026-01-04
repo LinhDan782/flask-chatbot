@@ -87,13 +87,13 @@ def crawl_olv_data(max_pages=1):
                                 "url": product_url,
                                 "image_url": img_url
                             })
-                except Exception as e:
-                    print(f"❌ LỖI API: {e}")
-                    return jsonify({'reply': 'Hệ thống đang bảo trì một chút xíu ạ 😅 (Lỗi server)'})
+        except Exception as e:
+            print(f"❌ LỖI API: {e}")
+            return jsonify({'reply': 'Hệ thống đang bảo trì một chút xíu ạ 😅 (Lỗi server)'})
                             
     if len(crawled_products) == 0:
         print("⚠️ Không lấy được dữ liệu online. Giữ nguyên dữ liệu cũ.")
-        return None 
+        return None
         
     print(f"✅ Đã crawl xong tổng cộng {len(crawled_products)} sản phẩm.")
     return crawled_products
