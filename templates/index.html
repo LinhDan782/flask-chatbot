@@ -78,12 +78,17 @@
         }
 
         /* Tin nhắn của Bot (Bên trái) */
-        .message.bot a {
+        .message.bot {
             align-self: flex-start;
             background: rgba(255, 255, 255, 0.85);
             color: #333;
             border-bottom-left-radius: 4px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .message.bot a {
+            color: #007bff;
+            font-weight: 600;
+            text-decoration: none;
         }
         .message.bot a:hover {
             text-decoration: underline;
@@ -301,8 +306,8 @@
         const message = input.value.trim();
 
         if (message || currentBase64Image) {
-            // Hiển thị tin nhắn User (Text thuần)
-            appendMessage(message || "Đã gửi một hình ảnh", 'user', false);
+            // Hiển thị tin nhắn User
+            appendMessage(message, 'user', false, currentBase64Imag);
             
             const payload = { 
                 message: message,
@@ -346,18 +351,30 @@
 
     // 4. Hàm hiển thị tin nhắn
     // Thêm tham số isHtml để biết khi nào cần render Markdown
-    function appendMessage(text, sender, isHtml = false) {
+    function appendMessage(text, sender, isHtml = false, imageUrl = null) {
         const chatBox = document.getElementById('chatBox');
         const div = document.createElement('div');
         div.className = `message ${sender}`;
         
-        if (isHtml) {
-            // Nếu là bot, dùng marked để chuyển markdown -> html
-            div.innerHTML = marked.parse(text);
-        } else {
-            // Nếu là user, giữ nguyên text để tránh lỗi XSS
-            div.textContent = text;
+    // Nếu có hình ảnh, thêm thẻ img vào trước
+        if (imageUrl) {
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.style.maxWidth = '200px';
+            img.style.borderRadius = '10px';
+            img.style.marginBottom = '5px';
+            img.style.display = 'block';
+            div.appendChild(img);
         }
+
+        // Phần xử lý nội dung văn bản
+        const textSpan = document.createElement('div');
+        if (isHtml) {
+            textSpan.innerHTML = marked.parse(text);
+        } else {
+            textSpan.textContent = text;
+        }
+        div.appendChild(textSpan);
         
         chatBox.appendChild(div);
         chatBox.scrollTop = chatBox.scrollHeight;
