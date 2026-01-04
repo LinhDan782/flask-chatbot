@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OLV Boutique Chatbot</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -77,12 +78,22 @@
         }
 
         /* Tin nhắn của Bot (Bên trái) */
-        .message.bot {
-            align-self: flex-start;
-            background: rgba(255, 255, 255, 0.85);
-            color: #333;
-            border-bottom-left-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        .message.bot a {
+            color: #007bff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .message.bot a:hover {
+            text-decoration: underline;
+        }
+        /* CSS cho danh sách để không bị lề quá xa */
+        .message.bot ul, .message.bot ol {
+            margin-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .message.bot p {
+            margin-bottom: 5px; /* Tách các đoạn văn nhỏ */
         }
 
         /* Tin nhắn của Khách (Bên phải) */
@@ -232,86 +243,36 @@
         </div>
 
 <script>
+    // 1. Cấu hình Marked để xuống dòng chuẩn hơn
+    marked.setOptions({
+        breaks: true, // Enter là xuống dòng
+        gfm: true     // Format chuẩn GitHub
+    });
+
+    // 2. Xử lý Paste (Ctrl + V) hình ảnh
+    document.getElementById('userInput').addEventListener('paste', function(e) {
+        const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+        for (let index in items) {
+            const item = items[index];
+            if (item.kind === 'file' && item.type.includes('image/')) {
+                const blob = item.getAsFile();
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    currentBase64Image = event.target.result;
+                    document.getElementById('previewImg').src = currentBase64Image;
+                    document.getElementById('imagePreview').style.display = 'block';
+                };
+                reader.readAsDataURL(blob);
+                e.preventDefault(); // Ngăn paste tên file text vào input
+            }
+        }
+    });
+
+    // 3. Hàm gửi tin nhắn
     function handleEnter(e) { 
         if (e.key === 'Enter') sendMessage(); 
     }
 
-    function sendMessage() {
-        const input = document.getElementById('userInput');
-        const chatBox = document.getElementById('chatBox');
-        const message = input.value.trim();
-
-        if (message) {
-            appendMessage(message, 'user');
-            input.value = '';
-
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'message bot';
-            loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i>';
-            loadingDiv.id = 'loading';
-            chatBox.appendChild(loadingDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            fetch('/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // 1. Loại bỏ loading spinner
-                const loading = document.getElementById('loading');
-                if (loading) {
-                    loading.remove();
-                }
-                
-                // 2. Hiển thị câu trả lời text
-                const botReplyText = data.reply;
-                appendMessage(botReplyText, 'bot');
-
-                // 3. Xử lý thông tin sản phẩm (Hiển thị ảnh)
-                const productInfo = data.product_info;
-                if (productInfo) {
-                    // Tạo thẻ hiển thị chi tiết sản phẩm
-                    const productHtml = `
-                        <div class="product-card">
-                            <img src="${productInfo.image_url}" alt="${productInfo.name}" class="product-image">
-                            <div class="product-details">
-                                <p class="product-name"><strong>${productInfo.name}</strong></p>
-                                <p class="product-price">${productInfo.price}</p>
-                                <a href="${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
-                            </div>
-                        </div>
-                    `;
-                    appendProductCard(productHtml);
-                }
-                
-                // 4. Cuộn xuống cuối
-                chatBox.scrollTop = chatBox.scrollHeight;
-
-            })
-            .catch(error => {
-                console.error('Lỗi kết nối server:', error);
-                // Loại bỏ loading cả khi có lỗi
-                const loading = document.getElementById('loading');
-                if (loading) {
-                    loading.remove();
-                }
-                appendMessage('Xin lỗi, đã xảy ra lỗi kết nối server.', 'bot');
-                chatBox.scrollTop = chatBox.scrollHeight;
-            });
-        }
-    }
-
-    // Hàm hiển thị Text
-    function appendMessage(text, sender) {
-        const chatBox = document.getElementById('chatBox');
-        const div = document.createElement('div');
-        div.className = `message ${sender}`;
-        div.textContent = text;
-        chatBox.appendChild(div);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
     let currentBase64Image = null;
 
     function previewImage(input) {
@@ -338,8 +299,8 @@
         const message = input.value.trim();
 
         if (message || currentBase64Image) {
-            // Hiển thị tin nhắn người dùng (nếu có ảnh thì báo đang gửi ảnh)
-            appendMessage(message || "Đã gửi một hình ảnh", 'user');
+            // Hiển thị tin nhắn User (Text thuần)
+            appendMessage(message || "Đã gửi một hình ảnh", 'user', false);
             
             const payload = { 
                 message: message,
@@ -349,12 +310,13 @@
             input.value = '';
             clearImage();
 
-            // Hiển thị loading...
+            // Loading
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'message bot';
-            loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i> Đang xem ảnh...';
+            loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i>';
             loadingDiv.id = 'loading';
             chatBox.appendChild(loadingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
 
             fetch('/chat', {
                 method: 'POST',
@@ -363,13 +325,42 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('loading').remove();
-                appendMessage(data.reply, 'bot');
+                const loading = document.getElementById('loading');
+                if (loading) loading.remove();
+                
+                //Gọi hàm hiển thị với isHtml = true cho Bot
+                appendMessage(data.reply, 'bot', true);
+
                 if (data.product_info) {
+                    appendProductCard(data.product_info);
                 }
+            })
+            .catch(err => {
+                console.error(err);
+                if(document.getElementById('loading')) document.getElementById('loading').remove();
             });
         }
     }
+
+    // 4. Hàm hiển thị tin nhắn
+    // Thêm tham số isHtml để biết khi nào cần render Markdown
+    function appendMessage(text, sender, isHtml = false) {
+        const chatBox = document.getElementById('chatBox');
+        const div = document.createElement('div');
+        div.className = `message ${sender}`;
+        
+        if (isHtml) {
+            // Nếu là bot, dùng marked để chuyển markdown -> html
+            div.innerHTML = marked.parse(text);
+        } else {
+            // Nếu là user, giữ nguyên text để tránh lỗi XSS
+            div.textContent = text;
+        }
+        
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
     function appendProductCard(productInfo) {
         const chatBox = document.getElementById('chatBox');
         const productHtml = `
@@ -386,6 +377,7 @@
         productContainer.className = 'message bot';
         productContainer.innerHTML = productHtml;
         chatBox.appendChild(productContainer);
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
 </body>

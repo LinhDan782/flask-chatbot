@@ -129,6 +129,7 @@ save_and_reload_data()
 
 STATIC_SHOP_INFO = """
 - Shop: OLV Boutique
+- Website mua hàng: https://www.olv.vn/
 - Địa chỉ: 224 Yersin, Hiệp Thành, Thủ Dầu Một, Bình Dương
 - Liên hệ: 0923003158
 - Chính sách: Đổi trả 7 ngày. Freeship đơn > 500k.
@@ -179,9 +180,12 @@ def chat():
         1. Trả lời ngắn gọn, thân thiện (dùng icon 🌸).
         2. Khi khách hỏi về "giảm giá", "sale", "hàng mới" hoặc "bán chạy", hãy lọc trong dữ liệu theo phần 'Nhóm' tương ứng để trả lời.
         3. Nếu có nhiều sản phẩm, hãy gợi ý khoảng 3-4 mẫu nổi bật nhất.
-        4. Luôn kèm theo giá và mô tả ngắn gọn, thân thiện.
-        5. Không hiển thị URL trực tiếp trong câu trả lời văn bản.
-        6. Chỉ cần nhắc đến tên sản phẩm chính xác như trong dữ liệu để hệ thống tự hiển thị thẻ sản phẩm.
+        4. Khi giới thiệu sản phẩm:
+           - BẮT BUỘC dùng định dạng danh sách gạch đầu dòng (-).
+           - Cấu trúc mỗi dòng: **[Tên sản phẩm](URL sản phẩm)** - Giá: ... - Mô tả siêu ngắn (dưới 15 từ).
+           - Ví dụ: 
+             - **[Đầm ABC](https://...)** - Giá: 500k - Thiết kế xinh xắn.
+        5. Không viết thành đoạn văn dài dòng. Mỗi ý xuống dòng rõ ràng.
         """
     ]
     if image_data:
