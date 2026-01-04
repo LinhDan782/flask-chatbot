@@ -15,7 +15,7 @@ from google import genai
 load_dotenv()
 api_key = os.getenv('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)    
-MODEL_ID ="gemini-1.5-flash"
+MODEL_ID ="gemini-2.5-flash"
 
 # Biến toàn cục lưu dữ liệu trong RAM
 PRODUCT_DATA_TEXT = ""
