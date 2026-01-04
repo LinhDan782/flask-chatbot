@@ -28,17 +28,29 @@
         /* Khung điện thoại mô phỏng */
         .phone-container {
             width: 100%;
-            max-width: 400px;
-            height: 90vh;
-            background: rgba(255, 255, 255, 0.1); /* Nền kính mờ */
-            backdrop-filter: blur(15px); /* Hiệu ứng làm mờ hậu cảnh */
-            border-radius: 30px;
+            max-width: 1000px; /* Độ rộng tối đa trên PC */
+            height: 85vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             flex-direction: column;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             overflow: hidden;
-            position: relative;
+            transition: all 0.3s ease;
+        }
+        /* Responsive cho điện thoại */
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+                align-items: flex-start;
+            }
+            .phone-container {
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
         }
         /* Khu vực hiển thị tin nhắn */
         .chat-box {
@@ -354,21 +366,26 @@
                 document.getElementById('loading').remove();
                 appendMessage(data.reply, 'bot');
                 if (data.product_info) {
-                    function appendProductCard(htmlContent) {
-                        const chatBox = document.getElementById('chatBox'); 
-                        
-                        // Tạo container cho sản phẩm
-                        const productContainer = document.createElement('div');
-                        // Thêm class 'message bot' để thẻ này căn lề giống tin nhắn bot
-                        productContainer.classList.add('message', 'bot'); 
-                        
-                        // Thêm nội dung HTML sản phẩm
-                        productContainer.innerHTML = htmlContent; 
-                        
-                        chatBox.appendChild(productContainer);
                 }
-            }});
+            });
         }
+    }
+    function appendProductCard(productInfo) {
+        const chatBox = document.getElementById('chatBox');
+        const productHtml = `
+            <div class="product-card" style="margin-left: 0; width: 100%; background: white;">
+                <img src="${productInfo.image_url}" alt="${productInfo.name}" class="product-image">
+                <div class="product-details">
+                    <p class="product-name"><strong>${productInfo.name}</strong></p>
+                    <p class="product-price">${productInfo.price}</p>
+                    <a href="${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
+                </div>
+            </div>
+        `;
+        const productContainer = document.createElement('div');
+        productContainer.className = 'message bot';
+        productContainer.innerHTML = productHtml;
+        chatBox.appendChild(productContainer);
     }
 </script>
 </body>
