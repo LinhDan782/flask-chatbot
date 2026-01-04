@@ -168,7 +168,7 @@ def chat():
     if not user_msg and not image_data:
         return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
 
-    contents = [ 
+    prompt = [ 
         f"""
         Bạn là AI tư vấn chuyên nghiệp của OLV Boutique. 🌸
         Dữ liệu sản phẩm (bao gồm Hàng mới, Giảm giá, Bán chạy, Tất cả sản phẩm):
@@ -188,17 +188,17 @@ def chat():
         if "," in image_data:
             image_data = image_data.split(",")[1]
         
-        contents.append({
+        prompt.append({
             "mime_type": "image/jpeg",
             "data": image_data
         })
 
-    contents.append(f"Khách: {user_msg}")
+    prompt.append(f"Khách: {user_msg}")
 
     try:
         response = client.models.generate_content(
             model=MODEL_ID,
-            contents=contents
+            contents=prompt
         )
         bot_reply = response.text
         product_detail = None
