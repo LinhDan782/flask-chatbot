@@ -188,10 +188,9 @@ def chat():
         if "," in image_data:
             image_data = image_data.split(",")[1]
         
-        prompt.append({
-            "mime_type": "image/jpeg",
-            "data": image_data
-        })
+        image_bytes = base64.b64decode(image_data)
+        img = Image.open(BytesIO(image_bytes))
+        prompt.append(img)
 
     prompt.append(f"Khách: {user_msg}")
 
