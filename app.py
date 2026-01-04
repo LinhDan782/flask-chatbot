@@ -192,13 +192,13 @@ def chat():
             "mime_type": "image/jpeg",
             "data": image_data
         })
-        
+
     contents.append(f"Khách: {user_msg}")
 
     try:
         response = client.models.generate_content(
             model=MODEL_ID,
-            contents=prompt
+            contents=contents
         )
         bot_reply = response.text
         product_detail = None
