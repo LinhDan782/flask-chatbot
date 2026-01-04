@@ -5,3 +5,4 @@ google.genai
 gunicorn
 beautifulsoup4
 requests
+Pillow

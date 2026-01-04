@@ -2,6 +2,9 @@ import os
 import json
 import time
 import requests
+import base64
+from io import BytesIO
+from PIL import Image
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template
@@ -161,26 +164,36 @@ def update_products():
 def chat():
     data = request.json
     user_msg = data.get('message')
-    
-    if not user_msg:
+    image_data = data.get('image')
+    if not user_msg and not image_data:
         return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
 
-    prompt = f"""
-    Bạn là AI tư vấn chuyên nghiệp của OLV Boutique. 🌸
-    Dữ liệu sản phẩm (bao gồm Hàng mới, Giảm giá, Bán chạy, Tất cả sản phẩm):
-    {PRODUCT_DATA_TEXT}
-    Thông tin shop:
-    {STATIC_SHOP_INFO}
-    Yêu cầu:
-    1. Trả lời ngắn gọn, thân thiện (dùng icon 🌸).
-    2. Khi khách hỏi về "giảm giá", "sale", "hàng mới" hoặc "bán chạy", hãy lọc trong dữ liệu theo phần 'Nhóm' tương ứng để trả lời.
-    3. Nếu có nhiều sản phẩm, hãy gợi ý khoảng 3-4 mẫu nổi bật nhất.
-    4. Luôn kèm theo giá và mô tả ngắn gọn, thân thiện.
-    5. Không hiển thị URL trực tiếp trong câu trả lời văn bản.
-    6. Chỉ cần nhắc đến tên sản phẩm chính xác như trong dữ liệu để hệ thống tự hiển thị thẻ sản phẩm.
-    
-    Khách: {user_msg}
-    """
+    contents = [ 
+        f"""
+        Bạn là AI tư vấn chuyên nghiệp của OLV Boutique. 🌸
+        Dữ liệu sản phẩm (bao gồm Hàng mới, Giảm giá, Bán chạy, Tất cả sản phẩm):
+        {PRODUCT_DATA_TEXT}
+        Thông tin shop:
+        {STATIC_SHOP_INFO}
+        Yêu cầu:
+        1. Trả lời ngắn gọn, thân thiện (dùng icon 🌸).
+        2. Khi khách hỏi về "giảm giá", "sale", "hàng mới" hoặc "bán chạy", hãy lọc trong dữ liệu theo phần 'Nhóm' tương ứng để trả lời.
+        3. Nếu có nhiều sản phẩm, hãy gợi ý khoảng 3-4 mẫu nổi bật nhất.
+        4. Luôn kèm theo giá và mô tả ngắn gọn, thân thiện.
+        5. Không hiển thị URL trực tiếp trong câu trả lời văn bản.
+        6. Chỉ cần nhắc đến tên sản phẩm chính xác như trong dữ liệu để hệ thống tự hiển thị thẻ sản phẩm.
+        """
+    ]
+    if image_data:
+        if "," in image_data:
+            image_data = image_data.split(",")[1]
+        
+        contents.append({
+            "mime_type": "image/jpeg",
+            "data": image_data
+        })
+        
+    contents.append(f"Khách: {user_msg}")
 
     try:
         response = client.models.generate_content(

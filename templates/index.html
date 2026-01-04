@@ -203,12 +203,21 @@
             <div class="message bot">Chào bạn! 👋 Mình là trợ lý ảo của Shop. Hôm nay mình có thể giúp gì cho bạn nè?</div>
         </div>
         <div class="input-area">
+            <input type="file" id="imageInput" accept="image/*" style="display: none;" onchange="previewImage(this)">
+            
+            <button class="send-btn" onclick="document.getElementById('imageInput').click()" style="background: #ef82a8; margin-right: 5px;">
+                <i class="fas fa-camera"></i>
+            </button>
+
             <div class="input-wrapper">
-                <input type="text" id="userInput" placeholder="Nhập câu hỏi..." onkeypress="handleEnter(event)">
+                <input type="text" id="userInput" placeholder="Hỏi hoặc gửi ảnh sản phẩm..." onkeypress="handleEnter(event)">
+                <div id="imagePreview" style="display: none; position: absolute; top: -60px; left: 10px; background: white; padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+                    <img src="" id="previewImg" style="height: 40px; border-radius: 4px;">
+                    <i class="fas fa-times-circle" onclick="clearImage()" style="cursor: pointer; color: red;"></i>
+                </div>
             </div>
             <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
-    </div>
 
 <script>
     function handleEnter(e) { 
@@ -291,20 +300,75 @@
         chatBox.appendChild(div);
         chatBox.scrollTop = chatBox.scrollHeight;
     }
+    let currentBase64Image = null;
 
-    // Hàm hiển thị Card sản phẩm
-    function appendProductCard(htmlContent) {
-        const chatBox = document.getElementById('chatBox'); 
-        
-        // Tạo container cho sản phẩm
-        const productContainer = document.createElement('div');
-        // Thêm class 'message bot' để thẻ này căn lề giống tin nhắn bot
-        productContainer.classList.add('message', 'bot'); 
-        
-        // Thêm nội dung HTML sản phẩm
-        productContainer.innerHTML = htmlContent; 
-        
-        chatBox.appendChild(productContainer);
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentBase64Image = e.target.result;
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function clearImage() {
+        currentBase64Image = null;
+        document.getElementById('imageInput').value = "";
+        document.getElementById('imagePreview').style.display = 'none';
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const chatBox = document.getElementById('chatBox');
+        const message = input.value.trim();
+
+        if (message || currentBase64Image) {
+            // Hiển thị tin nhắn người dùng (nếu có ảnh thì báo đang gửi ảnh)
+            appendMessage(message || "Đã gửi một hình ảnh", 'user');
+            
+            const payload = { 
+                message: message,
+                image: currentBase64Image 
+            };
+
+            input.value = '';
+            clearImage();
+
+            // Hiển thị loading...
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message bot';
+            loadingDiv.innerHTML = '<i class="fas fa-ellipsis-h fa-spin"></i> Đang xem ảnh...';
+            loadingDiv.id = 'loading';
+            chatBox.appendChild(loadingDiv);
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').remove();
+                appendMessage(data.reply, 'bot');
+                if (data.product_info) {
+                    function appendProductCard(htmlContent) {
+                        const chatBox = document.getElementById('chatBox'); 
+                        
+                        // Tạo container cho sản phẩm
+                        const productContainer = document.createElement('div');
+                        // Thêm class 'message bot' để thẻ này căn lề giống tin nhắn bot
+                        productContainer.classList.add('message', 'bot'); 
+                        
+                        // Thêm nội dung HTML sản phẩm
+                        productContainer.innerHTML = htmlContent; 
+                        
+                        chatBox.appendChild(productContainer);
+                }
+            });
+        }
     }
 </script>
 </body>
