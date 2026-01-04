@@ -15,7 +15,7 @@ from google import genai
 load_dotenv()
 api_key = os.getenv('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)    
-MODEL_ID ="gemini-2.5-flash"
+MODEL_ID ="gemini-1.5-flash"
 
 # Biến toàn cục lưu dữ liệu trong RAM
 PRODUCT_DATA_TEXT = ""
@@ -90,9 +90,10 @@ def crawl_olv_data(max_pages=1):
                 except Exception:
                     continue
                     
-        except Exception as e:
-            print(f"⚠️ Lỗi khi lấy {cat_name}: {e}")
-            
+                except Exception as e:
+                        print(f"❌ LỖI API: {e}")
+                        return jsonify({'reply': 'Hệ thống đang bảo trì một chút xíu ạ 😅 (Lỗi server)'})
+                            
     if len(crawled_products) == 0:
         print("⚠️ Không lấy được dữ liệu online. Giữ nguyên dữ liệu cũ.")
         return None 
