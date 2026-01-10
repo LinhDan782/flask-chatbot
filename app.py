@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from google import genai
+from google.genai import types
 
 # Cấu hình
 load_dotenv()
@@ -20,6 +21,7 @@ MODEL_ID ="gemini-2.5-flash"
 # Biến toàn cục lưu dữ liệu trong RAM
 PRODUCT_DATA_TEXT = ""
 PRODUCT_LIST_JSON = []
+CHAT_SESSIONS = {}
 
 # --- PHẦN 1: HÀM CRAWL DỮ LIỆU TỰ ĐỘNG ---
 def crawl_olv_data(max_pages=1):
@@ -142,12 +144,12 @@ CORS(app)
 def home():
     return render_template('index.html')
     
-# ===> ROUTE MỚI: Bấm vào đây để cập nhật dữ liệu <===
+# --- Route 2: Cập nhật dữ liệu sản phẩm ---
 @app.route('/admin/update-products', methods=['GET'])
 def update_products():
     try:
-        # 1. Chạy Crawler lấy 2 trang đầu (khoảng 60 sp mới nhất)
-        new_data = crawl_olv_data(max_pages=2) 
+        # 1. Chạy Crawler lấy 5 trang đầu
+        new_data = crawl_olv_data(max_pages=5)
         
         # 2. Lưu và nạp lại dữ liệu
         save_and_reload_data(new_data)
@@ -159,15 +161,28 @@ def update_products():
         })
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)})
-
-# --- Route 2: API Chat ---
+# --- Route 3: Xóa lịch sử chat ---
+@app.route('/clear_history', methods=['POST'])
+def clear_history():
+    data = request.json
+    session_id = data.get('session_id')
+    
+    if session_id in CHAT_SESSIONS:
+        del CHAT_SESSIONS[session_id] # Xóa khỏi RAM
+        return jsonify({'status': 'success', 'message': 'Đã xóa ký ức!'})
+    return jsonify({'status': 'error', 'message': 'Không tìm thấy session'})
+# --- Route 4: API Chat ---
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
     user_msg = data.get('message')
     image_data = data.get('image')
+    session_id = data.get('session_id')
     if not user_msg and not image_data:
         return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
+    # Khởi tạo lịch sử nếu chưa có
+    if session_id not in CHAT_SESSIONS:
+        CHAT_SESSIONS[session_id] = []
 
     prompt = [ 
         f"""
@@ -188,29 +203,59 @@ def chat():
         5. Không viết thành đoạn văn dài dòng. Mỗi ý xuống dòng rõ ràng.
         """
     ]
+# 2. Xử lý input người dùng
+    user_parts_for_api = []
+    saved_image_bytes = None
+    saved_mime_type = "image/jpeg"
     if image_data:
+        if ";base64," in image_data:
+            saved_mime_type = image_data.split(";")[0].split(":")[1]
         if "," in image_data:
-            image_data = image_data.split(",")[1]
-        
-        image_bytes = base64.b64decode(image_data)
-        img = Image.open(BytesIO(image_bytes))
-        prompt.append(img)
+            image_payload = image_data.split(",")[1]
+        else:
+            image_payload = image_data
+        saved_image_bytes = base64.b64decode(image_payload)
+        img = Image.open(BytesIO(base64.b64decode(image_data)))
+        user_parts_for_api.append(img)
+    if user_msg:
+        user_parts_for_api.append(f"Khách: {user_msg}")
 
-    prompt.append(f"Khách: {user_msg}")
+    # 3. Ghép: [Prompt] + [Lịch sử] + [Tin nhắn mới]
+    contents = [prompt] + CHAT_SESSIONS[session_id] + [user_parts_for_api]
 
     try:
         response = client.models.generate_content(
             model=MODEL_ID,
-            contents=prompt
+            contents=contents
         )
         bot_reply = response.text
+
+        # 4. Lưu lại hội thoại vào RAM
+        history_parts = []
+        if saved_image_bytes:
+            history_parts.append(types.Part.from_bytes(
+                data=saved_image_bytes, 
+                mime_type=saved_mime_type
+            ))
+        if user_msg:
+            history_parts.append(types.Part.from_text(text=user_msg))
+        # Lưu vào lịch sử User
+        if history_parts:
+            CHAT_SESSIONS[session_id].append(types.Content(
+                role="user", 
+                parts=history_parts
+            ))      
+        # Lưu câu trả lời của Bot
+        CHAT_SESSIONS[session_id].append(types.Content(
+            role="model",
+            parts=[types.Part.from_text(text=bot_reply)]
+        ))
+        # Tìm sản phẩm để hiển thị Card
         product_detail = None
-        # Duyệt qua danh sách sản phẩm để tìm sản phẩm được nhắc đến đầu tiên
         for p in PRODUCT_LIST_JSON:
-            # Kiểm tra xem tên sản phẩm có xuất hiện trong câu trả lời của Bot không
             if p['name'].lower() in bot_reply.lower(): 
                 product_detail = p
-                break # Lấy sản phẩm đầu tiên tìm thấy để hiển thị Card
+                break 
                 
         return jsonify({
             'reply': bot_reply,

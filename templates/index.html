@@ -221,10 +221,31 @@
             text-decoration: none;
             font-size: 13px;
         }
+        /* THÊM CSS CHO NÚT XÓA LỊCH SỬ */
+        .clear-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .header { position: relative; /* Để căn vị trí nút xóa */ }
         </style>
 </head>
 <body>
         <div class="phone-container"> <div class="header">
+        <button class="clear-btn" onclick="clearHistory()" title="Xóa cuộc trò chuyện">
+            <i class="fas fa-trash-alt"></i> Xóa lịch sử
+        </button>
         <div class="status-badge">● Online</div>
             <h3>Trợ lý OLV Boutique</h3>
             <p style="font-size: 0.8rem; opacity: 0.8;">Luôn sẵn sàng hỗ trợ bạn</p>
@@ -250,13 +271,18 @@
         </div>
 
 <script>
-    // 1. Cấu hình Marked để xuống dòng chuẩn hơn
+    //1. Tạo Session ID
+    const sessionId = 'USER_' + Date.now(); 
+    console.log("Session ID:", sessionId);
+
+    marked.setOptions({ breaks: true, gfm: true });
+    // 2. Cấu hình Marked để xuống dòng chuẩn hơn
     marked.setOptions({
         breaks: true, // Enter là xuống dòng
         gfm: true     // Format chuẩn GitHub
     });
 
-    // 2. Xử lý Paste (Ctrl + V) hình ảnh
+    // 3. Xử lý Paste (Ctrl + V) hình ảnh
     document.getElementById('userInput').addEventListener('paste', function(e) {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;
         for (let index in items) {
@@ -275,7 +301,7 @@
         }
     });
 
-    // 3. Hàm gửi tin nhắn
+    // 4. Hàm gửi tin nhắn
     function handleEnter(e) { 
         if (e.key === 'Enter') sendMessage(); 
     }
@@ -311,7 +337,8 @@
             
             const payload = { 
                 message: message,
-                image: currentBase64Image 
+                image: currentBase64Image,
+                session_id: sessionId
             };
 
             input.value = '';
@@ -351,7 +378,7 @@
         }
     }
 
-    // 4. Hàm hiển thị tin nhắn
+    // 5. Hàm hiển thị tin nhắn
     // Thêm tham số isHtml để biết khi nào cần render Markdown
     function appendMessage(text, sender, isHtml = false, imageUrl = null) {
         const chatBox = document.getElementById('chatBox');
@@ -399,6 +426,23 @@
         productContainer.innerHTML = productHtml;
         chatBox.appendChild(productContainer);
         chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    // 6. Hàm xóa lịch sử trò chuyện
+    function clearHistory() {
+        if(!confirm("Bạn có chắc muốn xóa toàn bộ đoạn chat này không?")) return;
+
+        fetch('/clear_history', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: sessionId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Xóa giao diện
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML = '<div class="message bot">Đã xóa bộ nhớ! 🧠<br>Chúng ta bắt đầu lại nhé. Bạn cần tìm đồ gì nhỉ?</div>';
+        })
+        .catch(err => alert("Lỗi khi xóa lịch sử!"));
     }
 </script>
 </body>
