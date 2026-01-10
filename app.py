@@ -211,7 +211,9 @@ def chat():
         if ";base64," in image_data:
             saved_mime_type = image_data.split(";")[0].split(":")[1]
         if "," in image_data:
-            image_payload = image_data.split(",")[1]
+            header,image_payload = image_data.split(",")[1]
+            if ":" in header and ";" in header:
+                saved_mime_type = header.split(":")[1].split(";")[0]
         else:
             image_payload = image_data
         saved_image_bytes = base64.b64decode(image_payload)
@@ -219,7 +221,21 @@ def chat():
         user_parts_for_api.append(img)
     if user_msg:
         user_parts_for_api.append(f"Khách: {user_msg}")
-
+    missing_padding = len(image_payload) % 4
+    if missing_padding:
+        image_payload += '=' * (4 - missing_padding)
+    try:
+        # 3. Giải mã một lần duy nhất
+        saved_image_bytes = base64.b64decode(image_payload)
+            
+        # 4. Sử dụng BytesIO để PIL Image có thể đọc được
+        img = Image.open(BytesIO(saved_image_bytes))
+            
+        # Gemini SDK chấp nhận trực tiếp đối tượng PIL Image hoặc bytes
+        user_parts_for_api.append(img)
+    except Exception as e:
+            print(f"❌ Lỗi xử lý ảnh: {e}")
+            return jsonify({'reply': 'Định dạng ảnh không hợp lệ, bạn gửi lại giúp shop nhé! 🌸'})
     # 3. Ghép: [Prompt] + [Lịch sử] + [Tin nhắn mới]
     contents = [prompt] + CHAT_SESSIONS[session_id] + [user_parts_for_api]
 

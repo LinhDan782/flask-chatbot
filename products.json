@@ -1,6 +1,6 @@
 [
   {
-    "id": "OLV_1766756352_0",
+    "id": "OLV_1768070190_0",
     "name": "Áo Ivory Mesh Smocked Layered Top",
     "price": "590,000₫",
     "category": "Hàng mới về",
@@ -8,7 +8,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25587_65170f57da6d4b0f8ecf268fb2e4bd4a_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_1",
+    "id": "OLV_1768070190_1",
     "name": "Áo White Tafta Puff Top",
     "price": "590,000₫",
     "category": "Hàng mới về",
@@ -16,7 +16,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25659_9dcf202b69b94e819882094e8d093da1_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_2",
+    "id": "OLV_1768070190_2",
     "name": "Chân váy tầng Mesh Layered Ruffled Mini Skirt nhiều màu",
     "price": "490,000₫",
     "category": "Hàng mới về",
@@ -24,7 +24,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25601-2_df99fc1d84c44decb4306b61fc3c0596_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_3",
+    "id": "OLV_1768070190_3",
     "name": "Đầm chiết eo A Line White Layered Mini Dress nhiều màu",
     "price": "790,000₫",
     "category": "Hàng mới về",
@@ -32,7 +32,15 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25258_6175d3742c744edabfe2cc733ce5a44d_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_4",
+    "id": "OLV_1768070190_4",
+    "name": "Đầm cổ yếm White Tafta Ruffled Layered Mini Dress",
+    "price": "1,200,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/dam-co-yem-white-tafta-ruffled-layered-mini-dress",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25422_dfd9b946a4f64fc3bd1e6fb405cd4f03_grande.jpg"
+  },
+  {
+    "id": "OLV_1768070190_5",
     "name": "Đầm dáng bí Izcalli Dress nhiều màu",
     "price": "1,190,000₫",
     "category": "Hàng mới về",
@@ -40,7 +48,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_27174_526e89737697462b8757c190255a2e30_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_5",
+    "id": "OLV_1768070190_6",
     "name": "Đầm hai dây Blush Silky Bow Flared Mini Dress",
     "price": "790,000₫",
     "category": "Hàng mới về",
@@ -48,7 +56,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_26026_1823cfe7b93942db8e93726a6fbabec1_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_6",
+    "id": "OLV_1768070190_7",
     "name": "Đầm suông Blush Tafta Pleated Bow Mini Dress",
     "price": "890,000₫",
     "category": "Hàng mới về",
@@ -56,15 +64,15 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25918_13148210c8d74d80a8e042276f6d7952_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_7",
-    "name": "Đầm suông Brown Chiffon Bowy Oversized Mini Dress nhiều màu",
+    "id": "OLV_1768070190_8",
+    "name": "Đầm suông Chiffon Bowy Oversized Mini Dress nhiều màu",
     "price": "990,000₫",
     "category": "Hàng mới về",
-    "url": "https://www.olv.vn/collections/pure-fairy/products/brown-chiffon-bowy-oversized-mini-dress",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/dam-suong-chiffon-bowy-oversized-mini-dress-nhieu-mau",
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_24479_32c30e1f574a43d5a8b6c9ac4123e806_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_8",
+    "id": "OLV_1768070190_9",
     "name": "Đầm suông hai dây Pink Mesh Layered Bow Mini Dress",
     "price": "890,000₫",
     "category": "Hàng mới về",
@@ -72,15 +80,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_26059_c3f7e64afa7540f89f7319d6e3d3730a_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_9",
-    "name": "Đầm suông White Tafta Pleated Mini Set",
-    "price": "890,000₫",
-    "category": "Hàng mới về",
-    "url": "https://www.olv.vn/collections/pure-fairy/products/white-tafta-pleated-mini-set",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25849_c69a7544ac364acb914c937b3bcfce01_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_10",
+    "id": "OLV_1768070190_10",
     "name": "Set áo và chân váy lụa Cream Satin Set",
     "price": "890,000₫",
     "category": "Hàng mới về",
@@ -88,15 +88,23 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25201_9204ba47b7ac421fbce30843eefef380_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_11",
+    "id": "OLV_1768070190_11",
+    "name": "Set áo và chân váy White Tafta Pleated Mini Set",
+    "price": "890,000₫",
+    "category": "Hàng mới về",
+    "url": "https://www.olv.vn/collections/pure-fairy/products/set-ao-va-chan-vay-white-tafta-pleated-mini-set",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25849_c69a7544ac364acb914c937b3bcfce01_grande.jpg"
+  },
+  {
+    "id": "OLV_1768070190_12",
     "name": "Set bí hai dây Ivory Mesh Smocked Puff Set",
-    "price": "1,290,000₫",
+    "price": "1,390,000₫",
     "category": "Hàng mới về",
     "url": "https://www.olv.vn/collections/pure-fairy/products/set-bi-hai-day-ivory-mesh-smocked-puff-set",
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25764_b630cdfd8bba40d18f14ee69bd70bc18_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_12",
+    "id": "OLV_1768070190_13",
     "name": "Set cổ yếm White Kate Halter Puff Mini Set",
     "price": "1,190,000₫",
     "category": "Hàng mới về",
@@ -104,7 +112,159 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_25502-2_bb0f8cd301354039b5bdf23df5fcd86b_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_13",
+    "id": "OLV_1768070191_14",
+    "name": "Chân váy áo dài phom rộng Nhu Vi",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-ao-dai-phom-rong-nhu-vi",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_61241_82dc9cdf506a478b8331320e24d11a52_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_15",
+    "name": "Quần ống rộng Chiffon Wide Leg Pants in Red",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/quan-ong-rong-chiffon-wide-leg-pants-in-red",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_60973_79b9f3f1a4704a27bca543bef7579b60_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_16",
+    "name": "Áo yếm An Tịch",
+    "price": "390,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-yem-an-tich",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_60997_56dbfd2ed44c4b158138d9d997437faa_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_17",
+    "name": "Áo Dài Kim Tuyến (Không kèm quần)",
+    "price": "1,190,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-kim-tuyen-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_63677_a5b20a71d1874c3c897751fc9d3fe70d_grande.jpg"
+  },
+  {
+    "id": "OLV_1768070191_18",
+    "name": "Áo Dài Phiêu Vân (Không kèm quần)",
+    "price": "1,490,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-phieu-van-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_60155_9c4978a93436429ab2c6574cc304d31d_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_19",
+    "name": "Áo Dài Nhu Nguyệt (Không kèm quần)",
+    "price": "1,390,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-nhu-nguyet-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_61655_41dd1a33ea14431aa9875dd04278052d_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_20",
+    "name": "Quần ống loe Black High Waist Flared Pants",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/quan-ong-loe-black-high-waist-flared-pants",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_52615_2aa4cb1b587a48438a2d80a7c2c5b2b2_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_21",
+    "name": "Áo len Ivory Ruffled Collar Knit Top",
+    "price": "690,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-len-ivory-ruffled-collar-knit-top",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_52379_c7654ebcf39c4e7a85ad477ab390808c_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_22",
+    "name": "Áo len Navy Jacquard Knit Buttoned Top",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-len-navy-jacquard-knit-buttoned-top",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_52171_d7c435195fea4b62a82fb6bc239f8d7a_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_23",
+    "name": "Áo len Blue Knit Long Sleeve Top",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-len-blue-knit-long-sleeve-top",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_52510_11085b313ffc443ba8c4918c4b9795ea_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_24",
+    "name": "Áo Knit Sweetheart Buttoned Ribbed Top nhiều màu",
+    "price": "520,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-knit-sweetheart-buttoned-ribbed-top-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/7_ac852c7ae0714d58b5126e3a6bfcd645_grande.png"
+  },
+  {
+    "id": "OLV_1768070191_25",
+    "name": "Quần Gray Wide Leg Drawstring Pants",
+    "price": "690,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/quan-gray-wide-leg-drawstring-pants",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26354_762cd2f059024126b32f9ab83f0bdc42_grande.jpg"
+  },
+  {
+    "id": "OLV_1768070191_26",
+    "name": "Áo Gray Hooded Drawstring Top",
+    "price": "590,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-gray-hooded-drawstring-top",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26332_35e64bda72da456288afd2c81940fc8d_grande.jpg"
+  },
+  {
+    "id": "OLV_1768070191_27",
+    "name": "Áo Dài Uyển Vận (Không kèm quần)",
+    "price": "1,190,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-uyen-van-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_61785_c2ccecbfeeaa417e894a9d73bc7eebab_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_28",
+    "name": "Áo Lô Nhã",
+    "price": "890,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-lo-nha",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_60588_6d11426b57e34496a762645b5ccba45b_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_29",
+    "name": "Áo Dài Mặc Lam (Không kèm quần)",
+    "price": "1,990,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-mac-lam-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_60490_60a7c311893849239c3dab809f7d0caf_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_30",
+    "name": "Áo yếm Khuê Nhi",
+    "price": "490,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-yem-khue-nhi",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_61610_db263d8954ab4517a7909134a922b3f0_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_31",
+    "name": "Áo Dài Thảo Nhu (Không kèm quần)",
+    "price": "1,090,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-thao-nhu-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_61474_bcc5f85472214ee8a58d1b120b7f3c8b_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_32",
+    "name": "Áo Dài Tố Nhiên (Không kèm quần)",
+    "price": "1,090,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-to-nhien-khong-kem-quan",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_61835_10f340f6620442379e8502db7070f503_grande.jpeg"
+  },
+  {
+    "id": "OLV_1768070191_33",
     "name": "Áo Cotton Babytee nhiều màu",
     "price": "290,000₫",
     "category": "Tất cả sản phẩm",
@@ -112,15 +272,15 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_26920_e64c5ea0ae3e4724bf2660146d652f9e_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_14",
-    "name": "Chân Váy Tú Chi",
+    "id": "OLV_1768070191_34",
+    "name": "Chân váy áo dài phom rộng Tú Chi",
     "price": "590,000₫",
     "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-tu-chi",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-ao-dai-phom-rong-tu-chi",
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_10857-2_32ccd2d35cb14b5caa6a50517aa93d68_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_15",
+    "id": "OLV_1768070191_35",
     "name": "Áo Beige Kate Belted Coat",
     "price": "990,000₫",
     "category": "Tất cả sản phẩm",
@@ -128,131 +288,11 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_26548_9bb1d109908a4f70bec9e7ead331fd5b_grande.jpg"
   },
   {
-    "id": "OLV_1766756352_16",
+    "id": "OLV_1768070191_36",
     "name": "Chân Váy Beige Kate Mini Skirt",
     "price": "490,000₫",
     "category": "Tất cả sản phẩm",
     "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-beige-kate-mini-skirt",
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_26593-2_6fa3273ae9464bcfbc494c6b21abd2b4_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_17",
-    "name": "Navy Kate Plaid Long Sleeves Set",
-    "price": "1,390,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/navy-kate-plaid-long-sleeves-set",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26834-2_a4eee91d86d94904a3639268b79e125c_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_18",
-    "name": "Gray Bow Long Sleeves Knit Set",
-    "price": "1,190,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/gray-bow-long-sleeves-knit-set",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26165_43ea3833ae4a434cac7d1c644dc0625d_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_19",
-    "name": "Charcoal Hooded Knit Set",
-    "price": "1,090,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/charcoal-hooded-knit-set",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26484_679380b676ac4b0ca24b30ab909e0513_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_20",
-    "name": "Chân váy Gray Floral Skirt",
-    "price": "790,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-gray-floral-skirt",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26470_628987edcf264bb393b5ed4a3a54b3c2_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_21",
-    "name": "Charcoal Lace Trim Knit Set",
-    "price": "1,090,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/charcoal-lace-trim-knit-set",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26750_fbf533be13514029bb0b55d29656a973_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_22",
-    "name": "Áo Knit Oversized Sweater nhiều màu",
-    "price": "690,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-knit-oversized-sweater-nhieu-mau",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26246_a27d068e548346e09b1718114bcea0a4_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_23",
-    "name": "Navy Knit Off Shoulder Set",
-    "price": "890,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/navy-knit-off-shoulder-set",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_27052-2_9ed730593f8a418f900da433a0f97661_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_24",
-    "name": "Navy Kate Sailor Set",
-    "price": "1,190,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/navy-kate-sailor-set",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_27109_fe8d8f1bafa247219f9a1d0179cf8edd_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_25",
-    "name": "Áo Cream Knit Trim Top",
-    "price": "520,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-cream-knit-trim-top",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_22579_7cdc094fdd624332a70bf28a435f68df_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_26",
-    "name": "Áo Cream Mesh Bow Knit Top nhiều màu",
-    "price": "590,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-cream-mesh-bow-knit-top-nhieu-mau",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26416_45076507bbc042c0ace1826c49863e15_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_27",
-    "name": "Áo Dài Diêu Uyển (Không kèm quần)",
-    "price": "990,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-dieu-uyen-khong-kem-quan",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_11328_07fb00616f484d248ad13c5a8132133e_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_28",
-    "name": "Áo Dài Tố Dung (Không kèm quần)",
-    "price": "990,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-to-dung-khong-kem-quan",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_11120_b1b66edbf41b4f96bbbe9a968c133641_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_29",
-    "name": "Knit Collar Set nhiều màu",
-    "price": "990,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/knit-collar-set-nhieu-mau",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_26613_7422f878acb8453d9032d8321f7131a2_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_30",
-    "name": "Chân váy White Parachute Tiered Ruffled Skirt",
-    "price": "390,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-white-parachute-tiered-ruffled-skirt",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_23220_b7d3a043be1e41e8b7da10567d5e75e9_grande.jpg"
-  },
-  {
-    "id": "OLV_1766756352_31",
-    "name": "Chân váy White Linen Flared Skirt",
-    "price": "590,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/chan-vay-white-linen-flared-skirt",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_23789_5c81de4e37e244589ac5aae9fcbbf82c_grande.jpg"
   }
 ]
