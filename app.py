@@ -129,25 +129,26 @@ def crawl_olv_data(max_pages=1):
 def save_and_reload_data(new_data=None):
     global PRODUCT_DATA_TEXT, PRODUCT_LIST_JSON
     
-    if new_data:
+    #Chỉ ghi file nếu có dữ liệu mới để tránh mất dữ liệu cũ khi crawl lỗi
+    if new_data and len(new_data) > 0:
         with open('products.json', 'w', encoding='utf-8') as f:
             json.dump(new_data, f, ensure_ascii=False, indent=2)
-            print("💾 Đã lưu file products.json mới.")
+            print(f"💾 Đã lưu {len(new_data)} sản phẩm mới vào products.json.")
 
     try:
-        with open('products.json', 'r', encoding='utf-8') as f:
-            PRODUCT_LIST_JSON = json.load(f)
+        if os.path.exists('products.json'):
+            with open('products.json', 'r', encoding='utf-8') as f:
+                PRODUCT_LIST_JSON = json.load(f)
             
-        text_data = ""
-        for p in PRODUCT_LIST_JSON:
-            # Thêm thông tin Danh mục vào text cho Gemini học
-            text_data += f"- Tên: {p['name']} | Giá: {p['price']} | Nhóm: {p.get('category', 'Sản phẩm')}\n"
-            text_data += f"  Link: {p['url']}\n---\n"
-        
-        PRODUCT_DATA_TEXT = text_data
-        print("🔄 Đã nạp dữ liệu đa danh mục vào bộ nhớ Bot.")
-    except FileNotFoundError:
-        pass
+            text_data = ""
+            for p in PRODUCT_LIST_JSON:
+                text_data += f"- Tên: {p['name']} | Giá: {p['price']} | Nhóm: {p.get('category', 'Sản phẩm')}\n"
+                text_data += f"  Link: {p['url']}\n---\n"
+            
+            PRODUCT_DATA_TEXT = text_data
+            print("🔄 Đã nạp dữ liệu vào bộ nhớ Bot.")
+    except Exception as e:
+        print(f"❌ Lỗi khi nạp dữ liệu: {e}")
 # --- RAG LOGIC (Tìm kiếm sản phẩm liên quan) ---
 def get_relevant_products(query, top_k=5):
     if not query: return ""
@@ -288,4 +289,17 @@ def chat():
         return jsonify({'reply': 'Lily đang bận chuẩn bị đồ một chút, nàng đợi xíu nhé! 🌸'})
 
 if __name__ == '__main__':
+    #Tự động cập nhật dữ liệu khi bắt đầu chạy server
+    print("⏳ Đang tự động cập nhật sản phẩm từ website OLV...")
+    try:
+        initial_data = crawl_olv_data(max_pages=5)
+        if initial_data:
+            save_and_reload_data(initial_data)
+        else:
+            print("⚠️ Không có dữ liệu mới, sử dụng dữ liệu cũ từ file.")
+            save_and_reload_data() # Nạp lại dữ liệu cũ nếu crawl thất bại
+    except Exception as e:
+        print(f"❌ Lỗi cập nhật lúc khởi động: {e}")
+        save_and_reload_data()
+
     app.run(debug=True)
