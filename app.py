@@ -16,7 +16,7 @@ from google.genai import types
 load_dotenv()
 api_key = os.getenv('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)    
-MODEL_ID ="gemini-2.5-flash"
+MODEL_ID ="gemini-2.0-flash"
 # --- SYSTEM INSTRUCTION (Tính năng: System Prompt & Fine-tuning logic) ---
 SYSTEM_INSTRUCTION = """
 Bạn là Lily - Chuyên gia tư vấn thời trang tâm lý và nhiệt huyết của OLV Boutique. 🌸
