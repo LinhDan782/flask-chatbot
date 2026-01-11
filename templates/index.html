@@ -278,10 +278,16 @@
     marked.setOptions({ breaks: true, gfm: true });
     // 2. Cấu hình Marked để xuống dòng chuẩn hơn
     marked.setOptions({
-        breaks: true, // Enter là xuống dòng
-        gfm: true     // Format chuẩn GitHub
+        breaks: true,
+        gfm: true,
+        headerIds: false,
+        mangle: false
     });
-
+    const renderer = new marked.Renderer();
+    renderer.link = function(href, title, text) {
+        return `<a target="_blank" rel="noopener noreferrer" href="${href}" title="${title || ''}">${text}</a>`;
+    };
+    marked.use({ renderer });
     // 3. Xử lý Paste (Ctrl + V) hình ảnh
     document.getElementById('userInput').addEventListener('paste', function(e) {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;

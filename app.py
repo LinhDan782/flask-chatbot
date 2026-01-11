@@ -16,7 +16,7 @@ from google.genai import types
 load_dotenv()
 api_key = os.getenv('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)    
-MODEL_ID ="gemini-2.0-flash"
+MODEL_ID ="gemini-2.5-flash"
 # --- SYSTEM INSTRUCTION (Tính năng: System Prompt & Fine-tuning logic) ---
 SYSTEM_INSTRUCTION = """
 Bạn là Lily - Chuyên gia tư vấn thời trang tâm lý và nhiệt huyết của OLV Boutique. 🌸
@@ -29,6 +29,7 @@ Nhiệm vụ của bạn:
 4. Định dạng: 
    - Dùng gạch đầu dòng cho danh sách.
    - **[Tên sản phẩm](URL)** - Giá - Nhận xét ngắn về phong cách.
+   - LƯU Ý: Phải sử dụng chính xác URL được cung cấp trong phần "Bối cảnh sản phẩm", không tự chế link.
 """
 STATIC_SHOP_INFO = """
 - Shop: OLV Boutique
@@ -47,7 +48,7 @@ def crawl_olv_data(max_pages=1):
     """Hàm lấy dữ liệu từ nhiều danh mục khác nhau"""
     categories = {
         "Giảm giá": "https://www.olv.vn/pages/flash-sale",
-        "Hàng mới về": "https://www.olv.vn/collections/pure-fairy",
+        "Bộ sưu tập": "https://www.olv.vn/collections",
         "Bán chạy": "https://www.olv.vn/collections/san-pham-ban-chay",
         "Tất cả sản phẩm": "https://www.olv.vn/collections/tat-ca-san-pham",
     }
@@ -82,8 +83,12 @@ def crawl_olv_data(max_pages=1):
                         
                         # Lấy link sản phẩm
                         a_tag = name_tag.find('a')
-                        product_url = "https://www.olv.vn" + a_tag['href'] if a_tag else ""
-                        
+                        href = a_tag.get('href', '') if a_tag else ""
+                        if href.startswith('http'):
+                            product_url = href
+                        else:
+                        # Đảm bảo có dấu / giữa domain và path
+                            product_url = "https://www.olv.vn" + ("" if href.startswith('/') else "/") + href
                         # Xử lý giá: lấy text và làm sạch
                         # Chú ý: .split('₫')[0] sẽ lấy con số đầu tiên trước ký hiệu tiền tệ
                         full_price_text = price_tag.get_text(strip=True)
