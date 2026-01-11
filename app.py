@@ -30,6 +30,13 @@ Nhiệm vụ của bạn:
    - Dùng gạch đầu dòng cho danh sách.
    - **[Tên sản phẩm](URL)** - Giá - Nhận xét ngắn về phong cách.
 """
+STATIC_SHOP_INFO = """
+- Shop: OLV Boutique
+- Website mua hàng: https://www.olv.vn/
+- Địa chỉ: 224 Yersin, Hiệp Thành, Thủ Dầu Một, Bình Dương
+- Liên hệ: 0923003158
+- Chính sách: Đổi trả 7 ngày. Freeship đơn > 500k.
+"""
 # Biến toàn cục lưu dữ liệu trong RAM
 PRODUCT_DATA_TEXT = ""
 PRODUCT_LIST_JSON = []
@@ -154,13 +161,6 @@ def get_relevant_products(query, top_k=5):
 # Khởi động lần đầu
 save_and_reload_data()
 
-STATIC_SHOP_INFO = """
-- Shop: OLV Boutique
-- Website mua hàng: https://www.olv.vn/
-- Địa chỉ: 224 Yersin, Hiệp Thành, Thủ Dầu Một, Bình Dương
-- Liên hệ: 0923003158
-- Chính sách: Đổi trả 7 ngày. Freeship đơn > 500k.
-"""
 app = Flask(__name__)
 CORS(app)
 
