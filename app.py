@@ -293,7 +293,7 @@ def chat():
         
     except Exception as e:
         print(e)
-        return jsonify({'reply': 'Lyly đang bận chuẩn bị đồ một chút, nàng đợi xíu nhé! 🌸'})
+        return jsonify({'reply': 'Lily đang bận chuẩn bị đồ một chút, nàng đợi xíu nhé! 🌸'})
 
 if __name__ == '__main__':
     app.run(debug=True)
