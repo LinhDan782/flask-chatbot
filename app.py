@@ -251,12 +251,15 @@ def chat():
         user_parts_for_api.append(f"Khách: {user_msg}")
     
     # Kết hợp tin nhắn của khách và ngữ cảnh sản phẩm (RAG)
-    full_user_query = f"Dữ liệu kho hàng hiện tại: {product_context}\n\nKhách hỏi: {user_msg}"
-    user_parts_for_api.append(types.Part.from_text(text=full_user_query))
+    full_user_query = f"Bối cảnh sản phẩm: {product_context}\n\nCâu hỏi khách hàng: {user_msg}"
+    content_parts = []
+    if saved_image_bytes:
+        content_parts.append(types.Part.from_bytes(data=saved_image_bytes, mime_type=saved_mime_type))
+    content_parts.append(types.Part.from_text(text=full_user_query))
 
     try:
         # Gửi đến Gemini
-        response = CHAT_SESSIONS[session_id].send_message(parts=user_parts_for_api)
+        response = CHAT_SESSIONS[session_id].send_message(message=content_parts)
         bot_reply = response.text
 
         # 4. Lưu lại hội thoại vào RAM
@@ -268,17 +271,6 @@ def chat():
             ))
         if user_msg:
             history_parts.append(types.Part.from_text(text=user_msg))
-        # Lưu vào lịch sử User
-        if history_parts:
-            CHAT_SESSIONS[session_id].append(types.Content(
-                role="user", 
-                parts=history_parts
-            ))      
-        # Lưu câu trả lời của Bot
-        CHAT_SESSIONS[session_id].append(types.Content(
-            role="model",
-            parts=[types.Part.from_text(text=bot_reply)]
-        ))
         # Tìm sản phẩm để hiển thị Card
         product_detail = None
         for p in PRODUCT_LIST_JSON:
@@ -292,7 +284,7 @@ def chat():
         })
         
     except Exception as e:
-        print(e)
+        print(f"❌ Lỗi Gemini API: {e}")
         return jsonify({'reply': 'Lily đang bận chuẩn bị đồ một chút, nàng đợi xíu nhé! 🌸'})
 
 if __name__ == '__main__':
