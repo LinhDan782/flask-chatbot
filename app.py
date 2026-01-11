@@ -48,7 +48,6 @@ def crawl_olv_data(max_pages=1):
     """Hàm lấy dữ liệu từ nhiều danh mục khác nhau"""
     categories = {
         "Giảm giá": "https://www.olv.vn/pages/flash-sale",
-        "Bộ sưu tập": "https://www.olv.vn/collections",
         "Bán chạy": "https://www.olv.vn/collections/san-pham-ban-chay",
         "Tất cả sản phẩm": "https://www.olv.vn/collections/tat-ca-san-pham",
     }
@@ -151,10 +150,6 @@ def save_and_reload_data(new_data=None):
         pass
 # --- RAG LOGIC (Tìm kiếm sản phẩm liên quan) ---
 def get_relevant_products(query, top_k=5):
-    """
-    Thay vì gửi 100 sản phẩm vào prompt, hàm này sẽ lọc ra các sản phẩm 
-    có tên hoặc danh mục liên quan đến từ khóa người dùng hỏi.
-    """
     if not query: return ""
     query_lc = query.lower()
     relevant = [p for p in PRODUCT_LIST_JSON if query_lc in p['name'].lower() or query_lc in p.get('category', '').lower()]
