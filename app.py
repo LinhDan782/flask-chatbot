@@ -17,7 +17,19 @@ load_dotenv()
 api_key = os.getenv('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)    
 MODEL_ID ="gemini-2.5-flash"
+# --- SYSTEM INSTRUCTION (Tính năng: System Prompt & Fine-tuning logic) ---
+SYSTEM_INSTRUCTION = """
+Bạn là Lily - Chuyên gia tư vấn thời trang tâm lý và nhiệt huyết của OLV Boutique. 🌸
+Phong cách của bạn: Ngọt ngào, tinh tế, luôn khen ngợi khách hàng một cách chân thành.
 
+Nhiệm vụ của bạn:
+1. Q&A: Giải đáp thắc mắc về size, chất liệu và phối đồ. Nếu khách gửi ảnh, hãy phân tích màu sắc/kiểu dáng để khen hoặc tư vấn món đồ phù hợp.
+2. RAG: Sử dụng dữ liệu sản phẩm được cung cấp để gợi ý. Không bao giờ nói "Tôi không biết", hãy khéo léo gợi ý sang sản phẩm tương tự.
+3. Cảm xúc: Sử dụng các từ ngữ như "nàng ơi", "yêu lắm", "cực xinh", "sang xịn mịn".
+4. Định dạng: 
+   - Dùng gạch đầu dòng cho danh sách.
+   - **[Tên sản phẩm](URL)** - Giá - Nhận xét ngắn về phong cách.
+"""
 # Biến toàn cục lưu dữ liệu trong RAM
 PRODUCT_DATA_TEXT = ""
 PRODUCT_LIST_JSON = []
@@ -125,7 +137,20 @@ def save_and_reload_data(new_data=None):
         print("🔄 Đã nạp dữ liệu đa danh mục vào bộ nhớ Bot.")
     except FileNotFoundError:
         pass
-
+# --- RAG LOGIC (Tìm kiếm sản phẩm liên quan) ---
+def get_relevant_products(query, top_k=5):
+    """
+    Thay vì gửi 100 sản phẩm vào prompt, hàm này sẽ lọc ra các sản phẩm 
+    có tên hoặc danh mục liên quan đến từ khóa người dùng hỏi.
+    """
+    if not query: return ""
+    query_lc = query.lower()
+    relevant = [p for p in PRODUCT_LIST_JSON if query_lc in p['name'].lower() or query_lc in p.get('category', '').lower()]
+    
+    context = "Dưới đây là các sản phẩm phù hợp với yêu cầu của bạn:\n"
+    for p in relevant[:top_k]:
+        context += f"- {p['name']} | Giá: {p['price']} | Link: {p['url']} | Nhóm: {p.get('category')}\n"
+    return context if len(relevant) > 0 else "Hiện tại shop đang cập nhật thêm mẫu mới, bạn xem các mẫu bán chạy nhé!"
 # Khởi động lần đầu
 save_and_reload_data()
 
@@ -182,27 +207,15 @@ def chat():
         return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
     # Khởi tạo lịch sử nếu chưa có
     if session_id not in CHAT_SESSIONS:
-        CHAT_SESSIONS[session_id] = []
-
-    prompt = [ 
-        f"""
-        Bạn là AI tư vấn chuyên nghiệp của OLV Boutique. 🌸
-        Dữ liệu sản phẩm (bao gồm Hàng mới, Giảm giá, Bán chạy, Tất cả sản phẩm):
-        {PRODUCT_DATA_TEXT}
-        Thông tin shop:
-        {STATIC_SHOP_INFO}
-        Yêu cầu:
-        1. Trả lời ngắn gọn, thân thiện (dùng icon 🌸).
-        2. Khi khách hỏi về "giảm giá", "sale", "hàng mới" hoặc "bán chạy", hãy lọc trong dữ liệu theo phần 'Nhóm' tương ứng để trả lời.
-        3. Nếu có nhiều sản phẩm, hãy gợi ý khoảng 3-4 mẫu nổi bật nhất.
-        4. Khi giới thiệu sản phẩm:
-           - BẮT BUỘC dùng định dạng danh sách gạch đầu dòng (-).
-           - Cấu trúc mỗi dòng: **[Tên sản phẩm](URL sản phẩm)** - Giá: ... - Mô tả siêu ngắn (dưới 15 từ).
-           - Ví dụ: 
-             - **[Đầm ABC](https://...)** - Giá: 500k - Thiết kế xinh xắn.
-        5. Không viết thành đoạn văn dài dòng. Mỗi ý xuống dòng rõ ràng.
-        """
-    ]
+        CHAT_SESSIONS[session_id] = client.chats.create(
+            model=MODEL_ID,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_INSTRUCTION,
+                temperature=0.7 # Độ sáng tạo vừa phải để trả lời mượt mà
+            )
+        )
+    # RAG: Lấy ngữ cảnh sản phẩm dựa trên tin nhắn
+    product_context = get_relevant_products(user_msg)
 # 2. Xử lý input người dùng
     user_parts_for_api = []
     saved_image_bytes = None
@@ -236,14 +249,14 @@ def chat():
 
     if user_msg:
         user_parts_for_api.append(f"Khách: {user_msg}")
-    # 3. Ghép: [Prompt] + [Lịch sử] + [Tin nhắn mới]
-    contents = [prompt] + CHAT_SESSIONS[session_id] + [user_parts_for_api]
+    
+    # Kết hợp tin nhắn của khách và ngữ cảnh sản phẩm (RAG)
+    full_user_query = f"Dữ liệu kho hàng hiện tại: {product_context}\n\nKhách hỏi: {user_msg}"
+    user_parts_for_api.append(types.Part.from_text(text=full_user_query))
 
     try:
-        response = client.models.generate_content(
-            model=MODEL_ID,
-            contents=contents
-        )
+        # Gửi đến Gemini
+        response = CHAT_SESSIONS[session_id].send_message(parts=user_parts_for_api)
         bot_reply = response.text
 
         # 4. Lưu lại hội thoại vào RAM
@@ -280,7 +293,7 @@ def chat():
         
     except Exception as e:
         print(e)
-        return jsonify({'reply': 'Hệ thống đang bảo trì một chút xíu ạ 😅'})
+        return jsonify({'reply': 'Lyly đang bận chuẩn bị đồ một chút, nàng đợi xíu nhé! 🌸'})
 
 if __name__ == '__main__':
     app.run(debug=True)
