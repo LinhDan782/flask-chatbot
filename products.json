@@ -849,14 +849,6 @@
   },
   {
     "id": "OLV_106",
-    "name": "Váy babydoll tay bồng Nương Hoa",
-    "price": "990,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/vay-babydoll-tay-bong-nuong-hoa",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_60781_4dd29e1f7088474599da014cca58c629_grande.jpeg"
-  },
-  {
-    "id": "OLV_107",
     "name": "Áo 2 dây dáng xòe Tú Văn",
     "price": "890,000₫",
     "category": "Tất cả sản phẩm",
@@ -864,7 +856,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_60686_1889acd388334a07889ebf66e9c1cf9f_grande.jpeg"
   },
   {
-    "id": "OLV_108",
+    "id": "OLV_107",
     "name": "Áo White Embroidered Babytee",
     "price": "420,000₫",
     "category": "Tất cả sản phẩm",
@@ -872,7 +864,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/51_ac331d67442247c98b44ffdcd6c9bba1_grande.png"
   },
   {
-    "id": "OLV_109",
+    "id": "OLV_108",
     "name": "Áo Polo Knit Ribbed Top nhiều màu",
     "price": "520,000₫",
     "category": "Tất cả sản phẩm",
@@ -880,7 +872,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_52444_da74064669c74e1bb720f8b1853bc960_grande.jpeg"
   },
   {
-    "id": "OLV_110",
+    "id": "OLV_109",
     "name": "White Ruffled Babydoll Dress",
     "price": "790,000₫",
     "category": "Tất cả sản phẩm",
@@ -888,7 +880,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/ecom_1x1-26_f096744826b8444fb2446598737f8515_grande.png"
   },
   {
-    "id": "OLV_111",
+    "id": "OLV_110",
     "name": "Áo Dài Thanh Y (Không kèm quần)",
     "price": "1,690,000₫",
     "category": "Tất cả sản phẩm",
@@ -896,15 +888,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/d_60363_42c7a479c0144092aa2e9567b7b8fa9c_grande.jpeg"
   },
   {
-    "id": "OLV_112",
-    "name": "Áo Dài Đan Duyên (Không kèm quần)",
-    "price": "1,190,000₫",
-    "category": "Tất cả sản phẩm",
-    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/ao-dai-dan-duyen-khong-kem-quan",
-    "image_url": "https://cdn.hstatic.net/products/1000304367/d_11433_6ab88750b3d24968a0db4780977e8efc_grande.jpg"
-  },
-  {
-    "id": "OLV_113",
+    "id": "OLV_111",
     "name": "Áo White Ruffled Buttoned Cami Top",
     "price": "390,000₫",
     "category": "Tất cả sản phẩm",
@@ -912,7 +896,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/ecom_1x1-25_36635867a4b84d68b0ebe71b5c8b1335_grande.png"
   },
   {
-    "id": "OLV_114",
+    "id": "OLV_112",
     "name": "Chân váy Midi Pencil Skirt nhiều màu",
     "price": "320,000₫",
     "category": "Tất cả sản phẩm",
@@ -920,7 +904,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/368_63545ec72fe140cbb84a35ad58258c36_grande.png"
   },
   {
-    "id": "OLV_115",
+    "id": "OLV_113",
     "name": "Chân váy Light Blue Tie Belt Mini Skirt",
     "price": "390,000₫",
     "category": "Tất cả sản phẩm",
@@ -928,7 +912,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/ecom_1x1-30_5e62e538de6a4c2ca166c9c5f3a770b9_grande.png"
   },
   {
-    "id": "OLV_116",
+    "id": "OLV_114",
     "name": "Áo Yếm Thanh Uyển",
     "price": "590,000₫",
     "category": "Tất cả sản phẩm",
@@ -936,7 +920,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/361_866be2f525b54c2cb39ca30baffd2bdb_grande.png"
   },
   {
-    "id": "OLV_117",
+    "id": "OLV_115",
     "name": "Cream Linen A Line Dress",
     "price": "890,000₫",
     "category": "Tất cả sản phẩm",
@@ -944,7 +928,7 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/1_f5ed0d872804435ab371665068a5282b_grande.png"
   },
   {
-    "id": "OLV_118",
+    "id": "OLV_116",
     "name": "Cream Linen Strappy Ruched Dress",
     "price": "1,100,000₫",
     "category": "Tất cả sản phẩm",
@@ -952,11 +936,27 @@
     "image_url": "https://cdn.hstatic.net/products/1000304367/4_6ced47fc77504000a2d2598594293008_grande.png"
   },
   {
-    "id": "OLV_119",
+    "id": "OLV_117",
     "name": "White Ruched Tie Waist Dress",
     "price": "690,000₫",
     "category": "Tất cả sản phẩm",
     "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/white-ruched-tie-waist-dress",
     "image_url": "https://cdn.hstatic.net/products/1000304367/6_461bbf58b0664b4e9cac0cb12d1c4d37_grande.png"
+  },
+  {
+    "id": "OLV_118",
+    "name": "Quần Wide Leg Pants nhiều màu",
+    "price": "690,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/quan-wide-leg-pants-nhieu-mau",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/2x3_b6f81a79ceae49c39a7e30702cedc893_grande.png"
+  },
+  {
+    "id": "OLV_119",
+    "name": "White Silky Halter Neck Tiered Dress",
+    "price": "1,290,000₫",
+    "category": "Tất cả sản phẩm",
+    "url": "https://www.olv.vn/collections/tat-ca-san-pham/products/white-silky-halter-neck-tiered-dress",
+    "image_url": "https://cdn.hstatic.net/products/1000304367/d_25122_a18a9a2046c64a6f96c84f2965f80455_grande.jpeg"
   }
 ]

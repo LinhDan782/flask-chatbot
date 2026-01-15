@@ -403,16 +403,18 @@
         }
 
         // Phần xử lý nội dung văn bản
-        const textSpan = document.createElement('div');
-        if (isHtml) {
-            textSpan.innerHTML = marked.parse(text);
-        } else {
-            textSpan.textContent = text;
-        }
-        div.appendChild(textSpan);
-        
-        chatBox.appendChild(div);
-        chatBox.scrollTop = chatBox.scrollHeight;
+    const textSpan = document.createElement('div');
+    if (isHtml) {
+        // TỰ ĐỘNG THAY THẾ "undefined" bằng link trang chủ nếu AI trả về sai
+        let cleanedText = text.replace(/undefined/g, "https://www.olv.vn/");
+        textSpan.innerHTML = marked.parse(cleanedText);
+    } else {
+        textSpan.textContent = text;
+    }
+    div.appendChild(textSpan);
+    
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
     }
 
     function appendProductCard(productInfo) {

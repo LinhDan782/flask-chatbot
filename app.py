@@ -27,19 +27,19 @@ STATIC_SHOP_INFO = """
 """
 SYSTEM_INSTRUCTION = """
 Bạn là Lily - Trợ lý bán hàng AI của OLV Boutique.
-Nhiệm vụ: Tư vấn ngắn gọn, chốt đơn nhanh, và cung cấp link mua hàng chính xác. Giao tiếp thân thiện, chuyên nghiệp như một nhân viên bán hàng thực thụ nhưng vẫn giữ được sự ngắn gọn, súc tích.
+Nhiệm vụ: Tư vấn ngắn gọn, chuyên nghiệp và PHẢI cung cấp link mua hàng ở định dạng Click được.
 
 QUY TẮC PHẢN HỒI (BẮT BUỘC):
-1. **NGẮN GỌN**: Trả lời đi thẳng vào vấn đề. Không dùng quá nhiều từ cảm thán (như "nàng ơi", "yêu lắm") trừ khi thực sự cần thiết. Giới hạn câu trả lời dưới 100 từ.
-2. **KHÔNG BỊA ĐẶT**: Chỉ tư vấn các sản phẩm có trong "Bối cảnh sản phẩm" được cung cấp. Nếu không tìm thấy sản phẩm phù hợp, hãy nói "Hiện tại shop chưa tìm thấy mẫu đó, bạn tham khảo các mẫu hot này nhé".
-3. **ĐỊNH DẠNG LINK**: Khi nhắc đến sản phẩm, BẮT BUỘC dùng định dạng Markdown sau để khách click được: 
-   - Dùng gạch đầu dòng cho danh sách.
-   - Với sản phẩm cụ thể: 👉 **[Tên sản phẩm - Giá](URL sản phẩm)**
-   - Với câu hỏi về Website/Trang chủ shop: 👉 **[Website Chính Hãng OLV](https://www.olv.vn/)**
-   - LƯU Ý: Phải sử dụng chính xác URL được cung cấp trong phần "Bối cảnh sản phẩm", không tự chế link. Tuyệt đối không trả về link là "undefined"
-4. **HÌNH ẢNH**: Nếu khách gửi ảnh, hãy nhận xét ngắn về màu sắc/kiểu dáng rồi gợi ý sản phẩm tương tự từ dữ liệu.
+1. Dùng gạch đầu dòng cho danh sách.
+2. **ĐỊNH DẠNG LINK SẢN PHẨM**: Luôn dùng cấu trúc: 👉 **[Tên sản phẩm - Giá](URL sản phẩm)**
+   - Ví dụ: 👉 **[Áo Dài Phiêu Vân - 1,490,000đ](https://www.olv.vn/products/ao-dai-phieu-van)**
+3. **ĐỊNH DẠNG LINK WEBSITE**: Khi khách hỏi link web/trang chủ, dùng: 👉 **[Website Chính Hãng OLV](https://www.olv.vn/)**
+4. **TUYỆT ĐỐI KHÔNG**:
+   - Không được trả về chữ "undefined". 
+   - Nếu không có link cụ thể, hãy dẫn về link trang chủ https://www.olv.vn/
+5. **NGẮN GỌN**: Trả lời dưới 100 từ, tập trung vào việc gợi ý sản phẩm.
 
-Context (Dữ liệu shop):
+Bối cảnh cửa hàng:
 {shop_info}
 """
 SYSTEM_INSTRUCTION = SYSTEM_INSTRUCTION.format(shop_info=STATIC_SHOP_INFO)
@@ -160,27 +160,23 @@ def save_and_reload_data(new_data=None):
         print(f"❌ Lỗi khi nạp dữ liệu: {e}")
 # --- RAG LOGIC (Tìm kiếm sản phẩm liên quan) ---
 def get_relevant_products(query, top_k=5):
-    if not query: return ""
-    query_lc = query.lower()
-    context = ""
-    # Ưu tiên thông tin Shop nếu khách hỏi link web/địa chỉ
-    if any(k in query_lc for k in ['link', 'web', 'shop', 'địa chỉ', 'cửa hàng']):
-        context += "THÔNG TIN QUAN TRỌNG: Website mua hàng là https://www.olv.vn/\n\n"
-    # Tìm kiếm đơn giản (có thể nâng cấp lên vector search sau này)
+    query_lc = query.lower() if query else ""
+    context = "DANH SÁCH SẢN PHẨM KHẢ DỤNG (Dùng link này để trả lời):\n"
+    # Ưu tiên thông tin Website
+    if any(k in query_lc for k in ['link', 'web', 'shop', 'địa chỉ']):
+        context += "- Website chính thức: https://www.olv.vn/\n"
+    # Tìm kiếm sản phẩm
     relevant = [p for p in PRODUCT_LIST_JSON if query_lc in p['name'].lower() or query_lc in p.get('category', '').lower()]
     
-    # Nếu không tìm thấy, lấy tạm 5 sản phẩm bán chạy/mới nhất để gợi ý
     if not relevant:
-        relevant = PRODUCT_LIST_JSON[:5]
-        context += "Không tìm thấy sản phẩm khớp 100%, nhưng đây là các mẫu gợi ý:\n"
-    else:
-        context += "Danh sách sản phẩm phù hợp có trong kho:\n"
+        relevant = PRODUCT_LIST_JSON[:top_k] # Lấy mẫu nếu không thấy
     
-    # Format dữ liệu đầu vào cho Gemini thật rõ ràng
     for p in relevant[:top_k]:
-        context += f"- Tên: {p['name']}\n  Giá: {p['price']}\n  URL: {p['url']}\n\n"
+        # Tạo cấu trúc rõ ràng: Tên | Giá | Link
+        context += f"Sản phẩm: {p['name']} | Giá: {p['price']} | Link: {p['url']}\n"
         
     return context
+
 # Khởi động lần đầu
 save_and_reload_data()
 
