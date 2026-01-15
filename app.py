@@ -172,9 +172,9 @@ def get_relevant_products(query, top_k=5):
     # Nếu không tìm thấy, lấy tạm 5 sản phẩm bán chạy/mới nhất để gợi ý
     if not relevant:
         relevant = PRODUCT_LIST_JSON[:5]
-        context = "Không tìm thấy sản phẩm khớp 100%, nhưng đây là các mẫu gợi ý:\n"
+        context += "Không tìm thấy sản phẩm khớp 100%, nhưng đây là các mẫu gợi ý:\n"
     else:
-        context = "Danh sách sản phẩm phù hợp có trong kho:\n"
+        context += "Danh sách sản phẩm phù hợp có trong kho:\n"
     
     # Format dữ liệu đầu vào cho Gemini thật rõ ràng
     for p in relevant[:top_k]:
