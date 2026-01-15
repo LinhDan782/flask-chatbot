@@ -19,18 +19,23 @@ client = genai.Client(api_key=api_key)
 MODEL_ID ="gemini-2.5-flash"
 # --- SYSTEM INSTRUCTION (Tính năng: System Prompt & Fine-tuning logic) ---
 SYSTEM_INSTRUCTION = """
-Bạn là Lily - Chuyên gia tư vấn thời trang tâm lý và nhiệt huyết của OLV Boutique. 🌸
-Phong cách của bạn: Ngọt ngào, tinh tế, luôn khen ngợi khách hàng một cách chân thành.
+Bạn là Lily - Trợ lý bán hàng AI của OLV Boutique.
+Nhiệm vụ: Tư vấn ngắn gọn, chốt đơn nhanh, và cung cấp link mua hàng chính xác.
 
-Nhiệm vụ của bạn:
-1. Q&A: Giải đáp thắc mắc về size, chất liệu và phối đồ. Nếu khách gửi ảnh, hãy phân tích màu sắc/kiểu dáng để khen hoặc tư vấn món đồ phù hợp.
-2. RAG: Sử dụng dữ liệu sản phẩm được cung cấp để gợi ý. Không bao giờ nói "Tôi không biết", hãy khéo léo gợi ý sang sản phẩm tương tự.
-3. Cảm xúc: Sử dụng các từ ngữ như "nàng ơi", "yêu lắm", "cực xinh", "sang xịn mịn".
-4. Định dạng: 
+QUY TẮC PHẢN HỒI (BẮT BUỘC):
+1. **NGẮN GỌN**: Trả lời đi thẳng vào vấn đề. Không dùng quá nhiều từ cảm thán (như "nàng ơi", "yêu lắm") trừ khi thực sự cần thiết. Giới hạn câu trả lời dưới 100 từ.
+2. **KHÔNG BỊA ĐẶT**: Chỉ tư vấn các sản phẩm có trong "Bối cảnh sản phẩm" được cung cấp. Nếu không tìm thấy sản phẩm phù hợp, hãy nói "Hiện tại shop chưa tìm thấy mẫu đó, bạn tham khảo các mẫu hot này nhé".
+3. **ĐỊNH DẠNG LINK**: Khi nhắc đến sản phẩm, BẮT BUỘC dùng định dạng Markdown sau để khách click được: 
    - Dùng gạch đầu dòng cho danh sách.
-   - **[Tên sản phẩm](URL)** - Giá - Nhận xét ngắn về phong cách.
+   - 👉 **[Tên sản phẩm - Giá](URL sản phẩm)**
+   (Ví dụ: 👉 **[Đầm Babydoll - 250k](https://olv.vn/dam-babydoll)**)
    - LƯU Ý: Phải sử dụng chính xác URL được cung cấp trong phần "Bối cảnh sản phẩm", không tự chế link.
+4. **HÌNH ẢNH**: Nếu khách gửi ảnh, hãy nhận xét ngắn về màu sắc/kiểu dáng rồi gợi ý sản phẩm tương tự từ dữ liệu.
+
+Context (Dữ liệu shop):
+{shop_info}
 """
+SYSTEM_INSTRUCTION = SYSTEM_INSTRUCTION.format(shop_info=STATIC_SHOP_INFO)
 STATIC_SHOP_INFO = """
 - Shop: OLV Boutique
 - Website mua hàng: https://www.olv.vn/
@@ -44,8 +49,8 @@ PRODUCT_LIST_JSON = []
 CHAT_SESSIONS = {}
 
 # --- PHẦN 1: HÀM CRAWL DỮ LIỆU TỰ ĐỘNG ---
-def crawl_olv_data(max_pages=1):
-    """Hàm lấy dữ liệu từ nhiều danh mục khác nhau"""
+def crawl_olv_data(max_pages=3):
+    """Hàm lấy dữ liệu từ nhiều danh mục, duyệt qua nhiều trang"""
     categories = {
         "Giảm giá": "https://www.olv.vn/pages/flash-sale",
         "Bán chạy": "https://www.olv.vn/collections/san-pham-ban-chay",
@@ -55,71 +60,74 @@ def crawl_olv_data(max_pages=1):
     crawled_products = []
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept-Language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7'
     }
+    
     print("🚀 Bắt đầu cập nhật dữ liệu từ OLV...")
     
-    for cat_name, url in categories.items():
-        try:
-            print(f"--- Đang truy cập danh mục: {cat_name} ...")
-            response = requests.get(url, headers=headers, timeout=10)
-            soup = BeautifulSoup(response.text, 'html.parser')
-            
-            # Tìm các khối sản phẩm (hỗ trợ nhiều class khác nhau của OLV)
-            items = soup.find_all('div', class_=['product-block', 'product-item', 'col-md-3', 'col-sm-6', 'col-xs-6'])
-            
-            for item in items:
-                try:
-                    # 1. Tìm tên sản phẩm
-                    name_tag = item.find(['h3', 'h4'], class_=['pro-name', 'product-title'])
-                    
-                    # 2. Tìm giá sản phẩm
-                    # Ưu tiên lấy class 'pro-price' nhưng phải loại bỏ phần giá cũ (thẻ del/s) nếu có
-                    price_tag = item.find(['p', 'span'], class_=['pro-price', 'current-price', 'price'])
-                    
-                    if name_tag and price_tag:
-                        name = name_tag.get_text(strip=True)
+    for cat_name, base_url in categories.items():
+        for page in range(1, max_pages + 1): # Vòng lặp duyệt page
+            try:
+                url = f"{base_url}?page={page}"
+                print(f"--- Đang truy cập: {cat_name} (Trang {page}) ...")
+                
+                response = requests.get(url, headers=headers, timeout=10)
+                soup = BeautifulSoup(response.text, 'html.parser')
+                
+                # Tìm khối sản phẩm
+                items = soup.find_all('div', class_=['product-block', 'product-item', 'col-md-3'])
+                
+                if not items:
+                    print(f"   ⚠️ Không tìm thấy sản phẩm ở trang {page}, dừng danh mục này.")
+                    break # Hết sản phẩm thì dừng, qua danh mục khác
+                
+                for item in items:
+                    try:
+                        name_tag = item.find(['h3', 'h4'], class_=['pro-name', 'product-title'])
+                        price_tag = item.find(['p', 'span'], class_=['pro-price', 'current-price', 'price'])
                         
-                        # Lấy link sản phẩm
-                        a_tag = name_tag.find('a')
-                        href = a_tag.get('href', '') if a_tag else ""
-                        if href.startswith('http'):
-                            product_url = href
-                        else:
-                        # Đảm bảo có dấu / giữa domain và path
-                            product_url = "https://www.olv.vn" + ("" if href.startswith('/') else "/") + href
-                        # Xử lý giá: lấy text và làm sạch
-                        # Chú ý: .split('₫')[0] sẽ lấy con số đầu tiên trước ký hiệu tiền tệ
-                        full_price_text = price_tag.get_text(strip=True)
-                        clean_price = full_price_text.split('₫')[0].strip().replace('\n', '') + '₫'
-                        
-                        # 3. Tìm ảnh sản phẩm
-                        img_tag = item.find('img')
-                        img_url = ""
-                        if img_tag:
-                            # Haravan/Shopify thường lưu ảnh thật ở data-src
-                            img_url = img_tag.get('data-src') or img_tag.get('src')
-                            if img_url and img_url.startswith('//'):
-                                img_url = "https:" + img_url
+                        if name_tag and price_tag:
+                            name = name_tag.get_text(strip=True)
+                            
+                            # Lấy link và xử lý link tương đối
+                            a_tag = name_tag.find('a')
+                            href = a_tag.get('href', '') if a_tag else ""
+                            if not href.startswith('http'):
+                                product_url = "https://www.olv.vn" + ("" if href.startswith('/') else "/") + href
+                            else:
+                                product_url = href
 
-                        # Kiểm tra trùng lặp dựa trên tên
-                        if not any(p['name'] == name for p in crawled_products):
-                            crawled_products.append({
-                                "id": f"OLV_{int(time.time())}_{len(crawled_products)}",
-                                "name": name,
-                                "price": clean_price,
-                                "category": cat_name, # Gán nhãn để Gemini nhận biết
-                                "url": product_url,
-                                "image_url": img_url
-                            })
-                except Exception as e:
-                    continue
-        except Exception as e:
-            print(f"❌ LỖI API: {e}")
-            return jsonify({'reply': 'Hệ thống đang bảo trì một chút xíu ạ 😅 (Lỗi server)'})
+                            # Xử lý giá
+                            full_price_text = price_tag.get_text(strip=True)
+                            clean_price = full_price_text.split('₫')[0].strip().replace('\n', '') + '₫'
+                            
+                            # Lấy ảnh
+                            img_tag = item.find('img')
+                            img_url = "https://theme.hstatic.net/200000039986/1000723835/14/share_fb_home.png?v=999" # Ảnh mặc định nếu lỗi
+                            if img_tag:
+                                raw_img = img_tag.get('data-src') or img_tag.get('src')
+                                if raw_img:
+                                    if raw_img.startswith('//'):
+                                        img_url = "https:" + raw_img
+                                    elif raw_img.startswith('http'):
+                                        img_url = raw_img
+
+                            # Kiểm tra trùng lặp ID hoặc Tên
+                            if not any(p['name'] == name for p in crawled_products):
+                                crawled_products.append({
+                                    "id": f"OLV_{len(crawled_products)}",
+                                    "name": name,
+                                    "price": clean_price,
+                                    "category": cat_name,
+                                    "url": product_url,
+                                    "image_url": img_url
+                                })
+                    except Exception as loop_e:
+                        continue
+            except Exception as e:
+                print(f"❌ Lỗi trang {page}: {e}")
+                continue
                                     
     if len(crawled_products) == 0:
-        print("⚠️ Không lấy được dữ liệu online. Giữ nguyên dữ liệu cũ.")
         return None
         
     print(f"✅ Đã crawl xong tổng cộng {len(crawled_products)} sản phẩm.")
@@ -153,12 +161,22 @@ def save_and_reload_data(new_data=None):
 def get_relevant_products(query, top_k=5):
     if not query: return ""
     query_lc = query.lower()
+    
+    # Tìm kiếm đơn giản (có thể nâng cấp lên vector search sau này)
     relevant = [p for p in PRODUCT_LIST_JSON if query_lc in p['name'].lower() or query_lc in p.get('category', '').lower()]
     
-    context = "Dưới đây là các sản phẩm phù hợp với yêu cầu của bạn:\n"
+    # Nếu không tìm thấy, lấy tạm 5 sản phẩm bán chạy/mới nhất để gợi ý
+    if not relevant:
+        relevant = PRODUCT_LIST_JSON[:5]
+        context = "Không tìm thấy sản phẩm khớp 100%, nhưng đây là các mẫu gợi ý:\n"
+    else:
+        context = "Danh sách sản phẩm phù hợp có trong kho:\n"
+    
+    # Format dữ liệu đầu vào cho Gemini thật rõ ràng
     for p in relevant[:top_k]:
-        context += f"- {p['name']} | Giá: {p['price']} | Link: {p['url']} | Nhóm: {p.get('category')}\n"
-    return context if len(relevant) > 0 else "Hiện tại shop đang cập nhật thêm mẫu mới, bạn xem các mẫu bán chạy nhé!"
+        context += f"- Tên: {p['name']}\n  Giá: {p['price']}\n  URL: {p['url']}\n\n"
+        
+    return context
 # Khởi động lần đầu
 save_and_reload_data()
 
