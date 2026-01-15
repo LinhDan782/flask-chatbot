@@ -284,8 +284,9 @@
         mangle: false
     });
     const renderer = new marked.Renderer();
-    renderer.link = function(href, title, text) {
-        return `<a target="_blank" rel="noopener noreferrer" href="${href}" title="${title || ''}">${text}</a>`;
+    renderer.link = function({href, title, text}) {
+        const cleanHref = (href === 'undefined' || !href) ? 'https://www.olv.vn/' : href;
+        return `<a target="_blank" rel="noopener noreferrer" href="${cleanHref}" title="${title || ''}">${text}</a>`;
     };
     marked.use({ renderer });
     // 3. Xử lý Paste (Ctrl + V) hình ảnh
@@ -405,8 +406,10 @@
         // Phần xử lý nội dung văn bản
     const textSpan = document.createElement('div');
     if (isHtml) {
-        // TỰ ĐỘNG THAY THẾ "undefined" bằng link trang chủ nếu AI trả về sai
-        let cleanedText = text.replace(/undefined/g, "https://www.olv.vn/");
+        // CƠ CHẾ BẢO VỆ: Thay thế mọi từ "undefined" trong văn bản bằng link thật
+        let cleanedText = text.replace(/\(undefined\)/g, "(https://www.olv.vn/)")
+                              .replace(/undefined/g, "https://www.olv.vn/");
+        
         textSpan.innerHTML = marked.parse(cleanedText);
     } else {
         textSpan.textContent = text;
@@ -418,6 +421,7 @@
     }
 
 function appendProductCard(productInfo) {
+    if (!productInfo) return; // Chống lỗi nếu productInfo bị null
     const chatBox = document.getElementById('chatBox');
     const productHtml = `
         <div class="product-card" style="margin-left: 0; width: 100%; background: white;">

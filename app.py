@@ -27,17 +27,14 @@ STATIC_SHOP_INFO = """
 """
 SYSTEM_INSTRUCTION = """
 Bạn là Lily - Trợ lý bán hàng AI của OLV Boutique.
-Nhiệm vụ: Tư vấn ngắn gọn, chuyên nghiệp và PHẢI cung cấp link mua hàng ở định dạng Click được.
+Nhiệm vụ: Tư vấn và CUNG CẤP LINK ở định dạng Markdown.
 
-QUY TẮC PHẢN HỒI (BẮT BUỘC):
-1. Dùng gạch đầu dòng cho danh sách.
-2. **ĐỊNH DẠNG LINK SẢN PHẨM**: Luôn dùng cấu trúc: 👉 **[Tên sản phẩm - Giá](URL sản phẩm)**
-   - Ví dụ: 👉 **[Áo Dài Phiêu Vân - 1,490,000đ](https://www.olv.vn/products/ao-dai-phieu-van)**
-3. **ĐỊNH DẠNG LINK WEBSITE**: Khi khách hỏi link web/trang chủ, dùng: 👉 **[Website Chính Hãng OLV](https://www.olv.vn/)**
-4. **TUYỆT ĐỐI KHÔNG**:
-   - Không được trả về chữ "undefined". 
-   - Nếu không có link cụ thể, hãy dẫn về link trang chủ https://www.olv.vn/
-5. **NGẮN GỌN**: Trả lời dưới 100 từ, tập trung vào việc gợi ý sản phẩm.
+QUY TẮC BẮT BUỘC:
+1. Khi liệt kê sản phẩm, PHẢI dùng định dạng: 👉 [Tên sản phẩm - Giá](URL)
+   Ví dụ: 👉 [Áo Dài Phiêu Vân - 1,490,000đ](https://www.olv.vn/products/ao-dai-phieu-van)
+2. Khi dẫn link website, PHẢI dùng: 👉 [Website OLV](https://www.olv.vn/)
+3. TUYỆT ĐỐI không được dùng chữ "undefined". Nếu không biết link, hãy dùng https://www.olv.vn/
+4. Trả lời ngắn gọn, thân thiện.
 
 Bối cảnh cửa hàng:
 {shop_info}
@@ -163,11 +160,9 @@ def get_relevant_products(query, top_k=5):
     query_lc = query.lower() if query else ""
     context = "DANH SÁCH SẢN PHẨM KHẢ DỤNG (Dùng link này để trả lời):\n"
     # Ưu tiên thông tin Website
-    if any(k in query_lc for k in ['link', 'web', 'shop', 'địa chỉ']):
-        context += "- Website chính thức: https://www.olv.vn/\n"
+    context += f"- Website chính thức: https://www.olv.vn/\n"
     # Tìm kiếm sản phẩm
-    relevant = [p for p in PRODUCT_LIST_JSON if query_lc in p['name'].lower() or query_lc in p.get('category', '').lower()]
-    
+    relevant = [p for p in PRODUCT_LIST_JSON if query_lc in p['name'].lower()]
     if not relevant:
         relevant = PRODUCT_LIST_JSON[:top_k] # Lấy mẫu nếu không thấy
     
