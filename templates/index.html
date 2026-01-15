@@ -417,23 +417,27 @@
     chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    function appendProductCard(productInfo) {
-        const chatBox = document.getElementById('chatBox');
-        const productHtml = `
-            <div class="product-card" style="margin-left: 0; width: 100%; background: white;">
-                <img src="${productInfo.image_url}" alt="${productInfo.name}" class="product-image">
-                <div class="product-details">
-                    <p class="product-name"><strong>${productInfo.name}</strong></p>
-                    <p class="product-price">${productInfo.price}</p>
-                    <a href="${productInfo.url}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
-                </div>
+function appendProductCard(productInfo) {
+    const chatBox = document.getElementById('chatBox');
+    const productHtml = `
+        <div class="product-card" style="margin-left: 0; width: 100%; background: white;">
+            <img src="${productInfo.image_url}" alt="${productInfo.name}" class="product-image">
+            <div class="product-details">
+                <p class="product-name">
+                    <a href="${productInfo.url || 'https://www.olv.vn/'}" target="_blank" style="text-decoration: none; color: inherit;">
+                        <strong>${productInfo.name}</strong>
+                    </a>
+                </p>
+                <p class="product-price">${productInfo.price}</p>
+                <a href="${productInfo.url || 'https://www.olv.vn/'}" target="_blank" class="product-link">Xem chi tiết 🌸</a>
             </div>
-        `;
-        const productContainer = document.createElement('div');
-        productContainer.className = 'message bot';
-        productContainer.innerHTML = productHtml;
-        chatBox.appendChild(productContainer);
-        chatBox.scrollTop = chatBox.scrollHeight;
+        </div>
+    `;
+    const productContainer = document.createElement('div');
+    productContainer.className = 'message bot';
+    productContainer.innerHTML = productHtml;
+    chatBox.appendChild(productContainer);
+    chatBox.scrollTop = chatBox.scrollHeight;
     }
     // 6. Hàm xóa lịch sử trò chuyện
     function clearHistory() {
