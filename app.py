@@ -18,6 +18,13 @@ api_key = os.getenv('GEMINI_API_KEY')
 client = genai.Client(api_key=api_key)    
 MODEL_ID ="gemini-2.5-flash"
 # --- SYSTEM INSTRUCTION (Tính năng: System Prompt & Fine-tuning logic) ---
+STATIC_SHOP_INFO = """
+- Shop: OLV Boutique
+- Website mua hàng: https://www.olv.vn/
+- Địa chỉ: 224 Yersin, Hiệp Thành, Thủ Dầu Một, Bình Dương
+- Liên hệ: 0923003158
+- Chính sách: Đổi trả 7 ngày. Freeship đơn > 500k.
+"""
 SYSTEM_INSTRUCTION = """
 Bạn là Lily - Trợ lý bán hàng AI của OLV Boutique.
 Nhiệm vụ: Tư vấn ngắn gọn, chốt đơn nhanh, và cung cấp link mua hàng chính xác.
@@ -36,13 +43,7 @@ Context (Dữ liệu shop):
 {shop_info}
 """
 SYSTEM_INSTRUCTION = SYSTEM_INSTRUCTION.format(shop_info=STATIC_SHOP_INFO)
-STATIC_SHOP_INFO = """
-- Shop: OLV Boutique
-- Website mua hàng: https://www.olv.vn/
-- Địa chỉ: 224 Yersin, Hiệp Thành, Thủ Dầu Một, Bình Dương
-- Liên hệ: 0923003158
-- Chính sách: Đổi trả 7 ngày. Freeship đơn > 500k.
-"""
+
 # Biến toàn cục lưu dữ liệu trong RAM
 PRODUCT_DATA_TEXT = ""
 PRODUCT_LIST_JSON = []
