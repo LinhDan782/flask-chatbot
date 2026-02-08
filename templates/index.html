@@ -239,6 +239,23 @@
             background: rgba(255, 255, 255, 0.4);
         }
         .header { position: relative; /* Để căn vị trí nút xóa */ }
+        /* --- Style cho nút Micro --- */
+        #voiceBtn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* Màu Xanh Ngọc */
+            margin-right: 5px;
+        }
+
+        /* Hiệu ứng nhấp nháy đỏ khi đang nghe */
+        .listening {
+            background: #ff4b2b !important;
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 75, 43, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 75, 43, 0); }
+        }
         </style>
 </head>
 <body>
@@ -258,6 +275,9 @@
             
             <button class="send-btn" onclick="document.getElementById('imageInput').click()" style="background: #ef82a8; margin-right: 5px;">
                 <i class="fas fa-camera"></i>
+            </button>
+            <button id="voiceBtn" class="send-btn" onclick="toggleVoice()">
+                <i class="fas fa-microphone"></i>
             </button>
 
             <div class="input-wrapper">
@@ -289,6 +309,50 @@
         return `<a target="_blank" rel="noopener noreferrer" href="${cleanHref}" title="${title || ''}">${text}</a>`;
     };
     marked.use({ renderer });
+    // --- LOGIC NHẬN DIỆN GIỌNG NÓI ---
+    const voiceBtn = document.getElementById('voiceBtn');
+    let recognition;
+
+    // Kiểm tra trình duyệt hỗ trợ
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'vi-VN'; // Tiếng Việt
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = () => {
+            voiceBtn.classList.add('listening');
+            document.getElementById('userInput').placeholder = "Đang nghe bạn nói...";
+        };
+
+        recognition.onend = () => {
+            voiceBtn.classList.remove('listening');
+            document.getElementById('userInput').placeholder = "Hỏi hoặc gửi ảnh sản phẩm...";
+            document.getElementById('userInput').focus();
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('userInput').value = transcript;
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Lỗi Voice:", event.error);
+            voiceBtn.classList.remove('listening');
+        };
+    } else {
+        if(voiceBtn) voiceBtn.style.display = 'none'; // Ẩn nếu không hỗ trợ
+    }
+
+    function toggleVoice() {
+        if (!recognition) return;
+        if (voiceBtn.classList.contains('listening')) {
+            recognition.stop();
+        } else {
+            recognition.start();
+        }
+    }
     // 3. Xử lý Paste (Ctrl + V) hình ảnh
     document.getElementById('userInput').addEventListener('paste', function(e) {
         const items = (e.clipboardData || e.originalEvent.clipboardData).items;
