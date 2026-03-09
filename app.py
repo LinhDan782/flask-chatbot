@@ -45,6 +45,8 @@ SYSTEM_INSTRUCTION = SYSTEM_INSTRUCTION.format(shop_info=STATIC_SHOP_INFO)
 PRODUCT_DATA_TEXT = ""
 PRODUCT_LIST_JSON = []
 CHAT_SESSIONS = {}
+# Bật / Tắt Gemini để test thực nghiệm
+USE_GEMINI = True   # True: bật Gemini | False: tắt Gemini
 
 # --- PHẦN 1: HÀM CRAWL DỮ LIỆU TỰ ĐỘNG ---
 def crawl_olv_data(max_pages=3):
@@ -171,7 +173,16 @@ def get_relevant_products(query, top_k=5):
         context += f"Sản phẩm: {p['name']} | Giá: {p['price']} | Link: {p['url']}\n"
         
     return context
+# --- TEST MÔ HÌNH 1: Tìm kiếm truyền thống (không AI) ---
+def search_products_traditional(query):
+    query = query.lower()
+    results = []
 
+    for p in PRODUCT_LIST_JSON:
+        if query in p['name'].lower():
+            results.append(p)
+
+    return results[:5]
 # Khởi động lần đầu
 save_and_reload_data()
 
@@ -217,8 +228,10 @@ def chat():
     user_msg = data.get('message')
     image_data = data.get('image')
     session_id = data.get('session_id')
+    
     if not user_msg and not image_data:
         return jsonify({'reply': 'Bạn chưa nhập gì cả!'})
+    
     # Khởi tạo lịch sử nếu chưa có
     if session_id not in CHAT_SESSIONS:
         CHAT_SESSIONS[session_id] = client.chats.create(
@@ -228,13 +241,32 @@ def chat():
                 temperature=0.7 # Độ sáng tạo vừa phải để trả lời mượt mà
             )
         )
-    # RAG: Lấy ngữ cảnh sản phẩm dựa trên tin nhắn
+    
+    # Nếu tắt Gemini → dùng tìm kiếm truyền thống
+    if not USE_GEMINI:
+        results = search_products_traditional(user_msg)
+        
+        if results:
+            reply = "Shop tìm thấy các sản phẩm sau:\n"
+            for p in results:
+                reply += f"👉 [{p['name']} - {p['price']}]({p['url']})\n"
+        else:
+            reply = "Hiện chưa tìm thấy sản phẩm phù hợp."
+        
+        return jsonify({
+            "reply": reply,
+            "product_info": results[0] if results else None
+        })
+    
+    # Nếu bật Gemini → chạy hệ thống AI hiện tại
     product_context = get_relevant_products(user_msg)
-# 2. Xử lý input người dùng
+    
+    # 2. Xử lý input người dùng
     user_parts_for_api = []
     saved_image_bytes = None
     saved_mime_type = "image/jpeg"
     image_payload = None
+    
     if image_data:
         try:
             # Tách header và payload
@@ -244,12 +276,12 @@ def chat():
                     saved_mime_type = header.split(":")[1].split(";")[0]
             else:
                 image_payload = image_data
-
+            
             # Sửa lỗi Padding cho Base64
             missing_padding = len(image_payload) % 4
             if missing_padding:
                 image_payload += '=' * (4 - missing_padding)
-
+            
             # Giải mã 1 lần duy nhất thành bytes
             saved_image_bytes = base64.b64decode(image_payload)
             
@@ -260,7 +292,7 @@ def chat():
         except Exception as e:
             print(f"❌ Lỗi xử lý ảnh: {e}")
             return jsonify({'reply': 'Định dạng ảnh không hợp lệ, bạn gửi lại giúp shop nhé! 🌸'})
-
+    
     if user_msg:
         user_parts_for_api.append(f"Khách: {user_msg}")
     
@@ -270,12 +302,12 @@ def chat():
     if saved_image_bytes:
         content_parts.append(types.Part.from_bytes(data=saved_image_bytes, mime_type=saved_mime_type))
     content_parts.append(types.Part.from_text(text=full_user_query))
-
+    
     try:
         # Gửi đến Gemini
         response = CHAT_SESSIONS[session_id].send_message(message=content_parts)
         bot_reply = response.text
-
+        
         # 4. Lưu lại hội thoại vào RAM
         history_parts = []
         if saved_image_bytes:
@@ -285,13 +317,14 @@ def chat():
             ))
         if user_msg:
             history_parts.append(types.Part.from_text(text=user_msg))
+        
         # Tìm sản phẩm để hiển thị Card
         product_detail = None
         for p in PRODUCT_LIST_JSON:
             if p['name'].lower() in bot_reply.lower(): 
                 product_detail = p
                 break 
-                
+        
         return jsonify({
             'reply': bot_reply,
             'product_info': product_detail
@@ -314,30 +347,5 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"❌ Lỗi cập nhật lúc khởi động: {e}")
         save_and_reload_data()
-#Bật/Tắt Gemini để test thực nghiệm
-#1.Biến cấu hình
-    USE_GEMINI = True   # True: bật Gemini | False: tắt Gemini
-#2.Hàm xử lý câu hỏi
-def handle_user_query(user_input):
-    if USE_GEMINI:
-        return answer_with_gemini(user_input)
-    else:
-        return answer_traditional(user_input)
-#Bước 3: Hai hàm xử lý khác nhau
-#3.1:Mô hình 1 – KHÔNG dùng Gemini (truyền thống)
-def answer_traditional(user_input):
-    results = search_products_by_keyword(user_input)
-    if results:
-        return f"Tìm thấy {len(results)} sản phẩm phù hợp."
-    else:
-        return "Hiện chưa tìm thấy sản phẩm phù hợp."
-#3.2:Mô hình 2 – Dùng Gemini
-def answer_with_gemini(user_input):
-    context = load_product_data()
-    prompt = f"""
-    Dựa trên dữ liệu sản phẩm sau: {context}
-    Hãy tư vấn cho khách hàng: {user_input}
-    """
-    response = gemini_model.generate_content(prompt)
-    return response.text
+
     app.run(debug=True)
