@@ -314,5 +314,30 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"❌ Lỗi cập nhật lúc khởi động: {e}")
         save_and_reload_data()
-
+#Bật/Tắt Gemini để test thực nghiệm
+#1.Biến cấu hình
+    USE_GEMINI = True   # True: bật Gemini | False: tắt Gemini
+#2.Hàm xử lý câu hỏi
+def handle_user_query(user_input):
+    if USE_GEMINI:
+        return answer_with_gemini(user_input)
+    else:
+        return answer_traditional(user_input)
+#Bước 3: Hai hàm xử lý khác nhau
+#3.1:Mô hình 1 – KHÔNG dùng Gemini (truyền thống)
+def answer_traditional(user_input):
+    results = search_products_by_keyword(user_input)
+    if results:
+        return f"Tìm thấy {len(results)} sản phẩm phù hợp."
+    else:
+        return "Hiện chưa tìm thấy sản phẩm phù hợp."
+#3.2:Mô hình 2 – Dùng Gemini
+def answer_with_gemini(user_input):
+    context = load_product_data()
+    prompt = f"""
+    Dựa trên dữ liệu sản phẩm sau: {context}
+    Hãy tư vấn cho khách hàng: {user_input}
+    """
+    response = gemini_model.generate_content(prompt)
+    return response.text
     app.run(debug=True)
