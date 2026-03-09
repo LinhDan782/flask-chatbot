@@ -2,7 +2,6 @@ flask
 flask-cors
 python-dotenv
 google.genai
-gunicorn
 beautifulsoup4
 requests
 Pillow
